@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YavaHire.API", "YavaHire.API\YavaHire.API.csproj", "{116C065F-2962-4EE2-9A30-5681E881DF4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YavaHire.Core", "YavaHire.Core\YavaHire.Core.csproj", "{BB9253DC-2378-4043-8AFA-FC9525AC9F29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{116C065F-2962-4EE2-9A30-5681E881DF4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{116C065F-2962-4EE2-9A30-5681E881DF4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{116C065F-2962-4EE2-9A30-5681E881DF4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{116C065F-2962-4EE2-9A30-5681E881DF4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9253DC-2378-4043-8AFA-FC9525AC9F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9253DC-2378-4043-8AFA-FC9525AC9F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9253DC-2378-4043-8AFA-FC9525AC9F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9253DC-2378-4043-8AFA-FC9525AC9F29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

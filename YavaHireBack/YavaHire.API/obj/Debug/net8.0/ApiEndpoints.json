@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "YavaHire.API.Controllers.HRController",
+    "Method": "GetHrs",
+    "RelativePath": "api/HR",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
