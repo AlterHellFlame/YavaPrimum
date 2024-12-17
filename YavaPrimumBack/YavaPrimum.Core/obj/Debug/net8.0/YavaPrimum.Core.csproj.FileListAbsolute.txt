@@ -1,0 +1,15 @@
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.AssemblyInfoInputs.cache
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.AssemblyInfo.cs
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.csproj.CoreCompileInputs.cache
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.sourcelink.json
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.csproj.AssemblyReference.cache
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\bin\Debug\net8.0\YavaPrimum.Core.deps.json
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\bin\Debug\net8.0\YavaPrimum.Core.runtimeconfig.json
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\bin\Debug\net8.0\YavaPrimum.Core.dll
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\bin\Debug\net8.0\YavaPrimum.Core.pdb
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.dll
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\refint\YavaPrimum.Core.dll
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.pdb
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\YavaPrimum.Core.genruntimeconfig.cache
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.Core\obj\Debug\net8.0\ref\YavaPrimum.Core.dll

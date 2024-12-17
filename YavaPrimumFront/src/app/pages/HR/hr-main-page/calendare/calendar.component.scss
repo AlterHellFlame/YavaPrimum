@@ -1,0 +1,16 @@
+.calendar {
+  width: 100%;
+  margin: auto;
+}
+
+.day-cell {
+  height: 100px; /* Высота ячейки */
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}

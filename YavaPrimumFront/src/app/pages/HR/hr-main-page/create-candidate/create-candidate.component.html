@@ -1,0 +1,38 @@
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <div class="modal-header">
+          <h5 class="modal-title">Добавить кандидата</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <label for="secondName" class="col-form-label">Введите фамилию</label>
+              <input type="text" class="form-control" id="secondName" name="secondName" ngModel>
+            </div>
+              <div>
+              <label for="firstName" class="col-form-label">Введите имя</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" ngModel>
+              </div>
+              <div>
+                <label for="surName" class="col-form-label">Введите отчество</label>
+                <input type="text" class="form-control" id="surName" name="surName" ngModel>
+              </div>
+              <div>
+                <label for="post" class="col-form-label">Введите должность</label>
+                <input type="text" class="form-control" id="post" name="post" ngModel>
+              </div>
+              <div>
+                <label for="country" class="col-form-label">Введите страну проживания</label>
+                <input type="text" class="form-control" id="country" name="country" ngModel>
+              </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Закрыть</button>
+          <button type="submit" class="btn btn-primary" >Добавить кандидата</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
