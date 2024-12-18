@@ -26,10 +26,10 @@ namespace YavaPrimum.API.Controllers
             return Ok(await _usersService.Register(request));
         }
 
-        //[HttpPost("/login")]
-        [HttpPost]
+        [HttpPost("/login")]
         public async Task<IResult> Login([FromBody] LoginUserRequest request)
         {
+            Console.WriteLine("Попытка войти в аккаунт с данными: " + request.EMail + " пароль: " + request.Password);
             string token = await _usersService.Login(request.EMail, request.Password);
 
             HttpContext.Response.Cookies.Append(JwtProvider.CookiesName, token, new CookieOptions()
@@ -37,7 +37,7 @@ namespace YavaPrimum.API.Controllers
                 Expires = DateTime.Now.AddMinutes(10)
             });
 
-            return Results.Ok();
+            return Results.Ok(request);
         }
 
         [HttpGet]

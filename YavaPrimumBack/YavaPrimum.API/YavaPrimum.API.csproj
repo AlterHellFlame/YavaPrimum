@@ -26,4 +26,8 @@
     <ProjectReference Include="..\YavaPrimum.Core\YavaPrimum.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

@@ -7,7 +7,7 @@ namespace YavaPrimum.API.Notify
 
         public async Task Send(string message)
         {
-            Console.WriteLine(message);
+            Console.WriteLine("Сообщение для кадровика: " + message);
             await this.Clients.All.SendAsync("Receive", message);
         }
     }

@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "uyjhgcNtpEaAJW54fMoJ7i3dzE/dd5HzGCkQd3u+VrQ=",
+  "Hash": "wG1KQU9wrK91arNa9KN1qKS9zWqI6oyd8/o0L7wvUeA=",
   "Source": "YavaPrimum.API",
   "BasePath": "_content/YavaPrimum.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "YavaPrimum.API\\wwwroot",
+      "Source": "YavaPrimum.API",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [],
   "Endpoints": []
 }

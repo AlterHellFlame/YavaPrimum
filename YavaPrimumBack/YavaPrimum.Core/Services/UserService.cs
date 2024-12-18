@@ -58,12 +58,11 @@ namespace YavaPrimum.Core.Services
         {
             User user = await GetByEMail(email);
 
-            Console.WriteLine(email + "  " +password);
 
             bool result = Verify(password, user.UserRegisterInfo.PasswordHash);
 
             if (result == false)
-                throw new Exception("Invalid password of user email: " + email);
+                throw new Exception("Логин или пароль введены неверно: " + email);
 
             string token = _jwtProvider.GenerateToken(user);
 

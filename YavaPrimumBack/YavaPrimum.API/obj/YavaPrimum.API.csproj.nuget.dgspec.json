@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaHire.API\\YavaPrimum.API.csproj": {}
+    "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\YavaPrimum.API.csproj": {}
   },
   "projects": {
-    "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaHire.API\\YavaPrimum.API.csproj": {
+    "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\YavaPrimum.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaHire.API\\YavaPrimum.API.csproj",
+        "projectUniqueName": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\YavaPrimum.API.csproj",
         "projectName": "YavaPrimum.API",
-        "projectPath": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaHire.API\\YavaPrimum.API.csproj",
+        "projectPath": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\YavaPrimum.API.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaHire.API\\obj\\",
+        "outputPath": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -12,7 +12,8 @@ import { CandidateService } from '../../../../services/candidate/candidate.servi
 })
 export class CreateCandidateComponent implements OnInit{
   message: any;
-  constructor(private notify: NotifyHubService, private candidateService: CandidateService) { }
+  constructor(private notify: NotifyHubService, 
+    private candidateService: CandidateService) { }
 
   ngOnInit(): void 
   {
@@ -26,24 +27,17 @@ export class CreateCandidateComponent implements OnInit{
 
 
   onSubmit(form: NgForm): void {
-    const payload = {
-      FirstName: form.value.firstName,
-      SecondName: form.value.secondName,
-      SurName: form.value.surName,
-      Post: form.value.post,
-      Country: form.value.country
-    };
-
-    console.log('Форма отправлена:', payload);
-    this.candidateService.addCandidate(payload).subscribe(
+    console.log('Форма отправлена:', form.value);
+    this.candidateService.addCandidate(form.value).subscribe(
       response => {
         console.log('Ответ от сервера:', response);
+        location.reload();
       },
       error => {
         console.error('Ошибка при отправке данных:', error);
       }
     );
-  }
-  
+  }  
+
 
 }

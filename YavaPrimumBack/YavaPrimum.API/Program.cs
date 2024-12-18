@@ -71,12 +71,15 @@ namespace YavaPrimum.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("CorsPolicy");
 
-            app.MapHub<NotifyHub>("/chat");
+                app.MapHub<NotifyHub>("/chat");
 
             app.MapControllers();
 
@@ -84,3 +87,6 @@ namespace YavaPrimum.API
         }
     }
 }
+
+
+

@@ -55,7 +55,7 @@ namespace YavaPrimum.Core.Services
                 SecondName = candidateRequest.SecondName,
                 SurName = candidateRequest.SurName,
             };
-
+            Console.WriteLine("Попытка добавить кандидата " + candidate.SecondName);
             await _dBContext.Candidate.AddAsync(candidate);
             await _dBContext.SaveChangesAsync();
             return candidate.CandidateId;

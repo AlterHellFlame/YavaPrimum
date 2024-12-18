@@ -6,19 +6,19 @@ bootstrapApplication(AppComponent, appConfig)
   .then(() => { console.log('Приложение успешно запущено.')})
   .catch((err) => console.error("Ошибки в main.ts " + err));
 
-  console.log('Уведомления поддерживаются.');
 
-// src/main.ts
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/ngsw-worker.js')
       .then(registration => {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        console.log('ServiceWorker работает : ', registration.scope);
       })
       .catch(error => {
-        console.log('ServiceWorker registration failed: ', error);
+        console.log('ServiceWorker не работает: ', error);
       });
   });
-}
+}*/
+
 
 

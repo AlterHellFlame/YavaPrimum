@@ -23,10 +23,8 @@ export class HrMainPageComponent implements OnInit {
   {
     this.candidateService.getProductCards().subscribe((val) => 
     {
+      console.log(val);
       this.candidates = val;
-      console.log(this.candidates);
-      console.log(this.candidates[0]);
-      console.log(this.candidates[0].firstName);
     });
   }
 
