@@ -1,41 +1,36 @@
-.dropdown-menu {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+.menu {
+  display: flex;
+  height: 600px;
+  gap: 50px;
 
-  &.show {
-    max-height: 200px; // Установите максимальную высоту по вашему усмотрению
-    opacity: 1;
-  }
-  
-}
+  .dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
 
-.candidates-list
-{
-  height: 500px;
-  width: 500px;
-  overflow-y: scroll;
-  overflow-x:hidden;
-
-
-  &::-webkit-scrollbar {
-    display: none; /* Скрываем скроллбар для WebKit (например, Chrome, Safari) */
+    &.show {
+      max-height: 200px; // Установите максимальную высоту по вашему усмотрению
+      opacity: 1;
+    }
   }
 
-  & {
+  .candidates-list {
+    height: 100%;
+    width: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      display: none; /* Скрываем скроллбар для WebKit (например, Chrome, Safari) */
+    }
+
     -ms-overflow-style: none;  /* Скрываем скроллбар для Internet Explorer и Edge */
     scrollbar-width: none;     /* Скрываем скроллбар для Firefox */
   }
-}
 
-.menu
-{
-  display: flex;
-  gap: 50px;
-
-  .calendar
-  {
-    width: 100%;
+  .calendar {
+    flex-grow: 1;
+    min-width: 50%;
   }
 }

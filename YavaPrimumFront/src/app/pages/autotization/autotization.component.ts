@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   imports: [FormsModule, CommonModule, HttpClientModule],
   templateUrl: './autotization.component.html',
   styleUrl: './autotization.component.scss',
-    providers: [AutorizationService] 
+  providers: [AutorizationService] 
 })
 export class AutotizationComponent{
 
@@ -18,7 +18,16 @@ constructor(private authService : AutorizationService, private router : Router){
 
   onSubmitLogIns(form: NgForm) : void
   {
-    
+    const formValues = form.value;
+    for (const key in formValues) 
+      { 
+        if (formValues[key] == "") 
+        { 
+          console.log(`${key}: ${formValues[key]}`); 
+          return;
+        }
+     }
+
     let loginEror = document.getElementById('loginEror')!;
 
       this.authService.logIn(form.value).subscribe(response => 

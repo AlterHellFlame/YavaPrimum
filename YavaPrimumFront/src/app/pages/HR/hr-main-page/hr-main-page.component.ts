@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';  // Импортиру�
 import { CandidateService } from '../../../services/candidate/candidate.service';
 import { Candidate } from '../../../data/interface/Candidate.interface';
 import { CandidateCardComponent } from "./candidate-card/candidate-card.component";
-import { CalendarComponent } from './calendare/calendare.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @Component({
   selector: 'app-hr-main-page',
@@ -41,6 +41,5 @@ export class HrMainPageComponent implements OnInit {
 
   applyFilter(filter: string) {
     console.log(`Применён фильтр: ${filter}`);
-    // Здесь можно добавить вашу логику для применения фильтра
   }
 }

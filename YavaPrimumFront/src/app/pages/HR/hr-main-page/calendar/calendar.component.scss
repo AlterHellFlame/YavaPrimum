@@ -1,0 +1,51 @@
+.grid
+{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    color: gray;
+}
+.weeks-grid
+{
+    .grid-cell
+    {
+        align-content: center;
+        text-align: center;
+
+        font-weight: bold;
+        height: 50px;
+    }
+}
+.day-grid
+{   flex-grow: 1;
+
+    .grid-cell
+    {
+        border-top: 1px solid #d3d3d3;
+
+    }
+    :hover
+    {
+        background-color: darken(white, 20%);
+        border-radius: 5px;
+        
+    }
+
+    .task
+    {
+        border-radius: 5px;
+        background-color: aquamarine;
+        font-size: 10px;
+    }
+    .task2
+    {
+        border-radius: 5px;
+        background-color: rgb(255, 208, 127);
+        font-size: 10px;
+    }
+    .task3
+    {
+        border-radius: 5px;
+        background-color: rgb(255, 127, 221);
+        font-size: 10px;
+    }
+}

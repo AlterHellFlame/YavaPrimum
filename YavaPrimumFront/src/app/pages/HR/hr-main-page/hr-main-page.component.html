@@ -1,23 +1,22 @@
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Добавьте кандидата
-  </button>
-
-<br>
-  <button class="btn btn-primary dropdown-toggle mt-3 mb-3" type="button" id="dropdownMenuButton" (click)="toggleDropdown()">
-    Всё
-  </button>
-  <div class="dropdown-menu" [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#" (click)="applyFilter('Всё')">Всё</a>
-    <a class="dropdown-item" href="#" (click)="applyFilter('Приём')">Приём</a>
-    <a class="dropdown-item" href="#" (click)="applyFilter('Звонок')">Звонок</a>
-    <a class="dropdown-item" href="#" (click)="applyFilter('Ожидание')">Ожидание</a>
-  </div>
-
-<div class="menu">
-  <div class="candidates-list">
-    
-    <app-candidate-card *ngFor="let candidate of candidates" [candidate]="candidate"></app-candidate-card>
+<div class="menu d-flex">
+  <div class="d-flex flex-column">
+    <div>
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Добавьте кандидата
+      </button>
+      <button class="btn btn-primary dropdown-toggle mb-3 w-25 mx-1" type="button" id="dropdownMenuButton" (click)="toggleDropdown()">
+        Всё
+      </button>
+      <div class="dropdown-menu" [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" (click)="applyFilter('Всё')">Всё</a>
+        <a class="dropdown-item" href="#" (click)="applyFilter('Приём')">Приём</a>
+        <a class="dropdown-item" href="#" (click)="applyFilter('Звонок')">Звонок</a>
+        <a class="dropdown-item" href="#" (click)="applyFilter('Ожидание')">Ожидание</a>
+      </div>
+    </div>
+    <div class="candidates-list">   
+      <app-candidate-card *ngFor="let candidate of candidates" [candidate]="candidate"></app-candidate-card>
+    </div>
   </div>
   <div class="calendar">
     <app-calendar></app-calendar>

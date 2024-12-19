@@ -1,0 +1,48 @@
+<div class="calendar h-100 d-flex flex-column">
+  <div class="headline d-flex justify-content-between">
+    <div class="headline-month">
+      {{ fistDayOfActiveMonth().monthShort}}
+      {{ fistDayOfActiveMonth().year}}
+    </div>
+    <div class="headline-controls d-flex">
+      <div class="headline-control"> ~ </div>
+      <div class="headline-control"> Сегодня </div>
+      <div class="headline-control"> ~ </div>
+    </div>
+    <div></div>
+  </div>
+
+  <div class="grid weeks-grid">
+    @for (weekDay of weekDays(); track $index)
+    {
+      <div class="grid-cell">
+        {{weekDay}}
+      </div>
+    }
+  </div>
+
+  <div class="grid day-grid">
+    @for (dayOfMonth of daysOfMonth(); track $index)
+    {
+      <div [ngClass]="{'grid-cell' : true}">
+        <div class="date">{{dayOfMonth.day}}</div>
+        @if(dayOfMonth.day % 2 ==0)
+        {
+        <div class="task mx-1">Meet with Aboba</div>    
+        }
+        @if(dayOfMonth.day % 3 ==0)
+        {
+          <div class="task2 mx-1">Do somethink2</div>
+        }
+        @if(dayOfMonth.day % 5 ==0)
+        {
+          <div class="task3 mx-1">Call to Candidate</div>
+        }
+        @if(dayOfMonth.day % 10 ==0)
+        {
+          <div class="task mx-1">Meet with Alesha</div>
+        }
+      </div>
+    }
+  </div>
+</div>
