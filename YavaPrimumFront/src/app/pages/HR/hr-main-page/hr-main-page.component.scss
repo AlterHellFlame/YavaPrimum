@@ -1,7 +1,7 @@
 .menu {
   display: flex;
   height: 600px;
-  gap: 50px;
+  gap: 25px;
 
   .dropdown-menu {
     max-height: 0;
@@ -15,9 +15,9 @@
     }
   }
 
-  .candidates-list {
+  .taks-list {
     height: 100%;
-    width: 500px;
+    min-width: 30vw;
     overflow-y: scroll;
     overflow-x: hidden;
 

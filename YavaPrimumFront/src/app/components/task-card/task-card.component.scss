@@ -1,0 +1,20 @@
+.task-card {
+
+    --bs-border-color-translucent: #f3f3f3;
+
+    width: 95%;
+    height: 150px;
+
+    padding: 3px 7px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+    .candidate_FIO {
+      font-size: 20px;
+    }
+  }
+  
+  .task-card:hover {
+    transform: scale(0.99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  

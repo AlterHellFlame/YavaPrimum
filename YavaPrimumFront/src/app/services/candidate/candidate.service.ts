@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Candidate } from '../../data/interface/Candidate.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,4 @@ export class CandidateService {
     return this.http.post<Candidate>(`${this.baseApiUrl}`, payload);
   }
 
-  public getProductCards(): Observable<Candidate[]> {
-    return this.http.get<Candidate[]>(`${this.baseApiUrl}`);
-  }
 }

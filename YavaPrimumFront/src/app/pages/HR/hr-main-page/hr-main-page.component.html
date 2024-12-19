@@ -14,8 +14,8 @@
         <a class="dropdown-item" href="#" (click)="applyFilter('Ожидание')">Ожидание</a>
       </div>
     </div>
-    <div class="candidates-list">   
-      <app-candidate-card *ngFor="let candidate of candidates" [candidate]="candidate"></app-candidate-card>
+    <div class="taks-list">   
+      <app-task-card *ngFor="let task of tasks" [task]="task"></app-task-card>
     </div>
   </div>
   <div class="calendar">
