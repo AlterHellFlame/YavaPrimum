@@ -58,6 +58,66 @@ export class TaskService {
         secondName: 'Petrov',
         status: 'Completed',
         dateTime: DateTime.local(2024, 12, 20, 14, 30)
+      },
+      {
+        secondName: 'Ivanov',
+        status: 'Pending',
+        dateTime: DateTime.local(2024, 12, 17, 9, 0)
+      },
+      {           
+        secondName: 'Petrov',
+        status: 'Completed',
+        dateTime: DateTime.local(2024, 12, 17, 14, 30)
+      },
+      {
+        secondName: 'Sidorov',
+        status: 'InProgress',
+        dateTime: DateTime.local(2024, 12, 18, 11, 0)
+      },
+      {
+        secondName: 'Kuznetsova',
+        status: 'Pending',
+        dateTime: DateTime.local(2024, 12, 18, 16, 0)
+      },
+      {
+        secondName: 'Nikolaev',
+        status: 'Completed',
+        dateTime: DateTime.local(2024, 12, 19, 10, 30)
+      },
+      {
+        secondName: 'Morozov',
+        status: 'Pending',
+        dateTime: DateTime.local(2024, 12, 19, 14, 0)
+      },
+      {
+        secondName: 'Zaitseva',
+        status: 'InProgress',
+        dateTime: DateTime.local(2024, 12, 20, 9, 0)
+      },
+      {
+        secondName: 'Lebedev',
+        status: 'Pending',
+        dateTime: DateTime.local(2024, 12, 20, 13, 15)
+      },
+      {
+        secondName: 'Bogdanova',
+        status: 'Completed',
+        dateTime: DateTime.local(2024, 12, 21, 11, 45)
+      },
+      {
+        secondName: 'Gusev',
+        status: 'InProgress',
+        dateTime: DateTime.local(2024, 12, 21, 15, 0)
+      },
+      {
+        secondName: 'Smirnov',
+        status: 'Pending',
+        dateTime: DateTime.local(2024, 12, 21, 17, 30)
+      },
+      {
+        secondName: 'Mikhailova',
+        status: 'Completed',
+        dateTime: DateTime.local(2024, 12, 21, 19, 15)
       }
     ];
 }

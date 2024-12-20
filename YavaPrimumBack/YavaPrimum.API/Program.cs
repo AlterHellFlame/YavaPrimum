@@ -24,6 +24,7 @@ namespace YavaPrimum.API
             builder.Services.AddScoped<IHRService, HRService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ICandidateService, CandidateService>();
+            builder.Services.AddScoped<ITasksService, TaskService>();
 
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 

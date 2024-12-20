@@ -36,6 +36,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GetTasks",
+    "RelativePath": "api/Tasks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
     "Method": "Crt",
     "RelativePath": "api/User",
