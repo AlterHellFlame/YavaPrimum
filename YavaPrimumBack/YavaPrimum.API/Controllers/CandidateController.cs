@@ -15,7 +15,7 @@ public class CandidateController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Guid> CreateCandidat([FromBody] CandidateRequest candidateRequest)
+    public async Task<Guid> CreateCandidat([FromBody] CandidateRequestResponse candidateRequest)
     {
         return await _candidateService.Create(candidateRequest);
     }

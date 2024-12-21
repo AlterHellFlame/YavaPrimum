@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -25,6 +24,10 @@ namespace YavaPrimum.API
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ICandidateService, CandidateService>();
             builder.Services.AddScoped<ITasksService, TaskService>();
+            builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<ICountryService, CountryService>();
+            builder.Services.AddScoped<ICompanyService, CompanyService>();
+            builder.Services.AddScoped<ITaskTypeService, TaskTypeService>();
 
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 

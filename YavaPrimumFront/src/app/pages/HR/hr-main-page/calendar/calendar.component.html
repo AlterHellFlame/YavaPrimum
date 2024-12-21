@@ -1,46 +1,32 @@
 <div class="calendar h-100 d-flex flex-column">
   <div class="headline d-flex justify-content-between">
     <div class="headline-month">
-      {{ fistDayOfActiveMonth().monthShort}}
-      {{ fistDayOfActiveMonth().year}}
+      {{ firstDayOfActiveMonth.monthShort }}
+      {{ firstDayOfActiveMonth.year }}
     </div>
     <div class="headline-controls d-flex">
       <div class="headline-control"> ~ </div>
-      <div class="headline-control"> Сегодня </div>
+      <div class="headline-control" (click)="setActiveDay(today)">Сегодня</div>
       <div class="headline-control"> ~ </div>
     </div>
     <div></div>
   </div>
 
   <div class="grid weeks-grid">
-    @for (weekDay of weekDays(); track $index)
-    {
-      <div class="grid-cell text-capitalize">
-        {{weekDay}}
-      </div>
-    }
+    <div *ngFor="let weekDay of weekDays" class="grid-cell text-capitalize">
+      {{ weekDay }}
+    </div>
   </div>
 
   <div class="grid day-grid">
-    @for (dayOfMonth of daysOfMonth(); track $index)
-    {
-      <div [ngClass]="{'grid-cell px-1' : true}" (click)="setActiveDay(dayOfMonth)">
-        <div class="date">{{dayOfMonth.day}}</div>
-        
-            @if(dayOfMonth.day % 2 ==0)
-            {
-            <div class="task px-1 ">9:15 Абоба</div>    
-            }
-            @if(dayOfMonth.day % 3 ==0)
-            {
-              <div class="task2 px-1">Крахравицкий</div>
-            }
-            @if(dayOfMonth.day % 5 ==0)
-            {
-              <div class="task2 px-1">Чебупольский</div>
-            }
-          <img  src ="https://cdn-icons-png.flaticon.com/128/2985/2985150.png"class="more">
-      </div>
-    }
+    <div *ngFor="let dayOfMonth of daysOfMonth" [ngClass]="{'grid-cell px-1': true}" (click)="setActiveDay(dayOfMonth)">
+      <div class="date">{{ dayOfMonth.day }}</div>
+      
+      <div *ngIf="dayOfMonth.day % 2 === 0" class="task px-1">9:15 Абоба</div>
+      <div *ngIf="dayOfMonth.day % 3 === 0" class="task2 px-1">Крахравицкий</div>
+      <div *ngIf="dayOfMonth.day % 5 === 0" class="task2 px-1">Чебупольский</div>
+      
+      <img src="https://cdn-icons-png.flaticon.com/128/2985/2985150.png" class="more">
+    </div>
   </div>
 </div>

@@ -10,11 +10,15 @@ namespace YavaPrimum.Core.Services
     {
         private readonly YavaPrimumDBContext _dbContext;
         private readonly IJwtProvider _jwtProvider;
+        private readonly IPostService _postService;
 
-        public UserService(YavaPrimumDBContext dbContext, IJwtProvider jwtProvider)
+        public UserService(YavaPrimumDBContext dbContext, 
+            IJwtProvider jwtProvider,
+            IPostService postService)
         {
             _dbContext = dbContext;
             _jwtProvider = jwtProvider;
+            _postService = postService;
         }
         public string GeneratePasswordHas(string password)
         {
@@ -44,7 +48,7 @@ namespace YavaPrimum.Core.Services
                 SecondName = registerUserRequest.SecondName,
                 SurName = registerUserRequest.SurName,
                 UserRegisterInfo = userRegisterInfo,
-                Post = _dbContext.Post.Find(registerUserRequest.PostId)
+                Post = await _postService.GetByName(registerUserRequest.Post)
             };
 
             await _dbContext.UserRegisterInfo.AddAsync(userRegisterInfo);

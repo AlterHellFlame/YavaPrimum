@@ -5,7 +5,6 @@
         string SecondName,
         string SurName,
         string Email,
-
-        Guid PostId
+        string Post
     );
 }

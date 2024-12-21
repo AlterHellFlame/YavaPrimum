@@ -28,7 +28,10 @@ namespace YavaPrimum.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Country")
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -36,9 +39,14 @@ namespace YavaPrimum.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Post")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("HRUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OPUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecondName")
                         .IsRequired()
@@ -48,9 +56,56 @@ namespace YavaPrimum.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Telephone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CandidateId");
 
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("HRUserId");
+
+                    b.HasIndex("OPUserId");
+
+                    b.HasIndex("PostId");
+
                     b.ToTable("Candidate");
+                });
+
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Company", b =>
+                {
+                    b.Property<Guid>("CompanyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompanyId");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Country", b =>
+                {
+                    b.Property<Guid>("CountryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CountryId");
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Post", b =>
@@ -68,6 +123,21 @@ namespace YavaPrimum.Core.Migrations
                     b.ToTable("Post");
                 });
 
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.TaskType", b =>
+                {
+                    b.Property<Guid>("TaskTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskTypeId");
+
+                    b.ToTable("TaskType");
+                });
+
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Tasks", b =>
                 {
                     b.Property<Guid>("TasksId")
@@ -80,9 +150,11 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TaskTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -90,6 +162,8 @@ namespace YavaPrimum.Core.Migrations
                     b.HasKey("TasksId");
 
                     b.HasIndex("CandidateId");
+
+                    b.HasIndex("TaskTypeId");
 
                     b.HasIndex("UserId");
 
@@ -148,21 +222,74 @@ namespace YavaPrimum.Core.Migrations
                     b.ToTable("UserRegisterInfo");
                 });
 
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Candidate", b =>
+                {
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.User", "HR")
+                        .WithMany()
+                        .HasForeignKey("HRUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.User", "OP")
+                        .WithMany()
+                        .HasForeignKey("OPUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+
+                    b.Navigation("HR");
+
+                    b.Navigation("OP");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Company", b =>
+                {
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Tasks", b =>
                 {
                     b.HasOne("YavaPrimum.Core.DataBase.Models.Candidate", "Candidate")
                         .WithMany()
                         .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.TaskType", "TaskType")
+                        .WithMany()
+                        .HasForeignKey("TaskTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YavaPrimum.Core.DataBase.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Candidate");
+
+                    b.Navigation("TaskType");
 
                     b.Navigation("User");
                 });

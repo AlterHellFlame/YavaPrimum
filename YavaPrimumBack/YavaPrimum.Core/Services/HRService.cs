@@ -7,16 +7,16 @@ namespace YavaPrimum.Core.Services
 {
     public class HRService : IHRService
     {
-        private YavaPrimumDBContext _dBContext;
+        private YavaPrimumDBContext _dbContext;
 
-        public HRService(YavaPrimumDBContext dBContext)
+        public HRService(YavaPrimumDBContext dbContext)
         {
-            _dBContext = dBContext;
+            _dbContext = dbContext;
         }
 
-        //public async Task<List<HR>> GetAll()
+        //public async Task<User> GetById(Guid HRId)
         //{
-        //    return await _dBContext.HRs.ToListAsync();
+        //    return await _dbContext.User.FindAsync(HRId);
         //}
     }
 }

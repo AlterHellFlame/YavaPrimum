@@ -21,16 +21,25 @@ import { DateTime } from 'luxon';
 })
 export class HrMainPageComponent implements OnInit {
   candidates: Candidate[] = [];
+  activeDay: DateTime = DateTime.now();
   tasks: Tasks[] = [];
+  tasksAll: Tasks[] = [];
 
   constructor(private candidateService: CandidateService, private taskService: TaskService) {}
 
   //Выполнение при знапуске странички
   ngOnInit(): void {
-    this.taskService.dayTasks$.subscribe(tasks => 
+    this.taskService.getAllTasks().subscribe(tasks =>
     {
-      this.tasks = tasks;
-      console.log("Таски на активную дату: ", this.tasks);
+      this.tasksAll = tasks;
+      console.log("Все таски ", this.tasksAll);
+    }
+    );
+    this.taskService.activeDay$.subscribe(day => 
+    {
+      this.activeDay = day;
+      console.log("Выбранная дата: ", this.activeDay);
+      this.getTasksOfDay();
     });
   }
 
@@ -43,5 +52,20 @@ export class HrMainPageComponent implements OnInit {
   //Фильтры для тасков
   applyFilter(filter: string) {
     console.log(`Применён фильтр: ${filter}`);
+  }
+
+
+  public getTasksOfDay(): void 
+  {
+      if (this.activeDay == null) 
+      {
+        this.tasks = [];
+      } 
+      else 
+      {
+        this.tasks = this.tasks.filter(task =>
+          task.dateTime.hasSame(this.activeDay, 'day')
+        );
+      }
   }
 }

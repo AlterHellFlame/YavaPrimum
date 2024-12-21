@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "candidateRequest",
-        "Type": "YavaPrimum.Core.DTO.CandidateRequest",
+        "Type": "YavaPrimum.Core.DTO.CandidateRequestResponse",
         "IsRequired": true
       }
     ],
@@ -36,6 +36,52 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.HRController",
+    "Method": "CreateNewIntreview",
+    "RelativePath": "api/HR",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.InterviewCreateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.HRController",
+    "Method": "GetHRTasks",
+    "RelativePath": "api/HR",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DataBase.Models.Tasks",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetTasks",
     "RelativePath": "api/Tasks",
@@ -43,12 +89,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DataBase.Models.Tasks, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
     "Method": "Crt",
     "RelativePath": "api/User",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "FillTables",
+    "RelativePath": "FillTables",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

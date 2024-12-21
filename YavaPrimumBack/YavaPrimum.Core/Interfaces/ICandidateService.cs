@@ -6,8 +6,8 @@ namespace YavaPrimum.Core.Interfaces
     public interface ICandidateService
     {
         Task<Guid> Create(Candidate candidate);
-        Task<List<CandidateRequest>> GetAll();
+        Task<List<CandidateRequestResponse>> GetAll();
         Task<Candidate> GetById(Guid id);
-        Task<Guid> Create(CandidateRequest candidateRequest);
+        Task<Guid> Create(CandidateRequestResponse candidateRequest);
     }
 }

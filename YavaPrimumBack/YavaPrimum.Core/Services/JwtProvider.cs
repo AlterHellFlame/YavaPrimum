@@ -29,5 +29,11 @@ namespace YavaPrimum.Core.Services
 
             return tokenValue;
         }
+
+        public async Task<Guid> GetUserIdFromToken(string token)
+        {
+            var jsonToken = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+            return Guid.Parse(jsonToken.Claims.First(claim => claim.Type == "userId").Value);
+        }
     }
 }

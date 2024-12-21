@@ -27,7 +27,7 @@ namespace YavaPrimum.API.Controllers
         }
 
         [HttpPost("/login")]
-        public async Task<IResult> Login([FromBody] LoginUserRequest request)
+        public async Task<ActionResult> Login([FromBody] LoginUserRequest request)
         {
             Console.WriteLine("Попытка войти в аккаунт с данными: " + request.EMail + " пароль: " + request.Password);
             string token = await _usersService.Login(request.EMail, request.Password);
@@ -37,7 +37,7 @@ namespace YavaPrimum.API.Controllers
                 Expires = DateTime.Now.AddMinutes(10)
             });
 
-            return Results.Ok(request);
+            return Ok();
         }
 
         [HttpGet]

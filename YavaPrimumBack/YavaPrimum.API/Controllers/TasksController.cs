@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using YavaPrimum.Core.DataBase;
+using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.Interfaces;
-using YavaPrimum.Core.Services;
 
 namespace YavaPrimum.API.Controllers
 {
@@ -11,12 +10,57 @@ namespace YavaPrimum.API.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ITasksService _tasksService;
-        //private readonly YavaPrimumDBContext _dBContext;
+        private readonly YavaPrimumDBContext _dBContext;
+
+        public TasksController(ITasksService tasksService,
+            YavaPrimumDBContext dBContext)
+        {
+            _tasksService = tasksService;
+            _dBContext = dBContext;
+        }
 
         [HttpGet]
-        public async Task<IActionResult> GetTasks()
+        public async Task<ActionResult<List<Tasks>>> GetTasks()
         {
             return Ok(await _tasksService.GetAll());
         }
+
+        [HttpGet("/FillTables")]//Заполняет таблички, где только название и id
+        public async Task<ActionResult> FillTables()
+        {
+            Country country = new Country()
+            {
+                CountryId = Guid.NewGuid(),
+                Name = "countryName"
+            };
+
+            Post post = new Post()
+            {
+                PostId = Guid.NewGuid(),
+                Name = "postName"
+            };
+
+            TaskType taskType = new TaskType()
+            {
+                TaskTypeId = Guid.NewGuid(),
+                Name = "taskTypeName"
+            };
+
+            Company company = new Company()
+            {
+                CompanyId = Guid.NewGuid(),
+                Name = "companyName",
+                Country = country
+            };
+
+            _dBContext.Post.Add(post);
+            _dBContext.TaskType.Add(taskType);
+            _dBContext.Country.Add(country);
+            _dBContext.Company.Add(company);
+            _dBContext.SaveChanges();
+            return Ok();
+        }
+
+
     }
 }
