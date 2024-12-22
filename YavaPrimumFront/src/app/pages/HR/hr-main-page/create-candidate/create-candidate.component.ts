@@ -45,7 +45,7 @@ export class CreateCandidateComponent implements OnInit {
   });
 
   onSubmit(): void {
-    const formValue = {
+/*    const formValue = {
       FirstName: this.form.get('FirstName')!.value!,
       SecondName: this.form.get('SecondName')!.value!,
       SurName: this.form.get('SurName')!.value!,
@@ -58,7 +58,7 @@ export class CreateCandidateComponent implements OnInit {
     console.log('Форма отправлена:', formValue);
 
     this.candidateService.addCandidate(formValue);
-
+*/
     this.notify.sendMessage("Habib");
   }
 }

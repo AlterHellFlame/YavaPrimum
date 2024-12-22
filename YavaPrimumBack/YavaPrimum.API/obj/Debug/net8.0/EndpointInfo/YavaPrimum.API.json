@@ -378,6 +378,23 @@
         },
         "additionalProperties": false
       },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "$ref": "#/components/schemas/Country"
+          }
+        },
+        "additionalProperties": false
+      },
       "Country": {
         "type": "object",
         "properties": {
@@ -445,6 +462,10 @@
             "nullable": true
           },
           "surName": {
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
             "type": "string",
             "nullable": true
           },
@@ -537,6 +558,9 @@
           "surName": {
             "type": "string",
             "nullable": true
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company"
           },
           "post": {
             "$ref": "#/components/schemas/Post"

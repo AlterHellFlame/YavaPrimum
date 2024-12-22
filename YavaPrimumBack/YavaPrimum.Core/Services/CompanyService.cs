@@ -29,6 +29,7 @@ namespace YavaPrimum.Core.Services
         public async Task<Company> GetByName(string companyName)
         {
             return await _dbContext.Company
+                .Include(c => c.Country)
                 .FirstOrDefaultAsync(t => t.Name == companyName);
         }
 

@@ -50,20 +50,20 @@ namespace YavaPrimum.API.Controllers
         [HttpGet]
         public async Task<ActionResult> Crt()
         {
-            await _dBContext.Post.AddAsync(new Post()
+            await _dBContext.Country.AddAsync(new Country()
             {
-                PostId = Guid.NewGuid(),
-                Name = "HR"
+                CountryId = Guid.NewGuid(),
+                Name = "Монголия"
             });
-            await _dBContext.Post.AddAsync(new Post()
+            await _dBContext.Country.AddAsync(new Country()
             {
-                PostId = Guid.NewGuid(),
-                Name = "Кадровик"
+                CountryId = Guid.NewGuid(),
+                Name = "Китай"
             });
-            await _dBContext.Post.AddAsync(new Post()
+            await _dBContext.Country.AddAsync(new Country()
             {
-                PostId = Guid.NewGuid(),
-                Name = "Водитель"
+                CountryId = Guid.NewGuid(),
+                Name = "ОАЭ"
             });
 
             await _dBContext.SaveChangesAsync();

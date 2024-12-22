@@ -11,14 +11,17 @@ namespace YavaPrimum.Core.Services
         private readonly YavaPrimumDBContext _dbContext;
         private readonly IJwtProvider _jwtProvider;
         private readonly IPostService _postService;
+        private readonly ICompanyService _companyService;
 
         public UserService(YavaPrimumDBContext dbContext, 
             IJwtProvider jwtProvider,
-            IPostService postService)
+            IPostService postService,
+            ICompanyService companyService)
         {
             _dbContext = dbContext;
             _jwtProvider = jwtProvider;
             _postService = postService;
+            _companyService = companyService;
         }
         public string GeneratePasswordHas(string password)
         {
@@ -48,9 +51,9 @@ namespace YavaPrimum.Core.Services
                 SecondName = registerUserRequest.SecondName,
                 SurName = registerUserRequest.SurName,
                 UserRegisterInfo = userRegisterInfo,
-                Post = await _postService.GetByName(registerUserRequest.Post)
+                Post = await _postService.GetByName(registerUserRequest.Post),
+                Company = await _companyService.GetByName(registerUserRequest.Company),
             };
-
             await _dbContext.UserRegisterInfo.AddAsync(userRegisterInfo);
             await _dbContext.User.AddAsync(user);
             await _dbContext.SaveChangesAsync();
@@ -93,6 +96,16 @@ namespace YavaPrimum.Core.Services
                 .Include(u => u.UserRegisterInfo)
                 .Where(u => u.UserId == id)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<User>> GetAll()
+        {
+            return await _dbContext.User
+                .Include(p=> p.Post)
+                .Include (u => u.UserRegisterInfo)
+                .Include (c => c.Company)
+                .Include(co => co.Company.Country)
+                .ToListAsync();
         }
     }
 }

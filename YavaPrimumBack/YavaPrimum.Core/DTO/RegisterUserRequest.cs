@@ -4,6 +4,7 @@
         string FirstName,
         string SecondName,
         string SurName,
+        string Company,
         string Email,
         string Post
     );

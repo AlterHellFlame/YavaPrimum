@@ -35,7 +35,7 @@ constructor(private authService : AutorizationService, private router : Router){
         loginEror.textContent = "Данные введены верно";
         loginEror.style.color = "green";
         console.log('Успешный вход:', response);
-        if(response == "Водитель")
+        if(response == "HR")
         {
           this.router.navigate(['/account/HR']);
         }

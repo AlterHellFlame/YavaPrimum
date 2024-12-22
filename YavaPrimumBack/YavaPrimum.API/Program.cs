@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using YavaPrimum.API.Notify;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.Interfaces;
 using YavaPrimum.Core.Services;
+using YavaPrimum.API.Notify;
 
 namespace YavaPrimum.API
 {

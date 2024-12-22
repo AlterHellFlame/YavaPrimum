@@ -7,6 +7,8 @@
         public string SecondName { get; set; }
         public string SurName { get; set; }
 
+        public Company Company { get; set; }
+
         public Post Post { get; set; }
         public UserRegisterInfo UserRegisterInfo { get; set; }
     }

@@ -17,6 +17,7 @@ export class PoMainPageComponent implements OnInit
     this.notify.startConnection();
     this.notify.addReceiveListener((message: string) => 
     {
+      console.log("Сообщение доставлено")
       this.message =  message;
       alert("Заявка от HR " + this.message);
     });
