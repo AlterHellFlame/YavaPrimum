@@ -31,25 +31,25 @@ namespace YavaPrimum.API.Controllers
             Country country = new Country()
             {
                 CountryId = Guid.NewGuid(),
-                Name = "countryName"
+                Name = "Россия"
             };
 
             Post post = new Post()
             {
                 PostId = Guid.NewGuid(),
-                Name = "postName"
+                Name = "Кадровик"
             };
 
             TaskType taskType = new TaskType()
             {
                 TaskTypeId = Guid.NewGuid(),
-                Name = "taskTypeName"
+                Name = "Звонок"
             };
 
             Company company = new Company()
             {
                 CompanyId = Guid.NewGuid(),
-                Name = "companyName",
+                Name = "Первый Элемент",
                 Country = country
             };
 

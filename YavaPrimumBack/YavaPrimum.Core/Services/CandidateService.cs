@@ -30,14 +30,15 @@ namespace YavaPrimum.Core.Services
         public async Task<List<CandidateRequestResponse>> GetAll()
         {
             return await _dBContext.Candidate
-                .Select(c => new CandidateRequestResponse
-                {
-                    FirstName = c.FirstName,
-                    SecondName = c.SecondName,
-                    SurName = c.SurName,
-                    Post = c.Post.Name,
-                    Country = c.Country.Name
-                })
+                .Select(c => new CandidateRequestResponse(
+                    c.FirstName,
+                    c.SecondName,
+                    c.SurName,
+                    c.Email,
+                    c.Telephone,
+                    c.Post.Name,
+                    c.Country.Name
+                ))
                 .ToListAsync();
         }
 

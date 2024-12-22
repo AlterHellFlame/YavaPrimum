@@ -46,7 +46,15 @@ namespace YavaPrimum.Core.Services
 
         public async Task<List<Tasks>> GetAllByUserId(Guid userId)
         {
-            return await _dBContext.Tasks.Where(t => t.User.UserId == userId).ToListAsync();
+            return await _dBContext.Tasks
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.Candidate.HR)
+                .Include(t => t.Candidate.OP)
+                .Include(t => t.Candidate.Post)
+                .Include(t => t.TaskType)
+                .Where(t => t.User.UserId == userId)
+                .ToListAsync();
         }
     }
 }

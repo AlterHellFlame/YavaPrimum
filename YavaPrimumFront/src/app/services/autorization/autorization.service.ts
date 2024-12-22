@@ -16,10 +16,11 @@ export class AutorizationService {
       EMail: string;
       Password : string;
     }
-  ) : Observable<LoginModel>
+  ) : Observable<string>
   {
     console.log(payload);
-    return this.http.post<LoginModel>(`${this.baseApiUrl}login`, payload);
+    return this.http.post(`${this.baseApiUrl}login`, payload, 
+      { responseType: 'text' as 'json', withCredentials: true }) as Observable<string>
   }
 
   

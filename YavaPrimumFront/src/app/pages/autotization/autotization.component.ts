@@ -35,7 +35,15 @@ constructor(private authService : AutorizationService, private router : Router){
         loginEror.textContent = "Данные введены верно";
         loginEror.style.color = "green";
         console.log('Успешный вход:', response);
-         this.router.navigate(['/head']);
+        if(response == "Водитель")
+        {
+          this.router.navigate(['/account/HR']);
+        }
+        else if (response == "Кадровик")
+        {
+          this.router.navigate(['/account/PO']);
+        }
+
       }, 
       error => 
       {
@@ -43,6 +51,7 @@ constructor(private authService : AutorizationService, private router : Router){
 
         loginEror.textContent = "Неверный логин или пароль";
       });
+
   }
 }
 

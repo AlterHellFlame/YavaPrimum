@@ -1,9 +1,10 @@
-import { Post } from "./User.interfase";
-
-export interface Candidate {
+export interface Candidate 
+{
   firstName: string;
   secondName: string;
   surName: string;
-  post: Post;
+  email: string;
+  telephone: string;
+  post: string;
   country: string;
 }

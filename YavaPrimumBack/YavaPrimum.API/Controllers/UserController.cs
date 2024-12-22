@@ -30,14 +30,21 @@ namespace YavaPrimum.API.Controllers
         public async Task<ActionResult> Login([FromBody] LoginUserRequest request)
         {
             Console.WriteLine("Попытка войти в аккаунт с данными: " + request.EMail + " пароль: " + request.Password);
+            
             string token = await _usersService.Login(request.EMail, request.Password);
+
 
             HttpContext.Response.Cookies.Append(JwtProvider.CookiesName, token, new CookieOptions()
             {
-                Expires = DateTime.Now.AddMinutes(10)
+                HttpOnly = true,
+                Secure = true, // Используйте true, если у вас HTTPS
+                SameSite = SameSiteMode.Lax, // Или Strict в зависимости от ваших требований
+                Expires = DateTime.UtcNow.AddHours(12)
             });
 
-            return Ok();
+            User user = await _usersService.GetByEMail(request.EMail);
+
+            return Ok(user.Post.Name);
         }
 
         [HttpGet]

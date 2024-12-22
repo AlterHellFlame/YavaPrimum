@@ -39,9 +39,10 @@ namespace YavaPrimum.API.Controllers
             _taskTypeService = taskTypeService;
         }
 
-        [HttpPost]
+        [HttpPost("/create-task")]
         public async Task<ActionResult<Guid>> CreateNewIntreview([FromBody] InterviewCreateRequest request)
         {
+            Console.WriteLine(request.InterviewDate.ToString() + " " + request.Candidate.SurName);
             Candidate candidate = new Candidate()
             {
                 CandidateId = Guid.NewGuid(),
@@ -61,8 +62,8 @@ namespace YavaPrimum.API.Controllers
             {
                 TasksId = Guid.NewGuid(),
                 Candidate = candidate,
-                DateTime = request.InterviewDate,
-                TaskType = await _taskTypeService.GetByName("Interview"),
+                DateTime = DateTime.Parse(request.InterviewDate),
+                TaskType = await _taskTypeService.GetByName("Интервью"),
                 User = candidate.HR
             };
 
@@ -73,11 +74,39 @@ namespace YavaPrimum.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Tasks>> GetHRTasks()
+        public async Task<ActionResult<List<TaskResponse>>> GetHRTasks()
         {
-            return Ok(await _tasksService.GetAllByUserId(
-                await _jwtProvider.GetUserIdFromToken(
-                    HttpContext.Request.Cookies[JwtProvider.CookiesName])));
+
+            if(HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok(new List<TaskResponse>());
+            }
+            string tokenus = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+            List<Tasks> tasks = await _tasksService.GetAllByUserId(
+                await _jwtProvider.GetUserIdFromToken(tokenus));
+
+            List<TaskResponse> taskResponses = new List<TaskResponse>();
+
+            foreach (var task in tasks)
+            {
+                taskResponses.Add(new TaskResponse(
+                    task.Status,
+                    task.DateTime,
+                    new CandidateRequestResponse(
+                        task.Candidate.FirstName,
+                        task.Candidate.SecondName,
+                        task.Candidate.SurName,
+                        task.Candidate.Email,
+                        task.Candidate.Telephone,
+                        task.Candidate.Post.Name,
+                        task.Candidate.Country.Name
+                    ),
+                    task.TaskType.Name
+                ));
+            }
+
+            return Ok(taskResponses);
         }
     }
 }

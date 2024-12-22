@@ -8,10 +8,10 @@ import { AutotizationComponent } from './pages/autotization/autotization.compone
 export const routes: Routes = [
     { path: '', component: AutotizationComponent },
     {
-      path: 'head', component: HeaderComponent,
+      path: 'account', component: HeaderComponent,
       children: [
-        { path: '', component: HrMainPageComponent },
-        { path: 'po', component: PoMainPageComponent }
+        { path: 'HR', component: HrMainPageComponent },
+        { path: 'PO', component: PoMainPageComponent }
       ]
     }
   ];

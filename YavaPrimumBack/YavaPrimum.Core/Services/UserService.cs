@@ -77,6 +77,7 @@ namespace YavaPrimum.Core.Services
         {
             User? user = await _dbContext.User
                 .Include(u => u.UserRegisterInfo)
+                .Include(p => p.Post)
                 .FirstOrDefaultAsync(
                 u => u.UserRegisterInfo.Email == email);
 

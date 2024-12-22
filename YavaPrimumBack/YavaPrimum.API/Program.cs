@@ -55,15 +55,6 @@ namespace YavaPrimum.API
 
             builder.Services.AddAuthorization();
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .SetIsOriginAllowed(origin => true)
-                    .AllowCredentials());
-            });
-
             builder.Services.AddControllers();
             var app = builder.Build();
 
@@ -78,12 +69,25 @@ namespace YavaPrimum.API
 
             app.UseStaticFiles();
 
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("CorsPolicy");
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always,
+            });
 
-                app.MapHub<NotifyHub>("/chat");
+            app.UseCors(x => {
+                x.AllowAnyHeader(); x.AllowAnyOrigin();
+                x.WithOrigins("https://localhost:4200").AllowCredentials(); 
+                x.WithOrigins("https://localhost:7247").AllowCredentials();
+                x.AllowAnyMethod();
+            });
+
+            app.MapHub<NotifyHub>("/chat");
 
             app.MapControllers();
 

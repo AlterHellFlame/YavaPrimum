@@ -1,11 +1,11 @@
 <div class="card task-card bg-white mb-4" *ngIf="task">
     <div>
         <span class="d-flex justify-content-between">
-        <p class="fs-4">9:15</p>
-        <p class="text-success">Приём</p>
+          <p class="fs-4">{{task.dateTime.toFormat('HH:mm')}}</p>
+        <p class="text-success">{{task.taskType}}</p>
         </span>
-      <p>Водитель</p>
-      <p class="candidate_FIO">{{task.candidate.secondName}}</p>
+      <p>{{task.candidate.post}}</p>
+      <p class="candidate_FIO">{{task.candidate.secondName}} {{task.candidate.firstName}} {{task.candidate.surName}}</p>
     </div>
   </div>
   

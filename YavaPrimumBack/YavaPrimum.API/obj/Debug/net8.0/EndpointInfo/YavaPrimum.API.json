@@ -66,7 +66,7 @@
         }
       }
     },
-    "/api/HR": {
+    "/create-task": {
       "post": {
         "tags": [
           "HR"
@@ -115,7 +115,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/HR": {
       "get": {
         "tags": [
           "HR"
@@ -126,17 +128,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tasks"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskResponse"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tasks"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskResponse"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tasks"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskResponse"
+                  }
                 }
               }
             }
@@ -389,7 +400,7 @@
           },
           "interviewDate": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -442,6 +453,26 @@
             "nullable": true
           },
           "post": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/CandidateRequestResponse"
+          },
+          "taskType": {
             "type": "string",
             "nullable": true
           }
