@@ -107,5 +107,31 @@ namespace YavaPrimum.Core.Services
                 .Include(co => co.Company.Country)
                 .ToListAsync();
         }
+
+        public async Task<UserResponse> GetByIdToFront(Guid id)
+        {
+            User? user = await _dbContext.User
+                .Include(u => u.UserRegisterInfo)
+                .Include(p => p.Post)
+                .Include(c => c.Company.Country)
+                .Where(u => u.UserId == id)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                throw new ArgumentNullException("No user with that id");
+
+            UserResponse userResponse = new UserResponse()
+            {
+                SecondName = user.SecondName,
+                FirstName = user.FirstName,
+                SurName = user.SurName,
+                Post = user.Post.Name,
+                Company = user.Company.Name,
+                Country = user.Company.Country.Name,
+                Email = user.UserRegisterInfo.Email,
+            };
+
+            return userResponse;
+        }
     }
 }

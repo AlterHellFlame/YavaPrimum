@@ -11,11 +11,16 @@ namespace YavaPrimum.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private IJwtProvider _jwtProvider;
+        private ITasksService _tasksService;
         private readonly IUserService _usersService;
         private readonly YavaPrimumDBContext _dBContext;
 
-        public UserController(IUserService usersService, YavaPrimumDBContext dBContext)
+        public UserController(IJwtProvider jwtProvider, ITasksService tasksService, 
+            IUserService usersService, YavaPrimumDBContext dBContext)
         {
+            _jwtProvider = jwtProvider;
+            _tasksService = tasksService;
             _usersService = usersService;
             _dBContext = dBContext;
         }
@@ -30,7 +35,7 @@ namespace YavaPrimum.API.Controllers
         public async Task<ActionResult> Login([FromBody] LoginUserRequest request)
         {
             Console.WriteLine("Попытка войти в аккаунт с данными: " + request.EMail + " пароль: " + request.Password);
-            
+
             string token = await _usersService.Login(request.EMail, request.Password);
 
 
@@ -68,6 +73,14 @@ namespace YavaPrimum.API.Controllers
 
             await _dBContext.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("/userData")]
+        public async Task<ActionResult<UserResponse>> GetUserData()
+        {
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+            return await _usersService.GetByIdToFront(await _jwtProvider.GetUserIdFromToken(token));
         }
     }
 }

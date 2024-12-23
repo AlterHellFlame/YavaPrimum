@@ -8,15 +8,12 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { TaskCardComponent } from '../../../components/task-card/task-card.component';
 import { Tasks } from '../../../data/interface/Tasks.interface';
 import { TaskService } from '../../../services/task/task.service';
-import { DateTime } from 'luxon';
-import { NotifyHubService } from '../../../services/notify-hub/notify-hub.service';
-import { HeaderComponent } from '../../../components/header/header.component';
 
 @Component({
   selector: 'app-hr-main-page',
   standalone: true,
   imports: [CommonModule, CreateCandidateComponent, HttpClientModule,
-             CalendarComponent, TaskCardComponent, HeaderComponent],
+             CalendarComponent, TaskCardComponent],
   templateUrl: './hr-main-page.component.html',
   styleUrls: ['./hr-main-page.component.scss'],
   providers: [CandidateService, TaskService]

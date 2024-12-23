@@ -1,9 +1,10 @@
 export interface User 
 {
-    id: number;
     firstName: string;
     secondName: string;
     surName: string;
-    //post: Post;
-    //userRegisterInfo: UserRegisterInfo;
+    post: string;
+    company: string;
+    country: string;
+    email : string;
 }

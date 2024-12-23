@@ -12,5 +12,6 @@ namespace YavaPrimum.Core.Interfaces
         Task<Guid> Register(RegisterUserRequest registerUserRequest);
         bool Verify(string password, string passwordHash);
         Task<List<User>> GetAll();
+        Task<UserResponse> GetByIdToFront(Guid id);
     }
 }
