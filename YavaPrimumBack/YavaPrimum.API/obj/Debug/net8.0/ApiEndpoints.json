@@ -36,26 +36,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.HRController",
-    "Method": "GetHRTasks",
-    "RelativePath": "api/HR",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TaskResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetTasks",
     "RelativePath": "api/Tasks",
@@ -120,6 +100,26 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.HRController",
+    "Method": "GetHRTasks",
+    "RelativePath": "get-tasks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TaskResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",

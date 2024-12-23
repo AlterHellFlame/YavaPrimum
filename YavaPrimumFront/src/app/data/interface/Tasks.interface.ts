@@ -9,14 +9,8 @@ export interface Tasks
     taskType: string
 }
 
-export interface Taskses
-{
-    candidate: Candidate,
-    dateTime: string,
-}
-
 export interface TasksRequest
 {
-    candidate: string,
+    candidate: Candidate,
     dateTime: string,
 }

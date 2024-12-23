@@ -117,7 +117,7 @@
         }
       }
     },
-    "/api/HR": {
+    "/get-tasks": {
       "get": {
         "tags": [
           "HR"

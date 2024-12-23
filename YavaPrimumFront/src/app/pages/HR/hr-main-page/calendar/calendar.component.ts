@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime, Info, Interval } from 'luxon';
-import { CalendarDayComponent } from './calendar-day/calendar-day.component';
 import { CommonModule } from '@angular/common';
 import { Tasks } from '../../../../data/interface/Tasks.interface';
 import { TaskService } from '../../../../services/task/task.service';
@@ -17,10 +16,17 @@ export class CalendarComponent implements OnInit {
   weekDays: string[] = Info.weekdays('short');
   daysOfMonth: DateTime[] = [];
 
+  allTasks: Tasks[] = [];
+  activeDay: DateTime = this.today;
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
+    this.taskService.allTasks$.subscribe(allTasks =>
+    {
+      this.allTasks = allTasks;
+    });
     this.computeDaysOfMonth();
+    this.taskService.setActiveDay(this.activeDay);
   }
 
   computeDaysOfMonth(): void {
@@ -36,6 +42,12 @@ export class CalendarComponent implements OnInit {
   }
 
   public setActiveDay(day: DateTime): void {
-    this.taskService.setActiveDay(day);
+    this.activeDay = day;
+    this.taskService.setActiveDay(this.activeDay);
+  }
+
+  public getTasksForDay(day: DateTime) : Tasks[]
+  {
+    return this.allTasks.filter(task => task.dateTime.hasSame(day, 'day'));
   }
 }

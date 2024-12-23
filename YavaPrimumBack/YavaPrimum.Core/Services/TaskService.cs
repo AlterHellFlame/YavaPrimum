@@ -41,7 +41,9 @@ namespace YavaPrimum.Core.Services
 
         public async Task<List<Tasks>> GetAll()
         {
-            return await _dBContext.Tasks.ToListAsync();
+            return await _dBContext.Tasks
+                .Include(t => t.TaskType)
+                .ToListAsync();
         }
 
         public async Task<List<Tasks>> GetAllByUserId(Guid userId)

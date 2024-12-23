@@ -27,6 +27,13 @@
 
     -ms-overflow-style: none;  /* Скрываем скроллбар для Internet Explorer и Edge */
     scrollbar-width: none;     /* Скрываем скроллбар для Firefox */
+
+    .noTask
+    {
+      font-size: 20px;
+      text-align: center;
+      color: gray;
+    }
   }
 
   .calendar {

@@ -14,7 +14,7 @@ export class CandidateService {
   constructor(private http: HttpClient) {}
 
   task!: TasksRequest;
-  public addCandidate(payload: {
+  public addCandidateAndInterview(payload: {
     FirstName: string;
     SecondName: string;
     SurName: string;

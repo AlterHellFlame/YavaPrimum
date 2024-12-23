@@ -19,14 +19,20 @@
   </div>
 
   <div class="grid day-grid">
-    <div *ngFor="let dayOfMonth of daysOfMonth" [ngClass]="{'grid-cell px-1': true}" (click)="setActiveDay(dayOfMonth)">
+    <div *ngFor="let dayOfMonth of daysOfMonth" [ngClass]="{
+    'grid-cell px-1': true, 
+    'grid-cell-active': dayOfMonth == activeDay,
+    'grid-cell-not-month' : firstDayOfActiveMonth.month != dayOfMonth.month}" 
+    (click)="setActiveDay(dayOfMonth)">
       <div class="date">{{ dayOfMonth.day }}</div>
       
-      <div *ngIf="dayOfMonth.day % 2 === 0" class="task px-1">9:15 Абоба</div>
-      <div *ngIf="dayOfMonth.day % 3 === 0" class="task2 px-1">Крахравицкий</div>
+      <div *ngFor="let task of getTasksForDay(dayOfMonth)" class="task-interview px-1">
+        {{task.dateTime.toFormat("HH:mm")}} {{task.candidate.secondName}}</div>
+      <!--<div *ngFor="let task of dayTasks" class="task px-1">Хабиб</div>
+      <div *ngIf="dayOfMonth.day % 3 === 0" class="task-call px-1">Крахравицкий</div>
       <div *ngIf="dayOfMonth.day % 5 === 0" class="task2 px-1">Чебупольский</div>
       
-      <img src="https://cdn-icons-png.flaticon.com/128/2985/2985150.png" class="more">
+      <img src="https://cdn-icons-png.flaticon.com/128/2985/2985150.png" class="more">-->
     </div>
   </div>
 </div>

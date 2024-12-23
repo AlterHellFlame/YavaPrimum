@@ -1,13 +1,22 @@
+$base-color : rgb(83, 83, 83);
+$not-month-color : darkgray;
+$boder-cell: #d3d3d3;
+$active-day-bg: darken(white, 20%);
+$today-bg : darken(white, 20%);
+$hover: darken(white, 10%);
+$task-interview-bg: #f6df6b;
+$task-call-bg: #6bf6ca;
+
 .grid
 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-auto-rows: 1fr;
-    color: gray;
+    color: $base-color;
 
     .grid-cell
     {
-        border-bottom: 1px solid #d3d3d3;
+        border-bottom: 1px solid $boder-cell;
     }
 }
 .weeks-grid
@@ -27,29 +36,36 @@
     .grid-cell
     {
         position: relative;
-
+    }
+    .grid-cell-active
+    {
+        background-color: $active-day-bg;
+        border-radius: 5px;
+    }
+    .grid-cell-not-month
+    {
+        color: $not-month-color;
     }
     :hover
     {
-        background-color: darken(white, 20%);
-        border-radius: 5px;
-        
+        background-color: $hover;
+        border-radius: 5px;     
     }
 
-    .task
+    .task-interview
     {
         width: fit-content;
         margin-top: 2px;
         border-radius: 5px;
-        background-color: aquamarine;
+        background-color: $task-interview-bg;
         font-size: 10px;
     }
-    .task2
+    .task-call
     {
         width: fit-content;
         margin-top: 2px;
         border-radius: 5px;
-        background-color: rgb(255, 208, 127);
+        background-color: $task-call-bg;
         font-size: 10px;
     }
 

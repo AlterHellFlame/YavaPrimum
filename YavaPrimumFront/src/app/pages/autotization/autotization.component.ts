@@ -30,10 +30,10 @@ constructor(private authService : AutorizationService, private router : Router){
 
     let loginEror = document.getElementById('loginEror')!;
 
+      loginEror.textContent = "Подождите..";
+      loginEror.style.color = "black";
       this.authService.logIn(form.value).subscribe(response => 
       {
-        loginEror.textContent = "Данные введены верно";
-        loginEror.style.color = "green";
         console.log('Успешный вход:', response);
         if(response == "HR")
         {
@@ -50,6 +50,7 @@ constructor(private authService : AutorizationService, private router : Router){
         console.error('Ошибка входа:', error);
 
         loginEror.textContent = "Неверный логин или пароль";
+        loginEror.style.color = "red";
       });
 
   }

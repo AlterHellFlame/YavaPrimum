@@ -73,7 +73,7 @@ namespace YavaPrimum.API.Controllers
             return Ok(task.TasksId);
         }
 
-        [HttpGet]
+        [HttpGet("/get-tasks")]
         public async Task<ActionResult<List<TaskResponse>>> GetHRTasks()
         {
 
@@ -82,9 +82,9 @@ namespace YavaPrimum.API.Controllers
                 Console.WriteLine("Куков нет");
                 return Ok(new List<TaskResponse>());
             }
-            string tokenus = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
             List<Tasks> tasks = await _tasksService.GetAllByUserId(
-                await _jwtProvider.GetUserIdFromToken(tokenus));
+                await _jwtProvider.GetUserIdFromToken(token));
 
             List<TaskResponse> taskResponses = new List<TaskResponse>();
 

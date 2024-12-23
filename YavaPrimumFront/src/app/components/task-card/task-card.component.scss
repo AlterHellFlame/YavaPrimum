@@ -3,7 +3,7 @@
     --bs-border-color-translucent: #f3f3f3;
 
     width: 95%;
-    height: 150px;
+    min-height: 150px;
 
     padding: 3px 7px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -11,6 +11,13 @@
     .candidate_FIO {
       font-size: 20px;
     }
+
+    .btn
+    {
+      font-size: 10px;
+      padding: 2px 5px;
+    }
+
   }
   
   .task-card:hover {

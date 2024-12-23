@@ -44,8 +44,8 @@ export class CreateCandidateComponent implements OnInit {
     InterviewDate: new FormControl('', Validators.required)
   });
 
-  onSubmit(): void {
-/*    const formValue = {
+  onSubmit(): void {    
+      const formValue = {
       FirstName: this.form.get('FirstName')!.value!,
       SecondName: this.form.get('SecondName')!.value!,
       SurName: this.form.get('SurName')!.value!,
@@ -57,8 +57,8 @@ export class CreateCandidateComponent implements OnInit {
     }
     console.log('Форма отправлена:', formValue);
 
-    this.candidateService.addCandidate(formValue);
-*/
+    this.candidateService.addCandidateAndInterview(formValue);
     this.notify.sendMessage("Habib");
+    window.location.reload();
   }
 }
