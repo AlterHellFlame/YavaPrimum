@@ -7,8 +7,8 @@ bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error("Ошибки в main.ts " + err));
 
 
-/*
-if ('serviceWorker' in navigator) {
+
+/*if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/ngsw-worker.js')
       .then(registration => {

@@ -44,6 +44,34 @@ export class TaskService {
     });
   }
 
+  public PassedInterview(task : Tasks) : void
+  {
+    this.http.post(`${this.baseApiUrl}TaskChange`, task, { withCredentials: true })
+    .subscribe(
+      response => {
+        console.log('Успешный ответ:', response);
+      },
+      error => {
+        console.error('Ошибка:', error);
+      }
+    );
+  
+  }
+
+  public FaildInterview(task : Tasks) : void
+  {
+    this.http.post(`${this.baseApiUrl}TaskChange`, task, { withCredentials: true })
+    .subscribe(
+      response => {
+        console.log('Успешный ответ:', response);
+      },
+      error => {
+        console.error('Ошибка:', error);
+      }
+    );
+  
+  }
+
   public setActiveDay(day : DateTime) : void
   {
     console.log("Активный день " + day.day);

@@ -9,10 +9,12 @@ namespace YavaPrimum.Core.Services
     public class TaskService : ITasksService
     {
         private readonly YavaPrimumDBContext _dBContext;
+        private readonly ITaskTypeService _taskType;
 
-        public TaskService(YavaPrimumDBContext dBContext)
+        public TaskService(YavaPrimumDBContext dBContext, ITaskTypeService taskType)
         {
             _dBContext = dBContext;
+            _taskType = taskType;
         }
 
         public async Task<Guid> Create(Tasks task)
@@ -23,20 +25,22 @@ namespace YavaPrimum.Core.Services
             return task.TasksId;
         }
 
-        public async Task<Guid> Create(TasksRequest taskRequest)
+        public async Task<Guid> Create(TasksRequest taskRequest, User user)
         {
-            Tasks task = new Tasks()
+            /*Tasks task = new Tasks()
             {
                 TasksId = Guid.NewGuid(),
                 Candidate = taskRequest.Candidate,
                 DateTime = taskRequest.DateTime,
-                User = taskRequest.User,
+                User = user,
                 Status = taskRequest.Status,
+                TaskType = await _taskType.GetByName(taskRequest.TaskType),
             };
             Console.WriteLine("Попытка добавить таску " + taskRequest.Candidate.SecondName);
             await _dBContext.Candidate.AddAsync(taskRequest.Candidate);
-            await _dBContext.SaveChangesAsync();
-            return taskRequest.Candidate.CandidateId;
+            await _dBContext.SaveChangesAsync();*/
+            Console.WriteLine("Тут ничего не работает");
+            return new Guid();
         }
 
         public async Task<List<Tasks>> GetAll()

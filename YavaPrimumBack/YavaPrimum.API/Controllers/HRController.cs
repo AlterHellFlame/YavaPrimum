@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using System.Diagnostics.Metrics;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
@@ -73,6 +75,14 @@ namespace YavaPrimum.API.Controllers
             return Ok(task.TasksId);
         }
 
+        [HttpPost("/change-task")]
+        public async Task<ActionResult<Guid>> ChangeNewIntreview([FromBody] InterviewCreateRequest request)
+        {
+            Console.WriteLine(request.InterviewDate.ToString() + " " + request.Candidate.SurName);
+            
+            return Ok(new Guid());
+        }
+
         [HttpGet("/get-tasks")]
         public async Task<ActionResult<List<TaskResponse>>> GetHRTasks()
         {
@@ -107,6 +117,20 @@ namespace YavaPrimum.API.Controllers
             }
 
             return Ok(taskResponses);
+        }
+
+        [HttpGet("/get-posts-country")]
+        public async Task<ActionResult<List<PostCountryResponce>>> GetPostsCountres()
+        {
+            List<Post> Posts = await _postService.GetAll();
+            List<Country> Countres = await _countryService.GetAll();
+
+            PostCountryResponce postCountry = new PostCountryResponce()
+            {
+                Posts = Posts.Select(post => post.Name).ToList(),
+                Countres = Countres.Select(country => country.Name).ToList(),
+            };
+            return Ok(postCountry);
         }
     }
 }

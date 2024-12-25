@@ -17,3 +17,5 @@ namespace YavaPrimum.Core.DTO
         public string Country {  set; get; }
     }
 }
+
+

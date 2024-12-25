@@ -67,6 +67,32 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.HRController",
+    "Method": "ChangeNewIntreview",
+    "RelativePath": "change-task",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.InterviewCreateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.HRController",
     "Method": "CreateNewIntreview",
     "RelativePath": "create-task",
     "HttpMethod": "POST",
@@ -100,6 +126,26 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.HRController",
+    "Method": "GetPostsCountres",
+    "RelativePath": "get-posts-country",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.PostCountryResponce, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.HRController",
@@ -162,6 +208,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "TaskChange",
+    "RelativePath": "TaskChange",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tasks",
+        "Type": "YavaPrimum.Core.DTO.TasksRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",

@@ -5,9 +5,9 @@
       {{ firstDayOfActiveMonth.year }}
     </div>
     <div class="headline-controls d-flex">
-      <div class="headline-control"> ~ </div>
-      <div class="headline-control" (click)="setActiveDay(today)">Сегодня</div>
-      <div class="headline-control"> ~ </div>
+      <div class="headline-control" (click)="goToPreviousMonth()"><i class="bi bi-caret-left"></i></div>
+      <div class="headline-control" (click)="goToToday()">Сегодня</div>
+      <div class="headline-control" (click)="goToFovardMonth()"><i class="bi bi-caret-right"></i></div>
     </div>
     <div></div>
   </div>
@@ -22,6 +22,7 @@
     <div *ngFor="let dayOfMonth of daysOfMonth" [ngClass]="{
     'grid-cell px-1': true, 
     'grid-cell-active': dayOfMonth == activeDay,
+    'grid-cell-today': dayOfMonth.hasSame(today, 'day'),
     'grid-cell-not-month' : firstDayOfActiveMonth.month != dayOfMonth.month}" 
     (click)="setActiveDay(dayOfMonth)">
       <div class="date">{{ dayOfMonth.day }}</div>

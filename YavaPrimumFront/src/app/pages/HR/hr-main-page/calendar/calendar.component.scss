@@ -1,5 +1,6 @@
 $base-color : rgb(83, 83, 83);
 $not-month-color : darkgray;
+$today-border: 1px dashed red;
 $boder-cell: #d3d3d3;
 $active-day-bg: darken(white, 20%);
 $today-bg : darken(white, 20%);
@@ -7,6 +8,10 @@ $hover: darken(white, 10%);
 $task-interview-bg: #f6df6b;
 $task-call-bg: #6bf6ca;
 
+.headline-control
+{
+    cursor: pointer;
+}
 .grid
 {
     display: grid;
@@ -41,6 +46,12 @@ $task-call-bg: #6bf6ca;
     {
         background-color: $active-day-bg;
         border-radius: 5px;
+    }
+    .grid-cell-today
+    {
+        background-color: $active-day-bg;
+        border-radius: 5px;
+        border: $today-border;
     }
     .grid-cell-not-month
     {

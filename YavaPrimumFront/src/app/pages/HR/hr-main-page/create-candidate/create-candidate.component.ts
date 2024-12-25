@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,29 +9,18 @@ import {
 } from '@angular/forms';
 import { NotifyHubService } from '../../../../services/notify-hub/notify-hub.service';
 import { CandidateService } from '../../../../services/candidate/candidate.service';
-import { DateTime } from 'luxon';
+import { AnotherService } from '../../../../services/another/another.service';
+import { HttpClientModule } from '@angular/common/http';
+import { TaskService } from '../../../../services/task/task.service';
 
 @Component({
   selector: 'app-create-candidate',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './create-candidate.component.html',
   styleUrl: './create-candidate.component.scss',
+  providers: [AnotherService]
 })
-export class CreateCandidateComponent implements OnInit {
-  message: any;
-  constructor(
-    private notify: NotifyHubService,
-    private candidateService: CandidateService
-  ) {}
-
-  ngOnInit(): void {
-    this.notify.startConnection();
-  }
-
-  async sendMessage(): Promise<void> {
-    await this.notify.sendMessage(this.message);
-    this.message = '';
-  }
+export class ChangeCandidateComponent implements OnInit {
 
   form = new FormGroup({
     FirstName: new FormControl('', Validators.required),
@@ -43,6 +32,31 @@ export class CreateCandidateComponent implements OnInit {
     Email: new FormControl('', Validators.required),
     InterviewDate: new FormControl('', Validators.required)
   });
+
+  message: any;
+  posts!: string[];
+  countres!: string[];
+  constructor(
+    private anotherService : AnotherService,
+    private notify: NotifyHubService,
+    private candidateService: CandidateService,
+    private taskSevice: TaskService
+  ) {}
+
+  ngOnInit(): void {
+    this.notify.startConnection();
+    this.anotherService.getPostsAndCountry().subscribe(res => {
+      this.posts = res.posts;
+      this.countres = res.countres;
+    })
+  }
+  
+
+  async sendMessage(): Promise<void> {
+    await this.notify.sendMessage(this.message);
+    this.message = '';
+  }
+
 
   onSubmit(): void {    
       const formValue = {
@@ -59,6 +73,7 @@ export class CreateCandidateComponent implements OnInit {
 
     this.candidateService.addCandidateAndInterview(formValue);
     this.notify.sendMessage("Habib");
-    window.location.reload();
+    //window.location.reload();
+    this.taskSevice.getAllTasks();
   }
 }

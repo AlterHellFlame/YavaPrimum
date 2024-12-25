@@ -40,8 +40,48 @@ export class CandidateService {
       interviewDate: payload.InterviewDate,
     };
 
+    alert("Машним");
+
     return this.http
       .post<TasksRequest>(`${this.baseApiUrl}create-task`, task, {
+        withCredentials: true,
+      })
+      .subscribe((t) => {
+        console.log('Кандидат на приём успешно отправлен');
+      });
+  }
+
+
+  public changeCandidateAndInterview(payload: {
+    FirstName: string;
+    SecondName: string;
+    SurName: string;
+    Post: string;
+    Country: string;
+    Telephone: string;
+    Email: string;
+    InterviewDate: string;
+  }) {
+
+    const candidate: Candidate = {
+      firstName: payload.FirstName,
+      secondName: payload.SecondName,
+      surName: payload.SurName,
+      post: payload.Post,
+      country: payload.Country,
+      telephone: payload.Telephone,
+      email: payload.Email,
+    };
+
+    const task = {
+      candidate: candidate,
+      interviewDate: payload.InterviewDate,
+    };
+
+    alert("Habiba");
+
+    return this.http
+      .post<TasksRequest>(`${this.baseApiUrl}change-task`, task, {
         withCredentials: true,
       })
       .subscribe((t) => {

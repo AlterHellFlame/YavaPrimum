@@ -50,4 +50,22 @@ export class CalendarComponent implements OnInit {
   {
     return this.allTasks.filter(task => task.dateTime.hasSame(day, 'day'));
   }
+
+  public goToPreviousMonth()
+  {
+    this.firstDayOfActiveMonth = this.firstDayOfActiveMonth.minus({month : 1})
+    this.computeDaysOfMonth();
+  }
+
+  public goToFovardMonth()
+  {
+    this.firstDayOfActiveMonth = this.firstDayOfActiveMonth.plus({month : 1})
+    this.computeDaysOfMonth();
+  }
+
+  public goToToday()
+  {
+    this.firstDayOfActiveMonth = this.today.startOf('month');
+    this.computeDaysOfMonth();
+  }
 }

@@ -56,32 +56,31 @@
           </div>
           <div>
             <label for="Post" class="col-form-label">Введите должность</label>
-            <input
-              placeholder="Водитель"
-              type="text"
-              class="form-control"
-              id="Post"
-              name="Post"
-              formControlName="Post"
-            />
+            <select
+            class="form-control"
+            id="Post"
+            name="Post"
+            formControlName="Post">
+              <option *ngFor="let post of posts">{{post}}</option>
+            </select>
           </div>
           <div>
             <label for="Country" class="col-form-label"
               >Введите страну проживания</label
             >
-            <input
-              placeholder="Беларусь"
-              type="text"
-              class="form-control"
-              id="Country"
-              name="Country"
-              formControlName="Country"
-            />
+            <select
+            class="form-control"
+            id="Country"
+            name="Country"
+            formControlName="Country">
+              <option *ngFor="let country of countres">{{country}}</option>
+            </select>
           </div>
           <div>
             <label for="Telephone">Телефон</label>
             <input
               placeholder="+375445559525"
+              mask="+375 (00) 000-00-00"
               type="text"
               class="form-control"
               id="telephone"

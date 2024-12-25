@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
+using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
 
 namespace YavaPrimum.API.Controllers
@@ -58,6 +59,13 @@ namespace YavaPrimum.API.Controllers
             _dBContext.Country.Add(country);
             _dBContext.Company.Add(company);
             _dBContext.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost("/TaskChange")]
+        public async Task<ActionResult> TaskChange(TasksRequest tasks)
+        {
+            Console.WriteLine(tasks.Candidate.SurName);
             return Ok();
         }
 

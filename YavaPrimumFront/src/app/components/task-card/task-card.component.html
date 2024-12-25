@@ -18,10 +18,13 @@
   </span>
     <span class="d-flex justify-content-end gap-1 mt-2">
       <button type="button" class="bi bi-clipboard2 btn btn-success"  data-bs-toggle="modal" 
-      data-bs-target="#Interview">Собеседовать</button>
-      <button type="button" class="bi bi-pen btn btn-secondary">Изменить</button>
-      <button type="button" class="bi bi-trash btn btn-danger">Удалить</button>
+      data-bs-target="#Interview" (click)="onButtonClick()">Собеседовать</button>
+
+      <button type="button" class="bi bi-pen btn btn-secondary"data-bs-toggle="modal" 
+      data-bs-target="#ChangeCandidate" (click)="onButtonClick()">Изменить</button>
+
+      <button type="button" class="bi bi-trash btn btn-danger" data-bs-toggle="modal" 
+      data-bs-target="#Delete" (click)="onButtonClick()">Удалить</button>
   </span>
 </div>
 
-<app-task-info></app-task-info>
