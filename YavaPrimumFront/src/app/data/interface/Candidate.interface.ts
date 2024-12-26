@@ -7,4 +7,5 @@ export interface Candidate
   telephone: string;
   post: string;
   country: string;
+  interviewStatus: number;
 }

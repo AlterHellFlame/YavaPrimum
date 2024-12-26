@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YavaPrimum.Core.DataBase;
 
@@ -11,9 +12,11 @@ using YavaPrimum.Core.DataBase;
 namespace YavaPrimum.Core.Migrations
 {
     [DbContext(typeof(YavaPrimumDBContext))]
-    partial class YavaPrimumDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241226202539_booToInt")]
+    partial class booToInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

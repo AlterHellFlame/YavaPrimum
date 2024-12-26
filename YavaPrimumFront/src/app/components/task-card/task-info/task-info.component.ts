@@ -23,7 +23,7 @@ export class TaskInfoComponent {
 
   public FaildInterview()
   {
-    this.taskService.FaildInterview(this.task);
+    this.taskService.FaildInterview(this.task.taskResponseId);
   }
 
   public OpenNextInterview()

@@ -33,15 +33,13 @@ export class CandidateService {
       country: payload.Country,
       telephone: payload.Telephone,
       email: payload.Email,
+      interviewStatus: 0
     };
 
     const task = {
       candidate: candidate,
       interviewDate: payload.InterviewDate,
     };
-
-    alert("Машним");
-
     return this.http
       .post<TasksRequest>(`${this.baseApiUrl}create-task`, task, {
         withCredentials: true,
@@ -61,7 +59,7 @@ export class CandidateService {
     Telephone: string;
     Email: string;
     InterviewDate: string;
-  }) {
+  }, taskId: string) {
 
     const candidate: Candidate = {
       firstName: payload.FirstName,
@@ -71,6 +69,7 @@ export class CandidateService {
       country: payload.Country,
       telephone: payload.Telephone,
       email: payload.Email,
+      interviewStatus: 0
     };
 
     const task = {
@@ -78,14 +77,12 @@ export class CandidateService {
       interviewDate: payload.InterviewDate,
     };
 
-    alert("Habiba");
-
     return this.http
-      .post<TasksRequest>(`${this.baseApiUrl}change-task`, task, {
+      .put<TasksRequest>(`${this.baseApiUrl}api/Tasks/UpdateTask${taskId}`, task, {
         withCredentials: true,
       })
       .subscribe((t) => {
-        console.log('Кандидат на приём успешно отправлен');
+        console.log('Кандидат на изменен успешно');
       });
   }
 }

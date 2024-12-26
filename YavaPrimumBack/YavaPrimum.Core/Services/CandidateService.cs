@@ -31,13 +31,15 @@ namespace YavaPrimum.Core.Services
         {
             return await _dBContext.Candidate
                 .Select(c => new CandidateRequestResponse(
+                    c.CandidateId,
                     c.FirstName,
                     c.SecondName,
                     c.SurName,
                     c.Email,
                     c.Telephone,
                     c.Post.Name,
-                    c.Country.Name
+                    c.Country.Name,
+                    c.InterviewStatus
                 ))
                 .ToListAsync();
         }

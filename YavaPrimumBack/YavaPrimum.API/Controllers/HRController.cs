@@ -101,18 +101,21 @@ namespace YavaPrimum.API.Controllers
             foreach (var task in tasks)
             {
                 taskResponses.Add(new TaskResponse(
+                    task.TasksId,
                     task.Status,
                     task.DateTime,
+                    task.TaskType.Name,
                     new CandidateRequestResponse(
+                        task.Candidate.CandidateId,
                         task.Candidate.FirstName,
                         task.Candidate.SecondName,
                         task.Candidate.SurName,
                         task.Candidate.Email,
                         task.Candidate.Telephone,
                         task.Candidate.Post.Name,
-                        task.Candidate.Country.Name
-                    ),
-                    task.TaskType.Name
+                        task.Candidate.Country.Name,
+                        task.Candidate.InterviewStatus
+                    )
                 ));
             }
 

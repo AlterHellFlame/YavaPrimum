@@ -3,6 +3,7 @@ import { Candidate } from "./Candidate.interface";
 
 export interface Tasks
 {
+    taskResponseId: string,
     candidate: Candidate,
     status: boolean
     dateTime: DateTime,

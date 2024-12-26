@@ -73,7 +73,8 @@ export class ChangeCandidateComponent implements OnInit {
 
     this.candidateService.addCandidateAndInterview(formValue);
     this.notify.sendMessage("Habib");
-    //window.location.reload();
+    window.location.reload();
     this.taskSevice.getAllTasks();
+    
   }
 }

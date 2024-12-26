@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Tasks } from '../../../data/interface/Tasks.interface';
+import { TaskService } from '../../../services/task/task.service';
 
 @Component({
   selector: 'app-task-delete',
@@ -10,8 +11,10 @@ import { Tasks } from '../../../data/interface/Tasks.interface';
 export class TaskDeleteComponent {
   @Input() task!: Tasks;
 
+  constructor(private taskService: TaskService){}
   public Delete()
   {
-    alert("Удалён")
+    this.taskService.DeleteTask(this.task.taskResponseId);
+    window.location.reload();
   }
 }

@@ -1,6 +1,4 @@
-﻿using YavaPrimum.Core.DataBase.Models;
-
-namespace YavaPrimum.Core.DTO
+﻿namespace YavaPrimum.Core.DTO
 {
     public class TasksRequest
     {

@@ -10,14 +10,17 @@ namespace YavaPrimum.API.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly ITasksService _tasksService;
         private readonly YavaPrimumDBContext _dBContext;
+        private readonly ITasksService _tasksService;
+        private readonly ICandidateService _candidateService;
 
         public TasksController(ITasksService tasksService,
-            YavaPrimumDBContext dBContext)
+            YavaPrimumDBContext dBContext,
+            ICandidateService candidateService)
         {
             _tasksService = tasksService;
             _dBContext = dBContext;
+            _candidateService = candidateService;
         }
 
         [HttpGet]
@@ -26,7 +29,7 @@ namespace YavaPrimum.API.Controllers
             return Ok(await _tasksService.GetAll());
         }
 
-        [HttpGet("/FillTables")]//Заполняет таблички, где только название и id
+        [HttpGet("FillTables")]//Заполняет таблички, где только название и id
         public async Task<ActionResult> FillTables()
         {
             Country country = new Country()
@@ -62,13 +65,46 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-        [HttpPost("/TaskChange")]
+        [HttpPost("TaskChange")]
         public async Task<ActionResult> TaskChange(TasksRequest tasks)
         {
             Console.WriteLine(tasks.Candidate.SurName);
             return Ok();
         }
 
+        [HttpDelete("DeleteTask{taskId:guid}")]
+        public async Task<ActionResult> DeleteTask(Guid taskId)
+        {
+            Console.WriteLine("Удаляю");
+            await _tasksService.Delete(taskId);
+            return Ok();
+        }
 
+        [HttpPost("CommitTask{taskId:guid}")]
+        public async Task<ActionResult> CommitTask(Guid taskId)
+        {
+            await _tasksService.CommitTask(taskId);
+            return Ok();
+        }
+
+        [HttpPut("UpdateTask{taskId:guid}")]
+        public async Task<ActionResult> UpdateTask(Guid taskId, [FromBody] InterviewCreateRequest newTask)
+        {
+            Console.WriteLine("Изменяю");
+            await _tasksService.Update(taskId, newTask);
+            return Ok();
+        }
+
+        [HttpPut("RejectInterview{taskId:guid}")]
+        public async Task<ActionResult> RejectInterview(Guid taskId)
+        {
+            Tasks task = await _tasksService.GetById(taskId);
+
+            task.Status = true;
+            task.Candidate.InterviewStatus = 0;
+
+            await _dBContext.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

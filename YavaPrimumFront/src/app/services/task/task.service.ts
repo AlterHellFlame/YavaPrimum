@@ -37,7 +37,7 @@ export class TaskService {
         ...task,
         dateTime: DateTime.fromISO(task.dateTime as unknown as string)
       }));
-      console.log("Все таски юзера" + this.allTasks);
+      console.log("Все таски юзера " + this.allTasks[0].taskResponseId);
       this.allTasksSubject.next(this.allTasks);
 
       this.setActiveDay(this.activeDay);
@@ -58,9 +58,9 @@ export class TaskService {
   
   }
 
-  public FaildInterview(task : Tasks) : void
+  public FaildInterview(taskId :string) : void
   {
-    this.http.post(`${this.baseApiUrl}TaskChange`, task, { withCredentials: true })
+    this.http.post(`${this.baseApiUrl}api/Tasks/UpdateTask`, taskId, { withCredentials: true })
     .subscribe(
       response => {
         console.log('Успешный ответ:', response);
@@ -69,6 +69,22 @@ export class TaskService {
         console.error('Ошибка:', error);
       }
     );
+  
+  }
+
+  public DeleteTask(taskId :string) : void
+  {
+    this.http.delete(`${this.baseApiUrl}api/Tasks/DeleteTask${taskId}`, { withCredentials: true })
+    .subscribe(
+      response => {
+        console.log('Успешный ответ:', response);
+      },
+      error => {
+        console.error('Ошибка:', error);
+      }
+    );
+  
+  
   
   }
 

@@ -282,7 +282,7 @@
         }
       }
     },
-    "/FillTables": {
+    "/api/Tasks/FillTables": {
       "get": {
         "tags": [
           "Tasks"
@@ -294,7 +294,7 @@
         }
       }
     },
-    "/TaskChange": {
+    "/api/Tasks/TaskChange": {
       "post": {
         "tags": [
           "Tasks"
@@ -318,6 +318,117 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/DeleteTask{taskId}": {
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/CommitTask{taskId}": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/UpdateTask{taskId}": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewCreateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewCreateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/RejectInterview{taskId}": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -478,6 +589,10 @@
             "type": "string",
             "nullable": true
           },
+          "interviewStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
           "post": {
             "$ref": "#/components/schemas/Post"
           },
@@ -496,6 +611,10 @@
       "CandidateRequestResponse": {
         "type": "object",
         "properties": {
+          "candidateId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "firstName": {
             "type": "string",
             "nullable": true
@@ -523,6 +642,10 @@
           "country": {
             "type": "string",
             "nullable": true
+          },
+          "interviewStatus": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -652,6 +775,10 @@
       "TaskResponse": {
         "type": "object",
         "properties": {
+          "taskResponseId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "status": {
             "type": "boolean"
           },
@@ -659,12 +786,12 @@
             "type": "string",
             "format": "date-time"
           },
-          "candidate": {
-            "$ref": "#/components/schemas/CandidateRequestResponse"
-          },
           "taskType": {
             "type": "string",
             "nullable": true
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/CandidateRequestResponse"
           }
         },
         "additionalProperties": false

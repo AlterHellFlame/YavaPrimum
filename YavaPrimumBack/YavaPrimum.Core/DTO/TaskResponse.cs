@@ -1,9 +1,11 @@
 ﻿namespace YavaPrimum.Core.DTO
 {
     public record TaskResponse(
+        Guid TaskResponseId,
         bool Status,
         DateTime DateTime,
-        CandidateRequestResponse Candidate,
-        string TaskType
+        string TaskType,
+
+        CandidateRequestResponse Candidate
     );
 }

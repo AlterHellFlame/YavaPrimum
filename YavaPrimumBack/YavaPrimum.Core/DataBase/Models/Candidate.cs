@@ -8,6 +8,7 @@
         public string SurName { get; set; } //Отчество
         public string Telephone { get; set; }
         public string Email { get; set; }
+        public int InterviewStatus { get; set; }
 
         public Post Post { get; set; }
         public Country Country { get; set; }

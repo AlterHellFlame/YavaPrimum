@@ -74,7 +74,7 @@ export class CreateCandidateComponent implements OnInit {
     }
     console.log('Форма отправлена:', formValue);
 
-    this.candidateService.changeCandidateAndInterview(formValue);
+    this.candidateService.changeCandidateAndInterview(formValue, this.task.taskResponseId);
     //this.notify.sendMessage("Habib");
     window.location.reload();
   }

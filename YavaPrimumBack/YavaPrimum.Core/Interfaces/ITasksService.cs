@@ -1,4 +1,5 @@
 ﻿using YavaPrimum.Core.DataBase.Models;
+using YavaPrimum.Core.DTO;
 
 namespace YavaPrimum.Core.Interfaces
 {
@@ -7,5 +8,9 @@ namespace YavaPrimum.Core.Interfaces
         Task<Guid> Create(Tasks task);
         Task<List<Tasks>> GetAll();
         Task<List<Tasks>> GetAllByUserId(Guid userId);
+        Task Delete(Guid taskId);
+        Task CommitTask(Guid taskId);
+        Task Update(Guid taskId, InterviewCreateRequest newTask);
+        Task<Tasks> GetById(Guid taskId);
     }
 }
