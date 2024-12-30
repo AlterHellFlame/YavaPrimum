@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { Tasks } from '../../../data/interface/Tasks.interface';
 import { TaskCardComponent } from '../task-card.component';
 import { TaskService } from '../../../services/task/task.service';
@@ -10,12 +10,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './task-info.component.html',
   styleUrl: './task-info.component.scss'
 })
-export class TaskInfoComponent {
-  @Input() task!: Tasks;
+export class TaskInfoComponent implements OnInit {
+  task!: Tasks;
   showElement: boolean = false; 
 
   constructor(private taskService: TaskService){}
   
+  ngOnInit(): void {
+    this.taskService.taskClick$.subscribe(task =>
+      {
+        if(task != null)
+        {
+            console.log("candidate " + task!.candidate);
+            this.task = task!;
+        }
+        else
+        {
+          console.error("Задачи нет");
+        }
+      })
+  }
+
   public PassedInterview()
   {
     this.taskService.PassedInterview(this.task);
@@ -40,3 +55,7 @@ export class TaskInfoComponent {
     this.CloseNextInterview();
   }
 }
+function createDefaultTasks(): Tasks {
+  throw new Error('Function not implemented.');
+}
+

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tasks } from '../../data/interface/Tasks.interface';
 import { CommonModule } from '@angular/common';
 import { TaskInfoComponent } from './task-info/task-info.component';
+import { TaskDeleteComponent } from './task-delete/task-delete.component';
+import { TaskService } from '../../services/task/task.service';
 
 @Component({
   selector: 'app-task-card',
@@ -11,10 +13,10 @@ import { TaskInfoComponent } from './task-info/task-info.component';
 })
 export class TaskCardComponent {
   @Input() task!: Tasks;
-  @Output() taskClicked = new EventEmitter<Tasks>();
 
+  constructor(private taskSevice: TaskService){}
   onButtonClick() 
   { 
-    this.taskClicked.emit(this.task);
+    this.taskSevice.setClickedTask(this.task);
   }
 }

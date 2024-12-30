@@ -4,6 +4,7 @@ import { DateTime, Info, Interval } from 'luxon';
 import { Tasks } from '../../data/interface/Tasks.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginModel } from '../../data/interface/loginModel.interfase';
+import { Subject } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,16 @@ export class TaskService {
   public dayTasks$: Observable<Tasks[]> = this.dayTasksSubject.asObservable();
   private dayTasks : Tasks[] = [];
 
+  //Активный таск
+  private taskClickSubject: BehaviorSubject<Tasks | null> = new BehaviorSubject<Tasks| null>(null); 
+  taskClick$ = this.taskClickSubject.asObservable(); 
+  
+  setClickedTask(task: Tasks) 
+  { 
+    console.log("1.Задать " + task + " " + task.candidate.secondName)
+    this.taskClickSubject.next(task); 
+  }
+
   public getAllTasks() : void
   {
     this.http.get<Tasks[]>(`${this.baseApiUrl}get-tasks`, { withCredentials: true }).subscribe(data=>
@@ -37,10 +48,9 @@ export class TaskService {
         ...task,
         dateTime: DateTime.fromISO(task.dateTime as unknown as string)
       }));
-      console.log("Все таски юзера " + this.allTasks[0].taskResponseId);
+      console.log("Все таски юзера " + this.allTasks);
       this.allTasksSubject.next(this.allTasks);
 
-      this.setActiveDay(this.activeDay);
     });
   }
 

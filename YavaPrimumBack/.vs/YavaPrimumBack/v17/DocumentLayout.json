@@ -90,8 +90,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\Services\\CandidateService.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAtwCgAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T22:22:37.581Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T22:22:37.581Z"
             },
             {
               "$type": "Document",
@@ -101,7 +100,7 @@
               "RelativeDocumentMoniker": "YavaPrimum.Core\\Services\\TaskService.cs",
               "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\TaskService.cs",
               "RelativeToolTip": "YavaPrimum.Core\\Services\\TaskService.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAswBsAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-26T22:15:13.581Z",
               "EditorCaption": ""
@@ -116,8 +115,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DTO\\InterviewCreateRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T22:14:48.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T22:14:48.204Z"
             },
             {
               "$type": "Document",
@@ -129,8 +127,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DTO\\TasksRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T22:14:22.069Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T22:14:22.069Z"
             },
             {
               "$type": "Document",
@@ -142,8 +139,7 @@
               "RelativeToolTip": "YavaPrimum.API\\Controllers\\TasksController.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAcwFYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T21:54:15.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T21:54:15.494Z"
             },
             {
               "$type": "Document",
@@ -155,8 +151,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DTO\\CandidateRequestResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T21:44:52.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T21:44:52.132Z"
             },
             {
               "$type": "Document",
@@ -168,8 +163,7 @@
               "RelativeToolTip": "YavaPrimum.API\\Controllers\\HRController.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAtwHMAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T20:15:45.09Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T20:15:45.09Z"
             },
             {
               "$type": "Document",
@@ -181,8 +175,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\Interfaces\\ITasksService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAcwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T22:18:14.388Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T22:18:14.388Z"
             },
             {
               "$type": "Document",
@@ -194,8 +187,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DataBase\\Models\\Candidate.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T21:42:34.997Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T21:42:34.997Z"
             },
             {
               "$type": "Document",
@@ -207,8 +199,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DTO\\TaskResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T21:41:27.385Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T21:41:27.385Z"
             },
             {
               "$type": "Document",
@@ -220,8 +211,7 @@
               "RelativeToolTip": "YavaPrimum.Core\\DataBase\\Models\\Tasks.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-26T21:41:38.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-26T21:41:38.984Z"
             }
           ]
         }

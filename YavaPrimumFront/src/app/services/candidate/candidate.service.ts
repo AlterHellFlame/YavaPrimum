@@ -23,9 +23,9 @@ export class CandidateService {
     Telephone: string;
     Email: string;
     InterviewDate: string;
-  }) {
+  }) : Observable<TasksRequest>{
 
-    const candidate: Candidate = {
+     const candidate: Candidate = {
       firstName: payload.FirstName,
       secondName: payload.SecondName,
       surName: payload.SurName,
@@ -44,9 +44,6 @@ export class CandidateService {
       .post<TasksRequest>(`${this.baseApiUrl}create-task`, task, {
         withCredentials: true,
       })
-      .subscribe((t) => {
-        console.log('Кандидат на приём успешно отправлен');
-      });
   }
 
 

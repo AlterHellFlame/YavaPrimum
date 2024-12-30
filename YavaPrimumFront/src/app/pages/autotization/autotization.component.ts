@@ -10,49 +10,36 @@ import { Router } from '@angular/router';
   imports: [FormsModule, CommonModule, HttpClientModule],
   templateUrl: './autotization.component.html',
   styleUrl: './autotization.component.scss',
-  providers: [AutorizationService] 
+  providers: [AutorizationService]
 })
-export class AutotizationComponent{
+export class AutotizationComponent {
+  constructor(private authService: AutorizationService, private router: Router) {}
 
-constructor(private authService : AutorizationService, private router : Router){}
-
-  onSubmitLogIns(form: NgForm) : void
-  {
-    const formValues = form.value;
-    for (const key in formValues) 
-      { 
-        if (formValues[key] == "") 
-        { 
-          console.log(`${key}: ${formValues[key]}`); 
-          return;
-        }
-     }
+  onSubmitLogIns(form: NgForm): void {
+    if (form.invalid) {
+      console.log('Форма содержит ошибки');
+      return;
+    }
 
     let loginEror = document.getElementById('loginEror')!;
 
-      loginEror.textContent = "Подождите..";
-      loginEror.style.color = "black";
-      this.authService.logIn(form.value).subscribe(response => 
-      {
+    loginEror.textContent = "Подождите..";
+    loginEror.style.color = "black";
+    this.authService.logIn(form.value).subscribe(
+      response => {
         console.log('Успешный вход:', response);
-        if(response == "HR")
-        {
+        if (response == "HR") {
           this.router.navigate(['/account/HR']);
-        }
-        else if (response == "Кадровик")
-        {
+        } else if (response == "Кадровик") {
           this.router.navigate(['/account/PO']);
         }
-
-      }, 
-      error => 
-      {
+      },
+      error => {
         console.error('Ошибка входа:', error);
 
         loginEror.textContent = "Неверный логин или пароль";
         loginEror.style.color = "red";
-      });
-
+      }
+    );
   }
 }
-

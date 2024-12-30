@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -11,6 +11,7 @@ import {
 import { AnotherService } from '../../../../services/another/another.service';
 import { Tasks } from '../../../../data/interface/Tasks.interface';
 import { CandidateService } from '../../../../services/candidate/candidate.service';
+import { TaskService } from '../../../../services/task/task.service';
 
 @Component({
   selector: 'app-change-candidate',
@@ -20,7 +21,7 @@ import { CandidateService } from '../../../../services/candidate/candidate.servi
   providers: [AnotherService]
 })
 export class CreateCandidateComponent implements OnInit {
-  @Input() task!: Tasks;
+  task!: Tasks;
 
   form!: FormGroup;
   posts!: string[];
@@ -30,17 +31,35 @@ export class CreateCandidateComponent implements OnInit {
   constructor(
     private anotherService : AnotherService,
     private fb: FormBuilder,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    private taskService: TaskService
   ) 
-  {
+  {}
 
-  }
 
   ngOnInit(): void {
     this.anotherService.getPostsAndCountry().subscribe(res => {
       this.posts = res.posts;
       this.countres = res.countres;
     })
+
+    this.taskService.taskClick$.subscribe(task =>
+    {
+      this.task = task!;
+ 
+      this.form = this.fb.group({
+        secondName: [this.task?.candidate.secondName || '', Validators.required],
+        firstName: [this.task?.candidate.firstName || '', Validators.required],
+        surName: [this.task?.candidate.surName || '', Validators.required],
+        post: [this.task?.candidate.post || '', Validators.required],
+        country: [this.task?.candidate.country || '', Validators.required],
+        telephone: [this.task?.candidate.telephone || '', Validators.required],
+        email: [this.task?.candidate.email || '', [Validators.required, Validators.email]],
+        interviewDate: [this.task?.dateTime ? this.task.dateTime.toISO() : '', Validators.required]
+      });
+      console.log(JSON.stringify(this.form.value, null, 2));
+    })
+    
   }
 
   load()

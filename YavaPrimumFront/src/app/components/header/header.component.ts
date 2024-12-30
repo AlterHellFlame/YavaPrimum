@@ -13,7 +13,15 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [UserService]
 })
 export class HeaderComponent implements OnInit{
-  user!: User;
+  user: User = {
+    secondName: "",
+    firstName: "",
+    surName: "",
+    company: "",
+    country: "",
+    email: "",
+    post: "",
+  };
 
   constructor(public userService: UserService){}
 
@@ -23,5 +31,6 @@ export class HeaderComponent implements OnInit{
         this.user = user
       }
     )
+    
   }
 }

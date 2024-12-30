@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Candidate } from "./Candidate.interface";
+import { Candidate, createDefaultCandidate } from "./Candidate.interface";
 
 export interface Tasks
 {
@@ -10,8 +10,19 @@ export interface Tasks
     taskType: string
 }
 
+export function createDefaultTasks(): Tasks {
+    return {
+      taskResponseId: 'default-id',
+      candidate: createDefaultCandidate(),
+      status: false,
+      dateTime: DateTime.now(),
+      taskType: 'default-task-type'
+    };
+  }
+
 export interface TasksRequest
 {
     candidate: Candidate,
     dateTime: string,
 }
+

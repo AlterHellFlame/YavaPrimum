@@ -12,6 +12,7 @@ import { CandidateService } from '../../../../services/candidate/candidate.servi
 import { AnotherService } from '../../../../services/another/another.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskService } from '../../../../services/task/task.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-create-candidate',
@@ -22,16 +23,7 @@ import { TaskService } from '../../../../services/task/task.service';
 })
 export class ChangeCandidateComponent implements OnInit {
 
-  form = new FormGroup({
-    FirstName: new FormControl('', Validators.required),
-    SecondName: new FormControl('', Validators.required),
-    SurName: new FormControl('', Validators.required),
-    Post: new FormControl('', Validators.required),
-    Country: new FormControl('', Validators.required),
-    Telephone: new FormControl('', Validators.required),
-    Email: new FormControl('', Validators.required),
-    InterviewDate: new FormControl('', Validators.required)
-  });
+  form! : FormGroup;
 
   message: any;
   posts!: string[];
@@ -49,6 +41,18 @@ export class ChangeCandidateComponent implements OnInit {
       this.posts = res.posts;
       this.countres = res.countres;
     })
+
+    this.form = new FormGroup({
+      SecondName: new FormControl('', Validators.required),
+      FirstName: new FormControl('', Validators.required),
+      SurName: new FormControl('', Validators.required),
+      Post: new FormControl('', Validators.required),
+      Country: new FormControl('', Validators.required),
+      Telephone: new FormControl('', Validators.required),
+      Email: new FormControl('', Validators.required),
+      InterviewDate: new FormControl(DateTime.now(), Validators.required)
+    });
+  
   }
   
 
@@ -71,10 +75,14 @@ export class ChangeCandidateComponent implements OnInit {
     }
     console.log('Форма отправлена:', formValue);
 
-    this.candidateService.addCandidateAndInterview(formValue);
-    this.notify.sendMessage("Habib");
-    window.location.reload();
-    this.taskSevice.getAllTasks();
+    this.candidateService.addCandidateAndInterview(formValue).subscribe((t) => 
+    {
+      console.log('Кандидат на приём успешно отправлен');
+      this.notify.sendMessage("Habib");
+      window.location.reload();
+      this.taskSevice.getAllTasks();
+    });
+
     
   }
 }
