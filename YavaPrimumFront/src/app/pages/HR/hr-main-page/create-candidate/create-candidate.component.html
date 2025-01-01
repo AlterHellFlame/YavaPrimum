@@ -18,106 +18,50 @@
             aria-label="Закрыть"
           ></button>
         </div>
-        <div class="modal-body">
-          <div>
-            <label for="SecondName" class="col-form-label"
-              >Введите фамилию</label
-            >
-            <input
-              placeholder="Иванов"
-              type="text"
-              class="form-control"
-              id="secondName"
-              name="secondName"
-              formControlName="SecondName"
-            />
+       <div class="modal-body">
+          <div class="form-group">
+            <label for="secondName" class="mt-1">Введите фамилию</label>
+            <input placeholder="Иванов" type="text" class="form-control" id="secondName" formControlName="secondName" />
           </div>
-          <div>
-            <label for="FirstName" class="col-form-label">Введите имя</label>
-            <input
-              placeholder="Иван"
-              type="text"
-              class="form-control"
-              id="FirstName"
-              name="FirstName"
-              formControlName="FirstName"
-            />
+
+          <div class="form-group">
+            <label for="firstName" class="mt-1">Введите имя</label>
+            <input placeholder="Иван" type="text" class="form-control" id="firstName" formControlName="firstName" />
           </div>
-          <div>
-            <label for="SurName" class="col-form-label">Введите отчество</label>
-            <input
-              placeholder="Иванович"
-              type="text"
-              class="form-control"
-              id="SurName"
-              name="SurName"
-              formControlName="SurName"
-            />
+
+          <div class="form-group">
+            <label for="surName" class="mt-1">Введите отчество</label>
+            <input placeholder="Иванович" type="text" class="form-control" id="surName" formControlName="surName" />
           </div>
-          <div>
-            <label for="Post" class="col-form-label">Введите должность</label>
-            <select
-            class="form-control"
-            id="Post"
-            name="Post"
-            formControlName="Post">
-              <option *ngFor="let post of posts">{{post}}</option>
-            </select>
+
+          <div class="d-flex justify-content-between">
+            <div class="form-group col-md-5">
+              <label for="post" class="mt-1">Введите должность</label>
+              <select class="form-control" id="post" formControlName="post">
+                <option *ngFor="let post of posts" [value]="post">{{ post }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="country" class="mt-1">Введите страну проживания</label>
+              <select class="form-control" id="country" formControlName="country">
+                <option *ngFor="let country of countres" [value]="country">{{ country }}</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <label for="Country" class="col-form-label"
-              >Введите страну проживания</label
-            >
-            <select
-            class="form-control"
-            id="Country"
-            name="Country"
-            formControlName="Country">
-              <option *ngFor="let country of countres">{{country}}</option>
-            </select>
+
+          <div class="form-group">
+            <label for="telephone" class="mt-1">Телефон</label>
+            <input placeholder="+375445559525" type="text" class="form-control" id="telephone" mask="000-00-0" formControlName="telephone" />
           </div>
-          <div>
-            <label for="Telephone">Телефон</label>
-            <input
-              placeholder="+375445559525"
-              mask="+375 (00) 000-00-00"
-              type="text"
-              class="form-control"
-              id="telephone"
-              name="telephone"
-              formControlName="Telephone"
-            />
+
+          <div class="form-group">
+            <label for="email" class="mt-1">Email</label>
+            <input placeholder="email@mail.ru" type="email" class="form-control" id="email" formControlName="email" />
           </div>
-          <div>
-            <label for="Email">Email</label>
-            <input
-              placeholder="email@mail.ru"
-              type="email"
-              class="form-control"
-              id="email"
-              name="Email"
-              formControlName="Email"
-            />
-          </div>
-          <!-- <div>
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="interviewPassed"
-            />
-            <label class="form-check-label" for="interviewPassed"
-              >Прошел собеседование</label
-            >
-          </div> -->
-          <div>
-            <label for="dateTime">Дата и время собеседования</label>
-            <input
-              type="datetime-local"
-              class="form-control"
-              id="dateTime"
-              name="dateTime"
-              formControlName="InterviewDate"
-            />
+
+          <div class="form-group">
+            <label for="dateTime" class="mt-1">Дата и время собеседования</label>
+            <input type="datetime-local" class="form-control" id="dateTime" formControlName="interviewDate" />
           </div>
         </div>
         <div class="modal-footer">

@@ -71,6 +71,10 @@ $task-call-bg: #6bf6ca;
         background-color: $task-interview-bg;
         font-size: 10px;
     }
+    .task-compleate
+    {
+        background-color: darken($task-interview-bg, 30%);
+    }
     .task-call
     {
         width: fit-content;

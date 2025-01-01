@@ -348,7 +348,7 @@
         }
       }
     },
-    "/api/Tasks/CommitTask{taskId}": {
+    "/api/Tasks/PassedInterview{taskId}": {
       "post": {
         "tags": [
           "Tasks"

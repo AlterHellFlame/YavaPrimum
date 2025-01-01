@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -14,10 +15,10 @@ namespace YavaPrimum.Core.Services
         private IPostService _postService;
         private ITaskTypeService _taskTypeService;
 
-        public CandidateService(YavaPrimumDBContext dBContext, 
-            ICompanyService companyService, 
-            ICountryService countryService, 
-            IPostService postService, 
+        public CandidateService(YavaPrimumDBContext dBContext,
+            ICompanyService companyService,
+            ICountryService countryService,
+            IPostService postService,
             ITaskTypeService taskTypeService)
         {
             _dBContext = dBContext;
@@ -74,6 +75,7 @@ namespace YavaPrimum.Core.Services
                 Telephone = candidateRequest.Telephone,
                 Country = await _countryService.GetByName(candidateRequest.Country),
                 Post = await _postService.GetByName(candidateRequest.Post),
+                InterviewStatus = candidateRequest.InterviewStatus
             };
 
             Console.WriteLine("Попытка добавить кандидата " + candidate.SecondName);
@@ -82,5 +84,22 @@ namespace YavaPrimum.Core.Services
 
             return candidate.CandidateId;
         }
+
+        public async Task<Guid> Update(Candidate candidate, CandidateRequestResponse candidateRequest)
+        {
+            candidate.SecondName = candidateRequest.SecondName;
+            candidate.FirstName = candidateRequest.FirstName;
+            candidate.SurName = candidateRequest.SurName;
+            candidate.Email = candidateRequest.Email;
+            candidate.Telephone = candidateRequest.Telephone;
+            candidate.Country = await _countryService.GetByName(candidateRequest.Country);
+            candidate.Post = await _postService.GetByName(candidateRequest.Post);
+            candidate.InterviewStatus = candidateRequest.InterviewStatus;
+
+            await _dBContext.SaveChangesAsync();
+
+            return candidate.CandidateId;
+        }
+
     }
 }

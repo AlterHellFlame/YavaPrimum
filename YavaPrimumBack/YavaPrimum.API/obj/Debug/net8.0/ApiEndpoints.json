@@ -57,22 +57,6 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "CommitTask",
-    "RelativePath": "api/Tasks/CommitTask{taskId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "DeleteTask",
     "RelativePath": "api/Tasks/DeleteTask{taskId}",
     "HttpMethod": "DELETE",
@@ -95,6 +79,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "CommitTask",
+    "RelativePath": "api/Tasks/PassedInterview{taskId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

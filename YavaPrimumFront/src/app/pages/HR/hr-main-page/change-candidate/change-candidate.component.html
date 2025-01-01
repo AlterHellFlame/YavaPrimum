@@ -9,52 +9,53 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="secondName" class="col-form-label">Введите фамилию</label>
+            <label for="secondName" class="mt-1">Введите фамилию</label>
             <input placeholder="Иванов" type="text" class="form-control" id="secondName" formControlName="secondName" />
           </div>
 
           <div class="form-group">
-            <label for="firstName" class="col-form-label">Введите имя</label>
+            <label for="firstName" class="mt-1">Введите имя</label>
             <input placeholder="Иван" type="text" class="form-control" id="firstName" formControlName="firstName" />
           </div>
 
           <div class="form-group">
-            <label for="surName" class="col-form-label">Введите отчество</label>
+            <label for="surName" class="mt-1">Введите отчество</label>
             <input placeholder="Иванович" type="text" class="form-control" id="surName" formControlName="surName" />
           </div>
 
-          <div class="form-group">
-            <label for="post" class="col-form-label">Введите должность</label>
-            <select class="form-control" id="post" formControlName="post">
-              <option *ngFor="let post of posts" [value]="post">{{ post }}</option>
-            </select>
+          <div class="d-flex justify-content-between">
+            <div class="form-group col-md-5">
+              <label for="post" class="mt-1">Введите должность</label>
+              <select class="form-control" id="post" formControlName="post">
+                <option *ngFor="let post of posts" [value]="post">{{ post }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="country" class="mt-1">Введите страну проживания</label>
+              <select class="form-control" id="country" formControlName="country">
+                <option *ngFor="let country of countres" [value]="country">{{ country }}</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="country" class="col-form-label">Введите страну проживания</label>
-            <select class="form-control" id="country" formControlName="country">
-              <option *ngFor="let country of countres" [value]="country">{{ country }}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="telephone">Телефон</label>
+            <label for="telephone" class="mt-1">Телефон</label>
             <input placeholder="+375445559525" type="text" class="form-control" id="telephone" mask="000-00-0" formControlName="telephone" />
           </div>
 
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email" class="mt-1">Email</label>
             <input placeholder="email@mail.ru" type="email" class="form-control" id="email" formControlName="email" />
           </div>
 
           <div class="form-group">
-            <label for="dateTime">Дата и время собеседования</label>
+            <label for="dateTime" class="mt-1">Дата и время собеседования</label>
             <input type="datetime-local" class="form-control" id="dateTime" formControlName="interviewDate" />
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-          <button type="submit" class="btn btn-primary">Добавить кандидата</button>
+          <button type="submit" class="btn btn-primary">Изменить кандидата</button>
         </div>
       </form>
     </div>

@@ -33,12 +33,20 @@ export class TaskInfoComponent implements OnInit {
 
   public PassedInterview()
   {
-    this.taskService.PassedInterview(this.task);
+    this.taskService.PassedInterview(this.task.taskResponseId);
+    window.location.reload;
   }
 
   public FaildInterview()
   {
     this.taskService.FaildInterview(this.task.taskResponseId);
+    window.location.reload;
+  }
+  
+  public NextInterview()
+  {
+    this.CloseNextInterview();
+    window.location.reload;
   }
 
   public OpenNextInterview()
@@ -50,12 +58,6 @@ export class TaskInfoComponent implements OnInit {
     this.showElement = false;
   }
 
-  public NextInterview()
-  {
-    this.CloseNextInterview();
-  }
-}
-function createDefaultTasks(): Tasks {
-  throw new Error('Function not implemented.');
+  
 }
 

@@ -12,6 +12,7 @@ import { CreateCandidateComponent } from './change-candidate/change-candidate.co
 import { ChangeCandidateComponent } from './create-candidate/create-candidate.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TaskDeleteComponent } from '../../../components/task-card/task-delete/task-delete.component';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-hr-main-page',
@@ -34,8 +35,8 @@ export class HrMainPageComponent implements OnInit {
     this.taskService.dayTasks$.subscribe( tasks =>
     {
       this.tasks = tasks;
-      console.log("Полученные таски: " + this.tasks);
-    });
+      console.log("Полученные таски: " + this.tasks.length);
+    })
   }
 
   //Открытие модального окна
@@ -49,10 +50,6 @@ export class HrMainPageComponent implements OnInit {
     console.log(`Применён фильтр: ${filter}`);
   }
 
-  selectedTask!: Tasks; 
-  PassedInterview(task: Tasks) 
-  { 
-    this.selectedTask = task;
-  }
+
 
 }

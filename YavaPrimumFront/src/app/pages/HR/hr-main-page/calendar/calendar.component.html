@@ -27,7 +27,8 @@
     (click)="setActiveDay(dayOfMonth)">
       <div class="date">{{ dayOfMonth.day }}</div>
       
-      <div *ngFor="let task of getTasksForDay(dayOfMonth)" class="task-interview px-1">
+      <div *ngFor="let task of getTasksForDay(dayOfMonth)" class="task-interview px-1"
+      [ngClass]="{'task-compleate': task.status == true}">
         {{task.dateTime.toFormat("HH:mm")}} {{task.candidate.secondName}}</div>
       <!--<div *ngFor="let task of dayTasks" class="task px-1">Хабиб</div>
       <div *ngIf="dayOfMonth.day % 3 === 0" class="task-call px-1">Крахравицкий</div>

@@ -46,39 +46,28 @@ export class CreateCandidateComponent implements OnInit {
     this.taskService.taskClick$.subscribe(task =>
     {
       this.task = task!;
- 
-      this.form = this.fb.group({
-        secondName: [this.task?.candidate.secondName || '', Validators.required],
-        firstName: [this.task?.candidate.firstName || '', Validators.required],
-        surName: [this.task?.candidate.surName || '', Validators.required],
-        post: [this.task?.candidate.post || '', Validators.required],
-        country: [this.task?.candidate.country || '', Validators.required],
-        telephone: [this.task?.candidate.telephone || '', Validators.required],
-        email: [this.task?.candidate.email || '', [Validators.required, Validators.email]],
-        interviewDate: [this.task?.dateTime ? this.task.dateTime.toISO() : '', Validators.required]
-      });
-      console.log(JSON.stringify(this.form.value, null, 2));
+      if(task != null)
+      {
+        this.form = this.fb.group({
+          secondName: [this.task?.candidate.secondName || '', Validators.required],
+          firstName: [this.task?.candidate.firstName || '', Validators.required],
+          surName: [this.task?.candidate.surName || '', Validators.required],
+          post: [this.task?.candidate.post || '', Validators.required],
+          country: [this.task?.candidate.country || '', Validators.required],
+          telephone: [this.task?.candidate.telephone || '', Validators.required],
+          email: [this.task?.candidate.email || '', [Validators.required, Validators.email]],
+          interviewDate: [this.task?.dateTime ? this.task.dateTime.toISO() : '', Validators.required]
+        });
+        console.log(JSON.stringify(this.form.value, null, 2));
+      }
+      else
+      {
+        console.error("Таска нет");
+      }
     })
     
   }
 
-  load()
-  {
-    console.log("Task " + this.task.candidate.secondName);
-
-    this.form = this.fb.group({
-      secondName: [this.task?.candidate.secondName || '', Validators.required],
-      firstName: [this.task?.candidate.firstName || '', Validators.required],
-      surName: [this.task?.candidate.surName || '', Validators.required],
-      post: [this.task?.candidate.post || '', Validators.required],
-      country: [this.task?.candidate.country || '', Validators.required],
-      telephone: [this.task?.candidate.telephone || '', Validators.required],
-      email: [this.task?.candidate.email || '', [Validators.required, Validators.email]],
-      interviewDate: [this.task?.dateTime ? this.task.dateTime.toISO() : '', Validators.required]
-    });
-
-    console.log(this.form);
-  }
 
   onSubmit(): void {    
     const formValue = {
@@ -93,9 +82,12 @@ export class CreateCandidateComponent implements OnInit {
     }
     console.log('Форма отправлена:', formValue);
 
-    this.candidateService.changeCandidateAndInterview(formValue, this.task.taskResponseId);
-    //this.notify.sendMessage("Habib");
-    window.location.reload();
+    this.candidateService.changeCandidateAndInterview(formValue, this.task.taskResponseId)
+    .subscribe((t) => {
+      console.log('Кандидат на изменен успешно');
+      //this.notify.sendMessage("Habib");
+      window.location.reload();
+    });;
   }
 
 }

@@ -56,7 +56,9 @@ export class CandidateService {
     Telephone: string;
     Email: string;
     InterviewDate: string;
-  }, taskId: string) {
+  }, taskId: string
+  ): Observable<TasksRequest>  
+  {
 
     const candidate: Candidate = {
       firstName: payload.FirstName,
@@ -78,8 +80,5 @@ export class CandidateService {
       .put<TasksRequest>(`${this.baseApiUrl}api/Tasks/UpdateTask${taskId}`, task, {
         withCredentials: true,
       })
-      .subscribe((t) => {
-        console.log('Кандидат на изменен успешно');
-      });
   }
 }

@@ -23,7 +23,7 @@ import { DateTime } from 'luxon';
 })
 export class ChangeCandidateComponent implements OnInit {
 
-  form! : FormGroup;
+  form!: FormGroup;
 
   message: any;
   posts!: string[];
@@ -36,53 +36,53 @@ export class ChangeCandidateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.notify.startConnection();
     this.anotherService.getPostsAndCountry().subscribe(res => {
       this.posts = res.posts;
       this.countres = res.countres;
     })
+    this.notify.startConnection();
 
     this.form = new FormGroup({
-      SecondName: new FormControl('', Validators.required),
-      FirstName: new FormControl('', Validators.required),
-      SurName: new FormControl('', Validators.required),
-      Post: new FormControl('', Validators.required),
-      Country: new FormControl('', Validators.required),
-      Telephone: new FormControl('', Validators.required),
-      Email: new FormControl('', Validators.required),
-      InterviewDate: new FormControl(DateTime.now(), Validators.required)
+      secondName: new FormControl('', Validators.required),
+      firstName: new FormControl('', Validators.required),
+      surName: new FormControl('', Validators.required),
+      post: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      telephone: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      interviewDate: new FormControl(DateTime.now().toISO(), Validators.required)
     });
-  
   }
-  
 
   async sendMessage(): Promise<void> {
     await this.notify.sendMessage(this.message);
     this.message = '';
   }
 
-
   onSubmit(): void {    
+    console.log(JSON.stringify(this.form.value, null, 2));
+      
+    if (this.form.valid) 
+      {
       const formValue = {
-      FirstName: this.form.get('FirstName')!.value!,
-      SecondName: this.form.get('SecondName')!.value!,
-      SurName: this.form.get('SurName')!.value!,
-      Post: this.form.get('Post')!.value!,
-      Country: this.form.get('Country')!.value!,
-      Telephone: this.form.get('Telephone')!.value!,
-      Email: this.form.get('Email')!.value!,
-      InterviewDate: this.form.get('InterviewDate')!.value!,
+        SecondName: this.form.get('secondName')!.value,
+        FirstName: this.form.get('firstName')!.value,
+        SurName: this.form.get('surName')!.value,
+        Post: this.form.get('post')!.value,
+        Country: this.form.get('country')!.value,
+        Telephone: this.form.get('telephone')!.value,
+        Email: this.form.get('email')!.value,
+        InterviewDate: this.form.get('interviewDate')!.value,
+      }
+      
+      this.candidateService.addCandidateAndInterview(formValue).subscribe((t) => {
+        console.log('Кандидат на приём успешно отправлен');
+        this.notify.sendMessage("Habib");
+        window.location.reload();
+        this.taskSevice.getAllTasks();
+      });
+    } else {
+      console.log('Форма не валидна');
     }
-    console.log('Форма отправлена:', formValue);
-
-    this.candidateService.addCandidateAndInterview(formValue).subscribe((t) => 
-    {
-      console.log('Кандидат на приём успешно отправлен');
-      this.notify.sendMessage("Habib");
-      window.location.reload();
-      this.taskSevice.getAllTasks();
-    });
-
-    
   }
 }

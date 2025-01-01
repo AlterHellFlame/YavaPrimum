@@ -86,7 +86,7 @@ namespace YavaPrimum.Core.Services
             await _dBContext.SaveChangesAsync();
         }
 
-        public async Task CommitTask(Guid taskId)
+        public async Task PassedInterview(Guid taskId)
         {
             (await _dBContext.Tasks
                 .FindAsync(taskId))
@@ -98,15 +98,35 @@ namespace YavaPrimum.Core.Services
         public async Task Update(Guid taskId, InterviewCreateRequest newTask)
         {
             Tasks task = await GetById(taskId);
-
+            await _candidateService.Update(task.Candidate, newTask.Candidate);
 
             task.DateTime = DateTime.Parse(newTask.InterviewDate);
-
-            //task.Candidate = await _candidateService.GetById(newTask.Candidate.CandidateId);
             task.TaskType = await _taskType.GetByName("Интервью");
 
-            await _dBContext.SaveChangesAsync();
+            // Начинаем транзакцию
+            using (var transaction = _dBContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    _dBContext.Tasks.Update(task);
+                    await _dBContext.SaveChangesAsync();
+
+                    // Подтверждаем транзакцию
+                    transaction.Commit();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        await entry.ReloadAsync();
+                    }
+                    // Откатываем транзакцию в случае ошибки
+                    transaction.Rollback();
+                }
+            }
+
         }
+
 
         public async Task RepeatInterview(Guid taskId)
         {

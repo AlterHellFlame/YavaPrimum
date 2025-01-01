@@ -35,7 +35,7 @@ export class TaskService {
   
   setClickedTask(task: Tasks) 
   { 
-    console.log("1.Задать " + task + " " + task.candidate.secondName)
+    console.log("1.Задать " + task.taskResponseId + " " + task.candidate.secondName)
     this.taskClickSubject.next(task); 
   }
 
@@ -50,13 +50,14 @@ export class TaskService {
       }));
       console.log("Все таски юзера " + this.allTasks);
       this.allTasksSubject.next(this.allTasks);
-
+      this.setClickedTask(this.allTasks[0]);
+      this.setActiveDay(DateTime.now())
     });
   }
 
-  public PassedInterview(task : Tasks) : void
+  public PassedInterview(taskId :string) : void
   {
-    this.http.post(`${this.baseApiUrl}TaskChange`, task, { withCredentials: true })
+    this.http.post(`${this.baseApiUrl}api/Tasks/PassedInterview${taskId}`, { withCredentials: true })
     .subscribe(
       response => {
         console.log('Успешный ответ:', response);
@@ -65,12 +66,11 @@ export class TaskService {
         console.error('Ошибка:', error);
       }
     );
-  
   }
 
   public FaildInterview(taskId :string) : void
   {
-    this.http.post(`${this.baseApiUrl}api/Tasks/UpdateTask`, taskId, { withCredentials: true })
+    this.http.post(`${this.baseApiUrl}api/Tasks/PassedInterview${taskId}`, { withCredentials: true })
     .subscribe(
       response => {
         console.log('Успешный ответ:', response);
@@ -95,7 +95,6 @@ export class TaskService {
     );
   
   
-  
   }
 
   public setActiveDay(day : DateTime) : void
@@ -116,6 +115,7 @@ export class TaskService {
     console.log("Таски на " + this.activeDay.day + " : " + this.dayTasks);
     this.dayTasksSubject.next(this.dayTasks);
   }
+  
 }
 
 

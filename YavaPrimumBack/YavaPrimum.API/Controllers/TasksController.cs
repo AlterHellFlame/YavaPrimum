@@ -80,10 +80,10 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-        [HttpPost("CommitTask{taskId:guid}")]
+        [HttpPost("PassedInterview{taskId:guid}")]
         public async Task<ActionResult> CommitTask(Guid taskId)
         {
-            await _tasksService.CommitTask(taskId);
+            await _tasksService.PassedInterview(taskId);
             return Ok();
         }
 
