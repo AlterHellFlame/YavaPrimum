@@ -1,13 +1,6 @@
-import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AnotherService } from '../../../../services/another/another.service';
 import { Tasks } from '../../../../data/interface/Tasks.interface';
 import { CandidateService } from '../../../../services/candidate/candidate.service';

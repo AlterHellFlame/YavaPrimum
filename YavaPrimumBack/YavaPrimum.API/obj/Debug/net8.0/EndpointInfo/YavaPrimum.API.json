@@ -282,72 +282,6 @@
         }
       }
     },
-    "/api/Tasks/FillTables": {
-      "get": {
-        "tags": [
-          "Tasks"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Tasks/TaskChange": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TasksRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TasksRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TasksRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Tasks/DeleteTask{taskId}": {
-      "delete": {
-        "tags": [
-          "Tasks"
-        ],
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Tasks/PassedInterview{taskId}": {
       "post": {
         "tags": [
@@ -361,6 +295,36 @@
             "schema": {
               "type": "string",
               "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/RepeatInterview{taskId}": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "dateTime",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -413,8 +377,8 @@
         }
       }
     },
-    "/api/Tasks/RejectInterview{taskId}": {
-      "put": {
+    "/api/Tasks/DeleteTask{taskId}": {
+      "delete": {
         "tags": [
           "Tasks"
         ],
@@ -428,6 +392,18 @@
               "format": "uuid"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tasks/FillTables": {
+      "get": {
+        "tags": [
+          "Tasks"
         ],
         "responses": {
           "200": {
@@ -832,26 +808,6 @@
           },
           "candidate": {
             "$ref": "#/components/schemas/Candidate"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TasksRequest": {
-        "type": "object",
-        "properties": {
-          "candidate": {
-            "$ref": "#/components/schemas/CandidateRequestResponse"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "dateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "taskType": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

@@ -50,10 +50,29 @@ export class TaskService {
       }));
       console.log("Все таски юзера " + this.allTasks);
       this.allTasksSubject.next(this.allTasks);
+
       this.setClickedTask(this.allTasks[0]);
       this.setActiveDay(DateTime.now())
     });
   }
+
+  public filterAndSortTasks(tasks: Tasks[]): Tasks[] 
+  {
+    const currentMonth = DateTime.now().month;
+    const currentYear = DateTime.now().year;
+    
+    // Фильтрация задач, относящихся к текущему месяцу
+    const filteredTasks = tasks.filter(task => 
+    {
+      return task.dateTime.month === currentMonth 
+      && task.dateTime.year === currentYear 
+      && task.status === true;
+    });
+    
+    // Сортировка задач по возрастанию даты
+    return filteredTasks.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis());
+  }
+  
 
   public PassedInterview(taskId :string) : void
   {
@@ -82,6 +101,14 @@ export class TaskService {
   
   }
 
+  public RepeatInterview(taskId: string, dateTime: string): Observable<any>
+  {
+    console.log("Повторяем " + taskId)
+    return this.http.post(`${this.baseApiUrl}api/Tasks/RepeatInterview${taskId}`, dateTime, { withCredentials: true })
+
+  
+  }
+
   public DeleteTask(taskId :string) : void
   {
     this.http.delete(`${this.baseApiUrl}api/Tasks/DeleteTask${taskId}`, { withCredentials: true })
@@ -107,12 +134,15 @@ export class TaskService {
 
   public getTasksOfDay(): void
   {
-    this.dayTasks = this.allTasks.filter(task => 
-    {
-      const taskDate = typeof task.dateTime === 'string' ? DateTime.fromISO(task.dateTime) : task.dateTime;
-      return taskDate.hasSame(this.activeDay, 'day');
-    });
-    console.log("Таски на " + this.activeDay.day + " : " + this.dayTasks);
+    this.dayTasks = this.allTasks
+      .filter(task => task.dateTime.hasSame(this.activeDay, 'day'))
+      .sort((a, b) => {
+        if (a.status !== b.status) {
+          return a.status ? 1 : -1;
+        }
+        return a.dateTime.valueOf() - b.dateTime.valueOf();
+      });
+  
     this.dayTasksSubject.next(this.dayTasks);
   }
   

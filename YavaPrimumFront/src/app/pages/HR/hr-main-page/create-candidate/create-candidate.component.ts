@@ -64,6 +64,7 @@ export class ChangeCandidateComponent implements OnInit {
       
     if (this.form.valid) 
       {
+        
       const formValue = {
         SecondName: this.form.get('secondName')!.value,
         FirstName: this.form.get('firstName')!.value,

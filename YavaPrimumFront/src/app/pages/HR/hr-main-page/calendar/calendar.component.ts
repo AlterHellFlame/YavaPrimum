@@ -18,6 +18,7 @@ export class CalendarComponent implements OnInit {
 
   allTasks: Tasks[] = [];
   activeDay: DateTime = this.today;
+  dayTaskLength: number = 0;
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
@@ -46,10 +47,22 @@ export class CalendarComponent implements OnInit {
     this.taskService.setActiveDay(this.activeDay);
   }
 
-  public getTasksForDay(day: DateTime) : Tasks[]
-  {
-    return this.allTasks.filter(task => task.dateTime.hasSame(day, 'day'));
+  public getTasksForDay(day: DateTime): Tasks[] {
+    let dayTask = this.allTasks
+      .filter(task => task.dateTime.hasSame(day, 'day'))
+      .sort((a, b) => {
+        if (a.status !== b.status) {
+          return a.status ? 1 : -1;
+        }
+        return a.dateTime.valueOf() - b.dateTime.valueOf();
+      });
+  
+    this.dayTaskLength = dayTask.length;
+    return dayTask;
   }
+  
+  
+  
 
   public goToPreviousMonth()
   {

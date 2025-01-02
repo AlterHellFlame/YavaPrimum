@@ -4,7 +4,7 @@
       <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#AddCandidate">
         Добавьте кандидата
       </button>
-      <button class="btn btn-primary dropdown-toggle mb-3 w-25 mx-1" type="button" id="dropdownMenuButton" (click)="toggleDropdown()">
+      <!--<button class="btn btn-primary dropdown-toggle mb-3 w-25 mx-1" type="button" id="dropdownMenuButton" (click)="toggleDropdown()">
         Всё
       </button>
       <div class="dropdown-menu" [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton">
@@ -12,7 +12,7 @@
         <a class="dropdown-item" href="#" (click)="applyFilter('Приём')">Приём</a>
         <a class="dropdown-item" href="#" (click)="applyFilter('Звонок')">Звонок</a>
         <a class="dropdown-item" href="#" (click)="applyFilter('Ожидание')">Ожидание</a>
-      </div>
+      </div>-->
     </div>
     <div class="taks-list">   
       <ng-container *ngIf="tasks.length > 0; else noTasks">

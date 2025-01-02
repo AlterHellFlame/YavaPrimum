@@ -29,6 +29,39 @@ namespace YavaPrimum.API.Controllers
             return Ok(await _tasksService.GetAll());
         }
 
+
+        [HttpPost("PassedInterview{taskId:guid}")]
+        public async Task<ActionResult> CommitTask(Guid taskId)
+        {
+            await _tasksService.PassedInterview(taskId);
+            return Ok();
+        }
+
+        [HttpPut("RepeatInterview{taskId:guid}")]
+        public async Task<ActionResult> RepeatInterview(Guid taskId, string dateTime)
+        {
+            await _tasksService.RepeatInterview(taskId, dateTime);
+
+            return Ok();
+        }
+
+        [HttpPut("UpdateTask{taskId:guid}")]
+        public async Task<ActionResult> UpdateTask(Guid taskId, [FromBody] InterviewCreateRequest newTask)
+        {
+            Console.WriteLine("Изменяю");
+            await _tasksService.Update(taskId, newTask);
+            return Ok();
+        }
+
+        [HttpDelete("DeleteTask{taskId:guid}")]
+        public async Task<ActionResult> DeleteTask(Guid taskId)
+        {
+            Console.WriteLine("Удаляю");
+            await _tasksService.Delete(taskId);
+            return Ok();
+        }
+
+
         [HttpGet("FillTables")]//Заполняет таблички, где только название и id
         public async Task<ActionResult> FillTables()
         {
@@ -62,48 +95,6 @@ namespace YavaPrimum.API.Controllers
             _dBContext.Country.Add(country);
             _dBContext.Company.Add(company);
             _dBContext.SaveChanges();
-            return Ok();
-        }
-
-        [HttpPost("TaskChange")]
-        public async Task<ActionResult> TaskChange(TasksRequest tasks)
-        {
-            Console.WriteLine(tasks.Candidate.SurName);
-            return Ok();
-        }
-
-        [HttpDelete("DeleteTask{taskId:guid}")]
-        public async Task<ActionResult> DeleteTask(Guid taskId)
-        {
-            Console.WriteLine("Удаляю");
-            await _tasksService.Delete(taskId);
-            return Ok();
-        }
-
-        [HttpPost("PassedInterview{taskId:guid}")]
-        public async Task<ActionResult> CommitTask(Guid taskId)
-        {
-            await _tasksService.PassedInterview(taskId);
-            return Ok();
-        }
-
-        [HttpPut("UpdateTask{taskId:guid}")]
-        public async Task<ActionResult> UpdateTask(Guid taskId, [FromBody] InterviewCreateRequest newTask)
-        {
-            Console.WriteLine("Изменяю");
-            await _tasksService.Update(taskId, newTask);
-            return Ok();
-        }
-
-        [HttpPut("RejectInterview{taskId:guid}")]
-        public async Task<ActionResult> RejectInterview(Guid taskId)
-        {
-            Tasks task = await _tasksService.GetById(taskId);
-
-            task.Status = true;
-            task.Candidate.InterviewStatus = 0;
-
-            await _dBContext.SaveChangesAsync();
             return Ok();
         }
     }

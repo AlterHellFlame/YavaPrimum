@@ -1,0 +1,35 @@
+<div class="d-flex">
+<div class="container profile mx-5 mt-5">
+    <form>
+        <span class="d-flex align-items-center">
+            <img class="photo" src="https://game-cdn.appsample.com/gim/images/logo.png">
+            <span class="d-flex flex-column">
+            <p class="name">{{formData.secondName}} {{formData.firstName}} {{formData.surName}}</p>
+            <p class="post">{{formData.post}}</p>
+          </span>
+        </span>
+        <span class="d-flex column-gap-3 flex-wrap">
+            <span class="d-inline-flex">
+              <i class="bi bi-telephone"></i>
+              <p>{{formData.email}}</p>
+            </span>
+            <span class="d-inline-flex">
+              <i class="bi bi-envelope"></i>
+              <p>{{formData.email}}</p>
+            </span>
+        </span>
+
+        <label for="country">Страна:</label>
+        <input id="country" class="form-control" [value]="formData.country" readonly>
+
+        <label for="company">Компания:</label>
+        <input id="company" class="form-control" [value]="formData.company" readonly>
+
+    </form>
+</div>
+<div class="container mt-5">
+    <canvas id="tasksChart" width="800" height="500"></canvas>
+  </div>
+  
+</div>
+

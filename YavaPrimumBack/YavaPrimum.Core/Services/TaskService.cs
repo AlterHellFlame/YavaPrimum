@@ -128,7 +128,7 @@ namespace YavaPrimum.Core.Services
         }
 
 
-        public async Task RepeatInterview(Guid taskId)
+        public async Task RepeatInterview(Guid taskId, string dateTime)
         {
             Tasks task = await GetById(taskId);
             task.Status = true;
@@ -138,14 +138,16 @@ namespace YavaPrimum.Core.Services
                 TasksId = Guid.NewGuid(),
                 Candidate = task.Candidate,
                 TaskType = task.TaskType,
-                DateTime = task.DateTime,
-                Status = task.Status,
+                DateTime = DateTime.Parse(dateTime),
+                Status = false,
                 User = task.User
             };
 
             await _dBContext.Tasks.AddAsync(repeatTask);
             await _dBContext.SaveChangesAsync();
         }
+
+       
     }
 }
 

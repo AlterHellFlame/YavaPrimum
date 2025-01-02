@@ -99,8 +99,8 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "RejectInterview",
-    "RelativePath": "api/Tasks/RejectInterview{taskId}",
+    "Method": "RepeatInterview",
+    "RelativePath": "api/Tasks/RepeatInterview{taskId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -109,22 +109,11 @@
         "Name": "taskId",
         "Type": "System.Guid",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "TaskChange",
-    "RelativePath": "api/Tasks/TaskChange",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+      },
       {
-        "Name": "tasks",
-        "Type": "YavaPrimum.Core.DTO.TasksRequest",
-        "IsRequired": true
+        "Name": "dateTime",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
