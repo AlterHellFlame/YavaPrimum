@@ -44,7 +44,9 @@
             <div class="form-group col-md-6">
               <label for="country" class="mt-1">Введите страну проживания</label>
               <select class="form-control" id="country" formControlName="country">
-                <option *ngFor="let country of countres" [value]="country">{{ country }}</option>
+                <option *ngFor="let country of countries" 
+                [value]="country" 
+                [selected]="country == countries[0]">{{ country }}</option>
               </select>
             </div>
           </div>
@@ -61,7 +63,7 @@
 
           <div class="form-group">
             <label for="dateTime" class="mt-1">Дата и время собеседования</label>
-            <input type="datetime-local" class="form-control" id="dateTime" formControlName="interviewDate" />
+            <input type="datetime-local" class="form-control" id="dateTime" formControlName="interviewDate"/>
           </div>
         </div>
         <div class="modal-footer">

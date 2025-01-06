@@ -1,0 +1,5 @@
+wwwroot\profile_photo\default.jpg
+wwwroot\profile_photo\Kinich.jpg
+wwwroot\profile_photo\Кинич2.jpg
+wwwroot\profile_photo\Пз.png
+wwwroot\profile_photo\Пикса.png

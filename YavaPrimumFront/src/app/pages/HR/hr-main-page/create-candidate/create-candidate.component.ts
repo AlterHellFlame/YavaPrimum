@@ -26,8 +26,8 @@ export class ChangeCandidateComponent implements OnInit {
   form!: FormGroup;
 
   message: any;
-  posts!: string[];
-  countres!: string[];
+  posts: string[] = [];
+  countries: string[] = [];
   constructor(
     private anotherService : AnotherService,
     private notify: NotifyHubService,
@@ -35,23 +35,25 @@ export class ChangeCandidateComponent implements OnInit {
     private taskSevice: TaskService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.anotherService.getPostsAndCountry().subscribe(res => {
-      this.posts = res.posts;
-      this.countres = res.countres;
-    })
+    this.posts = res.posts;
+    this.countries = res.countres;
+    
     this.notify.startConnection();
 
     this.form = new FormGroup({
       secondName: new FormControl('', Validators.required),
       firstName: new FormControl('', Validators.required),
       surName: new FormControl('', Validators.required),
-      post: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
+      post: new FormControl(this.posts[0], Validators.required),
+      country: new FormControl(this.countries[0], Validators.required),
       telephone: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      interviewDate: new FormControl(DateTime.now().toISO(), Validators.required)
+      interviewDate: new FormControl(DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm"), Validators.required)
     });
+    })
   }
 
   async sendMessage(): Promise<void> {

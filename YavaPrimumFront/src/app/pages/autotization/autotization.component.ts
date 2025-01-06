@@ -42,4 +42,27 @@ export class AutotizationComponent {
       }
     );
   }
+
+  status = 0
+  newPass()
+  {
+    if(this.status == 0)//Подтвержение что почта есть в бд
+    {
+      console.log("Подтверждаем почту");
+      this.status++;
+      return;
+    }
+    if(this.status == 1)//Ожидание кода с почты
+    {
+      console.log("Введите новый пароль");
+      this.status++;
+      return;
+    }
+    if(this.status == 2)//Установка нового пароля
+    {
+      console.log("Новый пароль установлен");
+      this.status = 0;
+      return;
+    }
+  }
 }

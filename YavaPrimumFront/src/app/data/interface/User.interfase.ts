@@ -7,4 +7,6 @@ export interface User
     company: string;
     country: string;
     email : string;
+    phone : string;
+    imgUrl : string;
 }

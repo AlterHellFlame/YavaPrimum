@@ -2,7 +2,7 @@
 <div class="container profile mx-5 mt-5">
     <form>
         <span class="d-flex align-items-center">
-            <img class="photo" src="https://game-cdn.appsample.com/gim/images/logo.png">
+            <img class="photo" src="https://localhost:7247/{{formData.imgUrl}}" [alt]="formData.secondName">
             <span class="d-flex flex-column">
             <p class="name">{{formData.secondName}} {{formData.firstName}} {{formData.surName}}</p>
             <p class="post">{{formData.post}}</p>
@@ -11,7 +11,7 @@
         <span class="d-flex column-gap-3 flex-wrap">
             <span class="d-inline-flex">
               <i class="bi bi-telephone"></i>
-              <p>{{formData.email}}</p>
+              <p>{{formData.phone}}</p>
             </span>
             <span class="d-inline-flex">
               <i class="bi bi-envelope"></i>

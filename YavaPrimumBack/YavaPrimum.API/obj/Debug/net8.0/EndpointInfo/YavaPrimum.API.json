@@ -305,8 +305,8 @@
         }
       }
     },
-    "/api/Tasks/RepeatInterview{taskId}": {
-      "put": {
+    "/api/Tasks/RepeatInterview/{taskId}": {
+      "post": {
         "tags": [
           "Tasks"
         ],
@@ -319,15 +319,27 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "dateTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepeatInterviewRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepeatInterviewRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepeatInterviewRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -490,6 +502,54 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/getByEmail": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
           }
         }
       }
@@ -748,6 +808,16 @@
         },
         "additionalProperties": false
       },
+      "RepeatInterviewRequest": {
+        "type": "object",
+        "properties": {
+          "dateTime": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TaskResponse": {
         "type": "object",
         "properties": {
@@ -831,6 +901,14 @@
             "type": "string",
             "nullable": true
           },
+          "imgUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
           "company": {
             "$ref": "#/components/schemas/Company"
           },
@@ -877,6 +955,14 @@
             "nullable": true
           },
           "company": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "imgUrl": {
             "type": "string",
             "nullable": true
           },

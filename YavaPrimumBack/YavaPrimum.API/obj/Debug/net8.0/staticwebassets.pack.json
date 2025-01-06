@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
+      "PackagePath": "staticwebassets\\profile_photo\\Kinich.jpg"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.jpg",
+      "PackagePath": "staticwebassets\\profile_photo\\default.jpg"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Кинич2.jpg",
+      "PackagePath": "staticwebassets\\profile_photo\\Кинич2.jpg"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пз.png",
+      "PackagePath": "staticwebassets\\profile_photo\\Пз.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пикса.png",
+      "PackagePath": "staticwebassets\\profile_photo\\Пикса.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.YavaPrimum.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.YavaPrimum.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.YavaPrimum.API.props",
+      "PackagePath": "build\\YavaPrimum.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.YavaPrimum.API.props",
+      "PackagePath": "buildMultiTargeting\\YavaPrimum.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.YavaPrimum.API.props",
+      "PackagePath": "buildTransitive\\YavaPrimum.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

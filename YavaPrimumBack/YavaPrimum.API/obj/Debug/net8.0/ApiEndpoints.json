@@ -100,8 +100,8 @@
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "RepeatInterview",
-    "RelativePath": "api/Tasks/RepeatInterview{taskId}",
-    "HttpMethod": "PUT",
+    "RelativePath": "api/Tasks/RepeatInterview/{taskId}",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -111,9 +111,9 @@
         "IsRequired": true
       },
       {
-        "Name": "dateTime",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.RepeatInterviewRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -232,6 +232,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TaskResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetByEmail",
+    "RelativePath": "getByEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
         "MediaTypes": [
           "text/plain",
           "application/json",

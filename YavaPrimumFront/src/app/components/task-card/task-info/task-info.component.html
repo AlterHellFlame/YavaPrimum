@@ -17,8 +17,8 @@ tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
                     <input
                     type="datetime-local"
                     class="form-control"
-                    id="dateTime"
-                    name="dateTime"
+                    #dateTimeInput
+                    [value]="dateTime"
                     />
                 </div>
             </div>

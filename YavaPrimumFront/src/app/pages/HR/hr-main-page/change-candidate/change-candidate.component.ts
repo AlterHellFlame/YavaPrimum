@@ -34,7 +34,6 @@ export class CreateCandidateComponent implements OnInit {
     this.anotherService.getPostsAndCountry().subscribe(res => {
       this.posts = res.posts;
       this.countres = res.countres;
-    })
 
     this.taskService.taskClick$.subscribe(task =>
     {
@@ -42,14 +41,14 @@ export class CreateCandidateComponent implements OnInit {
       if(task != null)
       {
         this.form = this.fb.group({
-          secondName: [this.task?.candidate.secondName || '', Validators.required],
-          firstName: [this.task?.candidate.firstName || '', Validators.required],
-          surName: [this.task?.candidate.surName || '', Validators.required],
-          post: [this.task?.candidate.post || '', Validators.required],
-          country: [this.task?.candidate.country || '', Validators.required],
-          telephone: [this.task?.candidate.telephone || '', Validators.required],
-          email: [this.task?.candidate.email || '', [Validators.required, Validators.email]],
-          interviewDate: [this.task?.dateTime ? this.task.dateTime.toISO() : '', Validators.required]
+          secondName: [this.task.candidate.secondName, Validators.required],
+          firstName: [this.task.candidate.firstName, Validators.required],
+          surName: [this.task.candidate.surName, Validators.required],
+          post: [this.task.candidate.post, Validators.required],
+          country: [this.task.candidate.country, Validators.required],
+          telephone: [this.task.candidate.telephone, Validators.required],
+          email: [this.task.candidate.email, [Validators.required, Validators.email]],
+          interviewDate: [this.task.dateTime.toFormat("yyyy-MM-dd'T'HH:mm"), Validators.required]
         });
         console.log(JSON.stringify(this.form.value, null, 2));
       }
@@ -58,20 +57,21 @@ export class CreateCandidateComponent implements OnInit {
         console.error("Таска нет");
       }
     })
+  })
     
   }
 
 
   onSubmit(): void {    
     const formValue = {
-    FirstName: this.form.get('firstName')!.value!,
-    SecondName: this.form.get('secondName')!.value!,
-    SurName: this.form.get('surName')!.value!,
-    Post: this.form.get('post')!.value!,
-    Country: this.form.get('country')!.value!,
-    Telephone: this.form.get('telephone')!.value!,
-    Email: this.form.get('email')!.value!,
-    InterviewDate: this.form.get('interviewDate')!.value!,
+    FirstName: this.form.get('firstName')!.value,
+    SecondName: this.form.get('secondName')!.value,
+    SurName: this.form.get('surName')!.value,
+    Post: this.form.get('post')!.value,
+    Country: this.form.get('country')!.value,
+    Telephone: this.form.get('telephone')!.value,
+    Email: this.form.get('email')!.value,
+    InterviewDate: this.form.get('interviewDate')!.value,
     }
     console.log('Форма отправлена:', formValue);
 

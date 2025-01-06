@@ -52,6 +52,14 @@ namespace YavaPrimum.API.Controllers
             return Ok(user.Post.Name);
         }
 
+        [HttpPost("/getByEmail")]
+        public async Task<ActionResult<bool>> GetByEmail([FromBody] string email)
+        {
+            User user = await _usersService.GetByEMail(email);
+            if (user != null) return true;
+            return false;
+        }
+
         [HttpGet]
         public async Task<ActionResult> Crt()
         {

@@ -11,10 +11,10 @@ import { DateTime } from 'luxon';
   templateUrl: './task-info.component.html',
   styleUrl: './task-info.component.scss'
 })
-export class TaskInfoComponent implements OnInit, AfterViewInit {
+export class TaskInfoComponent implements OnInit {
   task!: Tasks;
   showElement: boolean = false; 
-
+  dateTime = DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm");
   constructor(private taskService: TaskService){}
   
   ngOnInit(): void {
@@ -43,34 +43,15 @@ export class TaskInfoComponent implements OnInit, AfterViewInit {
     this.taskService.FaildInterview(this.task.taskResponseId);
     window.location.reload();
   }
-  
-  ngAfterViewInit()
-  { // Убедимся, что dateTimeInput доступен после инициализации представления 
-    if (!this.dateTimeInput) 
-    { 
-      console.error('DateTime input element is still not found!'); 
-    } 
-    else
-    {
-      console.log('Всё ок'); 
-    }
-  }
 
-  @ViewChild('dateTime') dateTimeInput!: ElementRef;
+  @ViewChild('dateTimeInput', { static: false }) dateTimeInput!: ElementRef;
   public NextInterview()
   {
-      this.CloseNextInterview();
+      this.CloseNextInterview(); 
   
-      if (!this.dateTimeInput || !this.dateTimeInput.nativeElement)
-      {
-          console.error('DateTime input element is not found!');
-          return;
-      }
-  
-      const dateTime = this.dateTimeInput.nativeElement.value;
-      const isoDateTime = new Date(dateTime).toISOString();
-  
-      this.taskService.RepeatInterview(this.task.taskResponseId, isoDateTime).subscribe(() => {
+      let dateTime = this.dateTimeInput.nativeElement.value;
+      //const isoDateTime = DateTime(dateTime).toFormat("yyyy-MM-dd'T'HH:mm");
+      this.taskService.RepeatInterview(this.task.taskResponseId, dateTime).subscribe(() => {
           window.location.reload();
       });
   }

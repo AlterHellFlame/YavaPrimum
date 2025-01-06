@@ -36,10 +36,34 @@
           </div>
         </div>
         <p class="loginEror text-center" id="loginEror"></p>
-        <a href="#" class="text-center mt-1">Забыли пароль?</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#ForgotPassword" class="text-center mt-1">Забыли пароль?</a>
         <button type="submit" class="btn btn-primary mt-4" [disabled]="form.invalid">Войти</button>
       </div>
     </form>
   </div>
   <img class="logo" src="img/PrimumLogo.svg">
+</div>
+
+
+<div class="modal fade" id="ForgotPassword" data-bs-backdrop="static"
+tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Забыли пароль?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+              <label for="email">Ввведите вашу почту</label>
+              <input
+              type="email"
+              class="form-control"
+              #email
+              />
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" (click)="newPass()">Да</button>
+            </div>
+        </div>
+    </div>
 </div>

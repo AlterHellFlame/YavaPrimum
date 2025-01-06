@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit{
     country: "",
     email: "",
     post: "",
+    phone: "",
+    imgUrl: "profile_photo/default.jpg",
   };
 
   constructor(public userService: UserService){}

@@ -101,13 +101,18 @@ export class TaskService {
   
   }
 
-  public RepeatInterview(taskId: string, dateTime: string): Observable<any>
-  {
-    console.log("Повторяем " + taskId)
-    return this.http.post(`${this.baseApiUrl}api/Tasks/RepeatInterview${taskId}`, dateTime, { withCredentials: true })
-
-  
+  public RepeatInterview(taskId: string, dateTime: string): Observable<any> {
+    console.log("Повторяем " + taskId + " с датой " + dateTime + " Типа " + typeof(dateTime));
+    return this.http.post(
+      `${this.baseApiUrl}api/Tasks/RepeatInterview/${taskId}`,
+      JSON.stringify({ dateTime }), 
+      {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json' } 
+      }
+    );
   }
+  
 
   public DeleteTask(taskId :string) : void
   {

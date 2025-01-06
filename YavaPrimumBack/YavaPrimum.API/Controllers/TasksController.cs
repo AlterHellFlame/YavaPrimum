@@ -37,11 +37,10 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-        [HttpPut("RepeatInterview{taskId:guid}")]
-        public async Task<ActionResult> RepeatInterview(Guid taskId, string dateTime)
+        [HttpPost("RepeatInterview/{taskId:guid}")] // Добавлен слэш перед taskId
+        public async Task<ActionResult> RepeatInterview(Guid taskId, [FromBody] RepeatInterviewRequest request)
         {
-            await _tasksService.RepeatInterview(taskId, dateTime);
-
+            await _tasksService.RepeatInterview(taskId, request.DateTime);
             return Ok();
         }
 

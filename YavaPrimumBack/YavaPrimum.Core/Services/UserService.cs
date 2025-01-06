@@ -129,6 +129,8 @@ namespace YavaPrimum.Core.Services
                 Company = user.Company.Name,
                 Country = user.Company.Country.Name,
                 Email = user.UserRegisterInfo.Email,
+                Phone = user.Phone,
+                ImgUrl = user.ImgUrl
             };
 
             return userResponse;

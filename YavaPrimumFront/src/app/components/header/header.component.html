@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <h3>YavaPrimum</h3>
+    <h3 routerLink="HR">YavaPrimum</h3>
     <span routerLink="userData" class="d-inline-flex toUserData">
-        <img id="photo" class="photo" src="icons/icon-512x512.png">
+        <img id="photo" class="photo mx-1" src="https://localhost:7247/{{user.imgUrl}}" [alt]="user.secondName">
         <p>{{user.secondName}} {{user.firstName}}</p>
     </span>
 </nav>
