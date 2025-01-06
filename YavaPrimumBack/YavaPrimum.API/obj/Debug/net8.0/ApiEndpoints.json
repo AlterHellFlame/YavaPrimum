@@ -111,8 +111,8 @@
         "IsRequired": true
       },
       {
-        "Name": "request",
-        "Type": "YavaPrimum.Core.DTO.RepeatInterviewRequest",
+        "Name": "dateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
         "IsRequired": true
       }
     ],
@@ -166,6 +166,37 @@
     "ReturnTypes": [
       {
         "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "CheckCode",
+    "RelativePath": "checkCode/{email}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "code",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -243,32 +274,6 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
-    "Method": "GetByEmail",
-    "RelativePath": "getByEmail",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
     "Method": "Login",
     "RelativePath": "login",
     "HttpMethod": "POST",
@@ -282,6 +287,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "NewPass",
+    "RelativePath": "newPass/{email}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "newPass",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DataBase.Models.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
@@ -300,6 +336,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "SendToEmail",
+    "RelativePath": "sendToEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
         "MediaTypes": [
           "text/plain",
           "application/json",

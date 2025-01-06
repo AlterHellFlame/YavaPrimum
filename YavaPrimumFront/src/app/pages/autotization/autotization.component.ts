@@ -43,25 +43,66 @@ export class AutotizationComponent {
     );
   }
 
+  Close(form: NgForm)
+  {
+    this.status = 0;
+    document.getElementById('emailToPass')!.removeAttribute('disabled');
+    document.getElementById('emailToPassError')!.textContent = "";
+    document.getElementById('codeToPassError')!.textContent = "";
+    document.getElementById('btnSuccess')!.removeAttribute('data-bs-dismiss');
+    form.reset();
+  }
+
   status = 0
-  newPass()
+  newPass(form: NgForm)
   {
     if(this.status == 0)//Подтвержение что почта есть в бд
     {
-      console.log("Подтверждаем почту");
-      this.status++;
+      let emailToPassError = document.getElementById('emailToPassError')!;
+      console.log(form.value.emailToPass);
+      this.authService.sendToEmail(form.value.emailToPass).subscribe(
+      res => {
+        if(res)
+        {
+          emailToPassError.textContent = "";
+          document.getElementById('emailToPass')!.setAttribute('disabled', 'true');
+          this.status++;
+        }
+        else
+        {
+          emailToPassError.textContent = "Пользователя с такой почтой не существует";
+        }
+      },
+      );
       return;
     }
     if(this.status == 1)//Ожидание кода с почты
     {
-      console.log("Введите новый пароль");
-      this.status++;
+      let codeToPassError = document.getElementById('codeToPassError')!;
+      this.authService.checkCode(form.value.emailToPass, form.value.codeToPass).subscribe(
+        res => {
+          if(res)
+          {
+            codeToPassError.textContent = "";
+            document.getElementById('codeToPass')!.setAttribute('disabled', 'true');
+            document.getElementById('btnSuccess')!.setAttribute('data-bs-dismiss', 'modal');
+            this.status++;
+          }
+          else
+          {
+            codeToPassError.textContent = "Введенный код неверный";
+          }
+        },
+      );
       return;
     }
     if(this.status == 2)//Установка нового пароля
     {
-      console.log("Новый пароль установлен");
-      this.status = 0;
+      this.authService.newPass(form.value.emailToPass, form.value.passToPass).subscribe(
+        res => {
+          this.Close(form);
+        },
+      );
       return;
     }
   }

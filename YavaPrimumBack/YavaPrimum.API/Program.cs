@@ -31,6 +31,8 @@ namespace YavaPrimum.API
 
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
+            builder.Services.AddSingleton<CodeVerificationService>();
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
                 {

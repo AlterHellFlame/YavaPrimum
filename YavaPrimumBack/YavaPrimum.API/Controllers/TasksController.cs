@@ -12,7 +12,6 @@ namespace YavaPrimum.API.Controllers
     {
         private readonly YavaPrimumDBContext _dBContext;
         private readonly ITasksService _tasksService;
-        private readonly ICandidateService _candidateService;
 
         public TasksController(ITasksService tasksService,
             YavaPrimumDBContext dBContext,
@@ -20,7 +19,6 @@ namespace YavaPrimum.API.Controllers
         {
             _tasksService = tasksService;
             _dBContext = dBContext;
-            _candidateService = candidateService;
         }
 
         [HttpGet]
@@ -38,9 +36,9 @@ namespace YavaPrimum.API.Controllers
         }
 
         [HttpPost("RepeatInterview/{taskId:guid}")] // Добавлен слэш перед taskId
-        public async Task<ActionResult> RepeatInterview(Guid taskId, [FromBody] RepeatInterviewRequest request)
+        public async Task<ActionResult> RepeatInterview(Guid taskId, [FromBody] StringRequest dateTime)
         {
-            await _tasksService.RepeatInterview(taskId, request.DateTime);
+            await _tasksService.RepeatInterview(taskId, dateTime.Value);
             return Ok();
         }
 

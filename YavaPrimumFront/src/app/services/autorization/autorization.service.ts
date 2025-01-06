@@ -24,10 +24,40 @@ export class AutorizationService {
       { responseType: 'text' as 'json', withCredentials: true }) as Observable<string>
   }
 
-  public GetByEmail(email : string) : Observable<boolean>
-  {
-    console.log(email);
-    return this.http.post(`${this.baseApiUrl}getByEmail`, email, {withCredentials: true }) as Observable<boolean>
+  public sendToEmail(email: string): Observable<boolean> {
+    console.log(`Отправить сообщение на ${email}`);
+    
+    const payload = { value: email };
+  
+    return this.http.post<boolean>(`${this.baseApiUrl}sendToEmail`, payload, {
+      responseType: 'json', // Указание типа ответа как json
+      withCredentials: true,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  public checkCode(email: string, code: string): Observable<boolean> {
+    console.log(`Отправить сообщение на ${email}`);
+    
+    const payload = { value: code };
+  
+    return this.http.post<boolean>(`${this.baseApiUrl}checkCode/${email}`, payload, {
+      responseType: 'json', // Указание типа ответа как json
+      withCredentials: true,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  
+  public newPass(email: string, newPass: string): Observable<User> {
+    console.log(`Отправить сообщение на ${email}`);
+    
+    const payload = { value: newPass };
+  
+    return this.http.post<User>(`${this.baseApiUrl}newPass/${email}`, payload, {
+      responseType: 'json', // Указание типа ответа как json
+      withCredentials: true,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
   
 }

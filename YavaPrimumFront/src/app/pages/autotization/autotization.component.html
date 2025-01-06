@@ -45,25 +45,52 @@
 </div>
 
 
-<div class="modal fade" id="ForgotPassword" data-bs-backdrop="static"
-tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Забыли пароль?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-              <label for="email">Ввведите вашу почту</label>
+<div class="modal fade" id="ForgotPassword" data-bs-backdrop="static" tabindex="-1" aria-labelledby="ForgotPassword" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Забыли пароль?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="Close(newPassForm)" aria-label="Закрыть"></button>
+          </div>
+        <form #newPassForm="ngForm" (ngSubmit)="newPass(newPassForm)">
+          <div class="modal-body">
+            <label for="emailToPass">Введите вашу почту</label>
+            <input
+            type="email"
+            class="form-control"
+            id="emailToPass"
+            name="emailToPass"
+            ngModel
+            />
+            <small id="emailToPassError" class="text-danger"></small>
+
+            <ng-container *ngIf="status >= 1">
+              <label for="codeToPass">Введите код</label>
               <input
-              type="email"
+              type="text"
               class="form-control"
-              #email
+              id="codeToPass"
+              name="codeToPass"
+              ngModel
               />
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-success" (click)="newPass()">Да</button>
-            </div>
-        </div>
-    </div>
+            </ng-container>
+            <small id="codeToPassError" class="text-danger"></small>
+
+            <ng-container *ngIf="status >= 2">
+              <label for="passToPass">Введите новый пароль</label>
+              <input
+              type="password"
+              class="form-control"
+              id="passToPass"
+              name="passToPass"
+              ngModel
+              />
+            </ng-container> 
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success" id="btnSuccess">Подтвердить</button>
+          </div>
+        </form>
+      </div>
+  </div>
 </div>

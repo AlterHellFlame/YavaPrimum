@@ -3,6 +3,10 @@ using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace YavaPrimum.Core.Services
 {
@@ -12,16 +16,22 @@ namespace YavaPrimum.Core.Services
         private readonly IJwtProvider _jwtProvider;
         private readonly IPostService _postService;
         private readonly ICompanyService _companyService;
+        private readonly IConfiguration _config;
+        private readonly CodeVerificationService _codeVerificationService;
 
-        public UserService(YavaPrimumDBContext dbContext, 
+        public UserService(YavaPrimumDBContext dbContext,
+            IConfiguration config,
             IJwtProvider jwtProvider,
             IPostService postService,
-            ICompanyService companyService)
+            ICompanyService companyService,
+            CodeVerificationService codeVerificationService)
         {
+            _config = config;
             _dbContext = dbContext;
             _jwtProvider = jwtProvider;
             _postService = postService;
             _companyService = companyService;
+            _codeVerificationService = codeVerificationService;
         }
         public string GeneratePasswordHas(string password)
         {
@@ -90,6 +100,20 @@ namespace YavaPrimum.Core.Services
             return user;
         }
 
+        public async Task<bool> IsUserExistByEMail(string email)
+        {
+            User? user = await _dbContext.User
+                .Include(u => u.UserRegisterInfo)
+                .Include(p => p.Post)
+                .FirstOrDefaultAsync(
+                u => u.UserRegisterInfo.Email == email);
+
+            if (user == null)
+                return false;
+
+            return true;
+        }
+
         public async Task<User> GetById(Guid id)
         {
             return await _dbContext.User
@@ -101,9 +125,9 @@ namespace YavaPrimum.Core.Services
         public async Task<List<User>> GetAll()
         {
             return await _dbContext.User
-                .Include(p=> p.Post)
-                .Include (u => u.UserRegisterInfo)
-                .Include (c => c.Company)
+                .Include(p => p.Post)
+                .Include(u => u.UserRegisterInfo)
+                .Include(c => c.Company)
                 .Include(co => co.Company.Country)
                 .ToListAsync();
         }
@@ -134,6 +158,46 @@ namespace YavaPrimum.Core.Services
             };
 
             return userResponse;
+        }
+
+        public async Task<string> SendMessageToEmail(string email, string myMessage, string subject)
+        {
+            if (!await IsUserExistByEMail(email)) return null;
+
+            MailAddress mailFrom = new MailAddress("yavaprimum@mail.ru", "YavaPrimum");
+            MailAddress mailTo = new MailAddress(email);
+            MailMessage message = new MailMessage(mailFrom, mailTo);
+            message.Body = await _codeVerificationService.GenerateCode(email);
+            message.Subject = subject;
+
+            SmtpClient smtpClient = new SmtpClient()
+            {
+                Host = "smtp.mail.ru",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(mailFrom.Address, "vuy7pBNKJC1LEESaksGN")
+            };
+            try
+            {
+                smtpClient.Send(message);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            Console.WriteLine(message);
+            return email;
+        }
+
+        public async Task<User> SetNewPassByEMail(string email, string newPass)
+        {
+            User user = await GetByEMail(email);
+            user.UserRegisterInfo.PasswordHash = GeneratePasswordHas(newPass);
+            _dbContext.SaveChanges();
+            return user;
+
         }
     }
 }

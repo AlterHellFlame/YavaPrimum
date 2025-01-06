@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace YavaPrimum.Core.DTO
 {
-    public class RepeatInterviewRequest
+    public class StringRequest
     {
-        public string DateTime { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -15,14 +15,16 @@ namespace YavaPrimum.API.Controllers
         private ITasksService _tasksService;
         private readonly IUserService _usersService;
         private readonly YavaPrimumDBContext _dBContext;
+        private readonly CodeVerificationService _codeVerificationService;
 
         public UserController(IJwtProvider jwtProvider, ITasksService tasksService, 
-            IUserService usersService, YavaPrimumDBContext dBContext)
+            IUserService usersService, YavaPrimumDBContext dBContext, CodeVerificationService codeVerificationService)
         {
             _jwtProvider = jwtProvider;
             _tasksService = tasksService;
             _usersService = usersService;
             _dBContext = dBContext;
+            _codeVerificationService = codeVerificationService;
         }
 
         [HttpPost("/register")]
@@ -52,12 +54,32 @@ namespace YavaPrimum.API.Controllers
             return Ok(user.Post.Name);
         }
 
-        [HttpPost("/getByEmail")]
-        public async Task<ActionResult<bool>> GetByEmail([FromBody] string email)
+        [HttpPost("/sendToEmail")]
+        public async Task<ActionResult<bool>> SendToEmail([FromBody] StringRequest email)
         {
-            User user = await _usersService.GetByEMail(email);
-            if (user != null) return true;
+            if (email == null || string.IsNullOrEmpty(email.Value))
+            {
+                return BadRequest("Некорректные данные");
+            }
+
+            string ret = await _usersService.SendMessageToEmail(email.Value, "123456", "Смена пароля");
+            if (ret != null)
+            {
+                return true;
+            }
             return false;
+        }
+
+        [HttpPost("/checkCode/{email}")]
+        public async Task<ActionResult<bool>> CheckCode(string email, [FromBody] StringRequest code)
+        {
+            return await _codeVerificationService.VerifyCode(email, code.Value);
+        }
+
+        [HttpPost("/newPass/{email}")]
+        public async Task<ActionResult<User>> NewPass(string email, [FromBody] StringRequest newPass)
+        {
+            return await _usersService.SetNewPassByEMail(email, newPass.Value);
         }
 
         [HttpGet]
