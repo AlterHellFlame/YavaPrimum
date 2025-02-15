@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { User } from '../../data/interface/User.interfase';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../data/interface/User.interface';
 import { UserService } from '../../services/user/user.service';
-import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule, HttpClientModule],
+  imports: [RouterOutlet, HttpClientModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   providers: [UserService]
@@ -28,7 +27,7 @@ export class HeaderComponent implements OnInit{
   constructor(public userService: UserService){}
 
   ngOnInit(): void {
-    this.userService.getUserDate().subscribe(user =>
+    this.userService.getUserData().subscribe(user =>
       {
         this.user = user
       }

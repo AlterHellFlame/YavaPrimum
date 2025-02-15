@@ -2,8 +2,10 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    
+
     {
-      "name": "ng serve",
+      "name": "ng serve --ssl true --ssl-cert D:\\Диплом\\YavaPrimum\\YavaPrimumFront\\src\\app\\ssl\\server.crt --ssl-key D:\\Диплом\\YavaPrimum\\YavaPrimumFront\\src\\app\\ssl\\server.key",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",

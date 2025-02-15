@@ -1,20 +1,20 @@
 import { Routes } from '@angular/router';
-import { HrMainPageComponent } from './pages/HR/hr-main-page/hr-main-page.component';
-import { PoMainPageComponent } from './pages/PO/po-main-page/po-main-page.component';
-import { AuthGuard } from './services/autorization/auth-guard';
-import { AutotizationComponent } from './pages/autotization/autotization.component';
+import { AuthorizationComponent } from './components/authorization/authorization.component';
 import { HeaderComponent } from './components/header/header.component';
-import { UserDataComponent } from './pages/user-data/user-data.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HrComponent } from './components/HR-page/hr/hr.component';
 
 export const routes: Routes = [
-    { path: '', component: AutotizationComponent },
+    { path: '', redirectTo: 'log-in', pathMatch: 'full' },
+    { path: 'log-in', component: AuthorizationComponent },
     {
       path: 'account', component: HeaderComponent,
       children: [
-        { path: 'HR', component: HrMainPageComponent },
-        { path: 'PO', component: PoMainPageComponent },
-        { path: 'userData', component: UserDataComponent },
+        { path: 'HR', component: HrComponent }
+        /*{ path: 'PO', component: PoMainPageComponent },
+        { path: 'userData', component: UserDataComponent },*/
       ]
-    }
+    },
+    { path: '**', component: NotFoundComponent },
   ];
   

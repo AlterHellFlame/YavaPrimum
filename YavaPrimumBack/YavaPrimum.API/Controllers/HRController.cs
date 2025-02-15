@@ -86,7 +86,7 @@ namespace YavaPrimum.API.Controllers
         [HttpGet("/get-tasks")]
         public async Task<ActionResult<List<TaskResponse>>> GetHRTasks()
         {
-
+           
             if(HttpContext.Request.Cookies.Count == 0)
             {
                 Console.WriteLine("Куков нет");

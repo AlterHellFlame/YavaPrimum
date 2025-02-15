@@ -28,10 +28,26 @@ namespace YavaPrimum.API.Controllers
         }
 
 
-        [HttpPost("PassedInterview{taskId:guid}")]
-        public async Task<ActionResult> CommitTask(Guid taskId)
+        [HttpPost("Interview/{taskId:guid}")]
+        public async Task<ActionResult> CommitTask(Guid taskId, StringRequest status)
         {
-            await _tasksService.PassedInterview(taskId);
+            Console.WriteLine(status.Value);
+            switch (status.Value)
+            {
+                case "passed":
+                {
+                    await _tasksService.PassedInterview(taskId);
+                    break;
+                };
+                case "faild":
+                {
+                    await _tasksService.FaidInterview(taskId);
+                        break;
+                };
+                default:
+                    break;
+            }
+            //await _tasksService.PassedInterview(taskId);
             return Ok();
         }
 
@@ -58,41 +74,5 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-
-        [HttpGet("FillTables")]//Заполняет таблички, где только название и id
-        public async Task<ActionResult> FillTables()
-        {
-            Country country = new Country()
-            {
-                CountryId = Guid.NewGuid(),
-                Name = "Россия"
-            };
-
-            Post post = new Post()
-            {
-                PostId = Guid.NewGuid(),
-                Name = "Кадровик"
-            };
-
-            TaskType taskType = new TaskType()
-            {
-                TaskTypeId = Guid.NewGuid(),
-                Name = "Звонок"
-            };
-
-            Company company = new Company()
-            {
-                CompanyId = Guid.NewGuid(),
-                Name = "Первый Элемент",
-                Country = country
-            };
-
-            _dBContext.Post.Add(post);
-            _dBContext.TaskType.Add(taskType);
-            _dBContext.Country.Add(country);
-            _dBContext.Company.Add(company);
-            _dBContext.SaveChanges();
-            return Ok();
-        }
     }
 }

@@ -5,6 +5,7 @@ using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.Interfaces;
 using YavaPrimum.Core.Services;
 using YavaPrimum.API.Notify;
+using Microsoft.AspNetCore.SignalR;
 
 namespace YavaPrimum.API
 {
@@ -17,6 +18,18 @@ namespace YavaPrimum.API
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSignalR();
+
+            builder.Services.AddSingleton<IUserIdProvider>(provider =>
+            {
+                // Создаем scope, чтобы получить scoped зависимости
+                var scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    var jwtProvider = scope.ServiceProvider.GetRequiredService<IJwtProvider>();
+                    return new UserIdProvider(jwtProvider);
+                }
+            });
+
 
             builder.Services.AddDbContext<YavaPrimumDBContext>();
 
@@ -77,7 +90,7 @@ namespace YavaPrimum.API
 
             app.UseCookiePolicy(new CookiePolicyOptions
             {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
+                MinimumSameSitePolicy = SameSiteMode.Lax,
                 HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
                 Secure = CookieSecurePolicy.Always,
             });
@@ -90,6 +103,7 @@ namespace YavaPrimum.API
             });
 
             app.MapHub<NotifyHub>("/chat");
+
 
             app.MapControllers();
 

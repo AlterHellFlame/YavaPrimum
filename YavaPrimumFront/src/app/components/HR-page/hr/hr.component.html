@@ -1,0 +1,26 @@
+<div class="menu d-flex">
+    <div class="d-flex flex-column">
+      <div>
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#AddCandidate">
+          Добавьте кандидата
+        </button>
+      </div>
+      <div class="taks-list">   
+        <ng-container *ngIf="tasks.length > 0; else noTasks">
+          <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+        </ng-container>
+        
+        <ng-template #noTasks>
+          <div class="noTask">На сегодня задач нет...</div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="calendar">
+      <app-calendar (getTasks)="getTasks($event)"></app-calendar>
+    </div>
+  </div>
+  <!--  <app-create-candidate></app-create-candidate>
+  <app-task-info></app-task-info>
+  <app-change-candidate></app-change-candidate>
+<app-task-delete></app-task-delete>-->
+  

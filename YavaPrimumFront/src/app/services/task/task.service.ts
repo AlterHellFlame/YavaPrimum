@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DateTime, Info, Interval } from 'luxon';
 import { Tasks } from '../../data/interface/Tasks.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LoginModel } from '../../data/interface/loginModel.interfase';
-import { Subject } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +10,11 @@ import { Subject } from '@microsoft/signalr';
 export class TaskService {
 
   baseApiUrl = 'https://localhost:7247/';
-  constructor(private http : HttpClient){}
-
-  //Актиный день
-  private daySubject: BehaviorSubject<DateTime> = new BehaviorSubject<DateTime>(DateTime.now()); 
-  public activeDay$: Observable<DateTime> = this.daySubject.asObservable();
-  private activeDay = DateTime.now();
+  constructor(private http : HttpClient){
+    this.LoadAllTasks();
+  }
  
-  //Все таски
-  private allTasksSubject: BehaviorSubject<Tasks[]> = new BehaviorSubject<Tasks[]>([]); 
-  public allTasks$: Observable<Tasks[]> = this.allTasksSubject.asObservable();
   private allTasks : Tasks[] = [];
-
-  //Таски на активный день
-  private dayTasksSubject: BehaviorSubject<Tasks[]> = new BehaviorSubject<Tasks[]>([]); 
-  public dayTasks$: Observable<Tasks[]> = this.dayTasksSubject.asObservable();
-  private dayTasks : Tasks[] = [];
 
   //Активный таск
   private taskClickSubject: BehaviorSubject<Tasks | null> = new BehaviorSubject<Tasks| null>(null); 
@@ -39,21 +26,25 @@ export class TaskService {
     this.taskClickSubject.next(task); 
   }
 
-  public getAllTasks() : void
+  public LoadAllTasks() : void
   {
-    this.http.get<Tasks[]>(`${this.baseApiUrl}get-tasks`, { withCredentials: true }).subscribe(data=>
+    console.log("LoadAllTasks");
+    this.http.get<Tasks[]>(`${this.baseApiUrl}get-tasks`, { withCredentials: true }).subscribe(data =>
     {
       this.allTasks = data.map(task => (
-      {
-        ...task,
-        dateTime: DateTime.fromISO(task.dateTime as unknown as string)
-      }));
-      console.log("Все таски юзера " + this.allTasks);
-      this.allTasksSubject.next(this.allTasks);
+        {
+          ...task,
+          dateTime: DateTime.fromISO(task.dateTime as unknown as string)
+        }));
+        console.log("Все таски юзера " + this.allTasks);
+    }
+    )
+  }
 
-      this.setClickedTask(this.allTasks[0]);
-      this.setActiveDay(DateTime.now())
-    });
+  public GetAllTasks() : Tasks[]
+  {
+    console.log("GetAllTasks " + this.allTasks);
+    return this.allTasks;
   }
 
   public filterAndSortTasks(tasks: Tasks[]): Tasks[] 
@@ -74,25 +65,15 @@ export class TaskService {
   }
   
 
-  public PassedInterview(taskId :string) : void
+  public Interview(taskId :string, status: string) : void
   {
-    this.http.post(`${this.baseApiUrl}api/Tasks/PassedInterview${taskId}`, { withCredentials: true })
-    .subscribe(
-      response => {
-        console.log('Успешный ответ:', response);
-      },
-      error => {
-        console.error('Ошибка:', error);
-      }
-    );
-  }
+    const payload = { value: status };
 
-  public FaildInterview(taskId :string) : void
-  {
-    this.http.post(`${this.baseApiUrl}api/Tasks/PassedInterview${taskId}`, { withCredentials: true })
+    this.http.post(`${this.baseApiUrl}api/Tasks/Interview/${taskId}`, payload, { withCredentials: true })
     .subscribe(
       response => {
         console.log('Успешный ответ:', response);
+        
       },
       error => {
         console.error('Ошибка:', error);
@@ -103,9 +84,12 @@ export class TaskService {
 
   public RepeatInterview(taskId: string, dateTime: string): Observable<any> {
     console.log("Повторяем " + taskId + " с датой " + dateTime + " Типа " + typeof(dateTime));
+
+    const payload = { value: dateTime };
+
     return this.http.post(
       `${this.baseApiUrl}api/Tasks/RepeatInterview/${taskId}`,
-      JSON.stringify({ dateTime }), 
+      payload, 
       {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' } 
@@ -129,26 +113,19 @@ export class TaskService {
   
   }
 
-  public setActiveDay(day : DateTime) : void
+  public getTasksOfDay(day: DateTime): Tasks[]
   {
-    console.log("Активный день " + day.day);
-    this.activeDay = day;
-    this.daySubject.next(this.activeDay);
-    this.getTasksOfDay();
-  }
-
-  public getTasksOfDay(): void
-  {
-    this.dayTasks = this.allTasks
-      .filter(task => task.dateTime.hasSame(this.activeDay, 'day'))
+    //if(this.allTasks.length == 0) this.LoadAllTasks();
+    console.log("getTasksOfDay " +  day.day +" из : " + this.allTasks);
+    let tasks =  this.allTasks
+      .filter(task => task.dateTime.hasSame(day, 'day'))
       .sort((a, b) => {
         if (a.status !== b.status) {
           return a.status ? 1 : -1;
         }
         return a.dateTime.valueOf() - b.dateTime.valueOf();
       });
-  
-    this.dayTasksSubject.next(this.dayTasks);
+      return tasks;
   }
   
 }

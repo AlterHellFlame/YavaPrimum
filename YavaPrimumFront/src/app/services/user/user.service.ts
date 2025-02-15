@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../../data/interface/User.interfase';
 import { Observable } from 'rxjs';
+import { User } from '../../data/interface/User.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http : HttpClient){}
 
 
-  public getUserDate() : Observable<User>
+  public getUserData() : Observable<User>
   {
       return this.http.get<User>(`${this.baseApiUrl}userData`, { withCredentials: true });
   }

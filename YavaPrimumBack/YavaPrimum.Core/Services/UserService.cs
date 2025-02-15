@@ -167,7 +167,7 @@ namespace YavaPrimum.Core.Services
             MailAddress mailFrom = new MailAddress("yavaprimum@mail.ru", "YavaPrimum");
             MailAddress mailTo = new MailAddress(email);
             MailMessage message = new MailMessage(mailFrom, mailTo);
-            message.Body = await _codeVerificationService.GenerateCode(email);
+            message.Body = $"Ваш код доступа: {await _codeVerificationService.GenerateCode(email)}. Не сообщайте о нём никому ";
             message.Subject = subject;
 
             SmtpClient smtpClient = new SmtpClient()

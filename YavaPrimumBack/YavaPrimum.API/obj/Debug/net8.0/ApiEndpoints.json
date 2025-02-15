@@ -73,18 +73,8 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "FillTables",
-    "RelativePath": "api/Tasks/FillTables",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "CommitTask",
-    "RelativePath": "api/Tasks/PassedInterview{taskId}",
+    "RelativePath": "api/Tasks/Interview/{taskId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -92,6 +82,11 @@
       {
         "Name": "taskId",
         "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
         "IsRequired": true
       }
     ],
@@ -286,7 +281,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",

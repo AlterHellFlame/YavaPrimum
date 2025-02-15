@@ -95,6 +95,15 @@ namespace YavaPrimum.Core.Services
             await _dBContext.SaveChangesAsync();
         }
 
+        public async Task FaidInterview(Guid taskId) //TODO поменять
+        {
+            (await _dBContext.Tasks
+                .FindAsync(taskId))
+                .Status = true;
+
+            await _dBContext.SaveChangesAsync();
+        }
+
         public async Task Update(Guid taskId, InterviewCreateRequest newTask)
         {
             Tasks task = await GetById(taskId);

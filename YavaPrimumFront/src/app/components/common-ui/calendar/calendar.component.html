@@ -1,0 +1,42 @@
+<div class="calendar h-100 d-flex flex-column">
+    <div class="headline d-flex justify-content-between">
+      <div class="headline-month">
+        {{ firstDayOfActiveMonth.monthShort }}
+        {{ firstDayOfActiveMonth.year }}
+      </div>
+      <div class="headline-controls d-flex">
+        <div class="headline-control" (click)="goToPreviousMonth()"><i class="bi bi-caret-left"></i></div>
+        <div class="headline-control" (click)="goToToday()">Сегодня</div>
+        <div class="headline-control" (click)="goToFovardMonth()"><i class="bi bi-caret-right"></i></div>
+      </div>
+      <div></div>
+    </div>
+  
+    <div class="grid weeks-grid">
+      <div *ngFor="let weekDay of weekDays" class="grid-cell text-capitalize">
+        {{ weekDay }}
+      </div>
+    </div>
+  
+    <div class="grid day-grid">
+      <div *ngFor="let dayOfMonth of daysOfMonth" [ngClass]="{
+      'grid-cell px-1': true, 
+      'grid-cell-active': dayOfMonth == activeDay,
+      'grid-cell-today': dayOfMonth.hasSame(today, 'day'),
+      'grid-cell-not-month' : firstDayOfActiveMonth.month != dayOfMonth.month}" 
+      (click)="setActiveDay(dayOfMonth)">
+        <div class="date">{{ dayOfMonth.day }}</div>
+      
+  
+        <ng-container *ngFor="let task of getTasksForDay(dayOfMonth) | slice:0:4">
+          <div class="task-interview px-1" [ngClass]="{'task-compleate': task.status == true}">
+            {{task.dateTime.toFormat("HH:mm")}} {{task.candidate.secondName}}
+          </div>
+        </ng-container>
+        
+        
+        <img  *ngIf="dayTaskLength > 4" src="https://cdn-icons-png.flaticon.com/128/2985/2985150.png" class="more">
+      </div>
+    </div>
+  </div>
+  

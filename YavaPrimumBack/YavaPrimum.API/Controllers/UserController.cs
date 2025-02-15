@@ -34,7 +34,7 @@ namespace YavaPrimum.API.Controllers
         }
 
         [HttpPost("/login")]
-        public async Task<ActionResult> Login([FromBody] LoginUserRequest request)
+        public async Task<ActionResult<string>> Login([FromBody] LoginUserRequest request)
         {
             Console.WriteLine("Попытка войти в аккаунт с данными: " + request.EMail + " пароль: " + request.Password);
 
@@ -108,6 +108,11 @@ namespace YavaPrimum.API.Controllers
         [HttpGet("/userData")]
         public async Task<ActionResult<UserResponse>> GetUserData()
         {
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok(new List<TaskResponse>());
+            }
             string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
 
             return await _usersService.GetByIdToFront(await _jwtProvider.GetUserIdFromToken(token));

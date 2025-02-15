@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using YavaPrimum.Core.Interfaces;
 
 namespace YavaPrimum.API.Notify
@@ -6,43 +8,51 @@ namespace YavaPrimum.API.Notify
     public class NotifyHub : Hub
     {
         private readonly IUserService _usersService;
+        private readonly IJwtProvider _jwtProvider;
 
-        public NotifyHub(IUserService usersService)
+        public NotifyHub(IUserService usersService, IJwtProvider jwtProvider)
         {
             _usersService = usersService;
+            _jwtProvider = jwtProvider;
         }
 
-        public async Task Send(string message)
+        public async Task SendToUser(string message)
         {
             Console.WriteLine("Сообщение для кадровика: " + message);
-            var users = await _usersService.GetAll();
-
-            var filteredUsers = users.Where(user => user.Company.Country.Name == "Беларусь" && user.Post.Name != "HR");
-
-            // Отправка сообщения фильтрованным пользователям
-            foreach (var user in filteredUsers)
-            {
-                await this.Clients.User(user.UserId.ToString()).SendAsync("Receive", message);
-            }
+            await this.Clients.User("2C0BA6CA-F14C-4733-B567-A1D851314259".ToLower()).SendAsync("Receive", message);
         }
 
-        /*
-
-
-        public async Task Send(string message)
+        public async Task SendToCountry(string message)
         {
             Console.WriteLine("Сообщение для кадровика: " + message);
-            await this.Clients.All.SendAsync("Receive", message);
-            
-            var users = await _usersService.GetAll();
+            await this.Clients.User("2C0BA6CA-F14C-4733-B567-A1D851314259".ToLower()).SendAsync("Receive", message);
+        }
 
-            var filteredUsers = users.Where(user => user.Company.Country.Name == "Беларусь" && user.Post.Name != "HR");
+        public async Task Grouping(string message)
+        {
+            await Groups.AddToGroupAsync("2C0BA6CA-F14C-4733-B567-A1D851314259".ToLower(), "Страна");
+        }
 
-            // Отправка сообщения фильтрованным пользователям
-            foreach (var user in filteredUsers)
+    }
+
+    public class UserIdProvider : IUserIdProvider
+    {
+        private readonly IJwtProvider _jwtProvider;
+
+        public UserIdProvider(IJwtProvider jwtProvider)
+        {
+            _jwtProvider = jwtProvider;
+        }
+
+        public string GetUserId(HubConnectionContext connection)
+        {
+            var cookies = connection.GetHttpContext().Request.Cookies;
+            if (cookies.TryGetValue("token-cookies", out var token))
             {
-                await this.Clients.All.SendAsync("Receive", message);
+                var userId = _jwtProvider.GetUserIdFromToken(token).Result.ToString();
+                return userId;
             }
-        }*/
+            return null;
+        }
     }
 }

@@ -1,0 +1,31 @@
+<div class="modal fade" id="Interview" data-bs-backdrop="static"
+tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Вы берете кандидата {{task.candidate.secondName}} на работу?</h5>
+                <button type="button" class="btn-close" (click)="CloseNextInterview()" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!showElement" class="d-flex justify-content-end gap-1">
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="Interview('passed')">Да</button>
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" (click)="Interview('faild')">Нет</button>
+                    <button type="button" class="btn btn-secondary" (click)="OpenNextInterview()">Повторное собеседование</button>
+                </div>
+                <div *ngIf="showElement">
+                    <label for="dateTime">Выберите новую дату и время для собеседования</label>
+                    <input
+                    type="datetime-local"
+                    class="form-control"
+                    #dateTimeInput
+                    [value]="dateTime"
+                    />
+                </div>
+            </div>
+            <div class="modal-footer" *ngIf="showElement">
+                <button type="submit" class="btn btn-success mt-1" data-bs-dismiss="modal" 
+                (click)="NextInterview()">Повторное собеседование</button>
+              </div>
+        </div>
+    </div>
+</div>
