@@ -1,3 +1,4 @@
+wwwroot\default.jpg
 wwwroot\profile_photo\default.jpg
 wwwroot\profile_photo\Kinich.jpg
 wwwroot\profile_photo\Кинич2.jpg

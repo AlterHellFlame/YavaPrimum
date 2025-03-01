@@ -39,39 +39,21 @@ namespace YavaPrimum.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("HRUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("InterviewStatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("OPUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SecondName")
+                    b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SurName")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telephone")
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CandidateId");
 
                     b.HasIndex("CountryId");
-
-                    b.HasIndex("HRUserId");
-
-                    b.HasIndex("OPUserId");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Candidate");
                 });
@@ -106,9 +88,49 @@ namespace YavaPrimum.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneMask")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CountryId");
 
                     b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Notifications", b =>
+                {
+                    b.Property<Guid>("NotificationsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsReaded")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("RecipientUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StatusTasksStatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TasksId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TextMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NotificationsId");
+
+                    b.HasIndex("RecipientUserId");
+
+                    b.HasIndex("StatusTasksStatusId");
+
+                    b.HasIndex("TasksId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Post", b =>
@@ -126,21 +148,6 @@ namespace YavaPrimum.Core.Migrations
                     b.ToTable("Post");
                 });
 
-            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.TaskType", b =>
-                {
-                    b.Property<Guid>("TaskTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TaskTypeId");
-
-                    b.ToTable("TaskType");
-                });
-
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Tasks", b =>
                 {
                     b.Property<Guid>("TasksId")
@@ -150,13 +157,13 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<Guid>("CandidatePostPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("TaskTypeId")
+                    b.Property<Guid>("StatusTasksStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -166,11 +173,40 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("TaskTypeId");
+                    b.HasIndex("CandidatePostPostId");
+
+                    b.HasIndex("StatusTasksStatusId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", t =>
+                        {
+                            t.HasTrigger("trg_updTask_crtNotification");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                });
+
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.TasksStatus", b =>
+                {
+                    b.Property<Guid>("TasksStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MessageTemplate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("TasksStatusId");
+
+                    b.ToTable("TasksStatus");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.User", b =>
@@ -182,11 +218,23 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -197,16 +245,9 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SecondName")
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SurName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserRegisterInfoId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId");
 
@@ -214,28 +255,7 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.HasIndex("UserRegisterInfoId");
-
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.UserRegisterInfo", b =>
-                {
-                    b.Property<Guid>("UserRegisterInfoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserRegisterInfoId");
-
-                    b.ToTable("UserRegisterInfo");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Candidate", b =>
@@ -243,33 +263,10 @@ namespace YavaPrimum.Core.Migrations
                     b.HasOne("YavaPrimum.Core.DataBase.Models.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.User", "HR")
-                        .WithMany()
-                        .HasForeignKey("HRUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.User", "OP")
-                        .WithMany()
-                        .HasForeignKey("OPUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Country");
-
-                    b.Navigation("HR");
-
-                    b.Navigation("OP");
-
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Company", b =>
@@ -283,6 +280,33 @@ namespace YavaPrimum.Core.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Notifications", b =>
+                {
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.TasksStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusTasksStatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Tasks", "Task")
+                        .WithMany()
+                        .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Tasks", b =>
                 {
                     b.HasOne("YavaPrimum.Core.DataBase.Models.Candidate", "Candidate")
@@ -291,9 +315,15 @@ namespace YavaPrimum.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.TaskType", "TaskType")
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Post", "CandidatePost")
                         .WithMany()
-                        .HasForeignKey("TaskTypeId")
+                        .HasForeignKey("CandidatePostPostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.TasksStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusTasksStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -305,7 +335,9 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Navigation("Candidate");
 
-                    b.Navigation("TaskType");
+                    b.Navigation("CandidatePost");
+
+                    b.Navigation("Status");
 
                     b.Navigation("User");
                 });
@@ -324,17 +356,9 @@ namespace YavaPrimum.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.UserRegisterInfo", "UserRegisterInfo")
-                        .WithMany()
-                        .HasForeignKey("UserRegisterInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Company");
 
                     b.Navigation("Post");
-
-                    b.Navigation("UserRegisterInfo");
                 });
 #pragma warning restore 612, 618
         }

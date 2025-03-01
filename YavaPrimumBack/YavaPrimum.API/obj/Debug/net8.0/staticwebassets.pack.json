@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\default.jpg",
+      "PackagePath": "staticwebassets\\default.jpg"
+    },
+    {
       "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
       "PackagePath": "staticwebassets\\profile_photo\\Kinich.jpg"
     },

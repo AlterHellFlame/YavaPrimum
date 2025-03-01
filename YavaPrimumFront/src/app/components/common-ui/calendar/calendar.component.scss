@@ -2,10 +2,11 @@ $base-color : rgb(83, 83, 83);
 $not-month-color : darkgray;
 $today-border: 1px dashed rgb(0, 145, 255);
 $boder-cell: #d3d3d3;
-$active-day-bg: #cfcfcf;
-$today-bg : #aea0a0;
-$hover: #9b9b9b;
+$active-day-bg: #aea0a0;
+$today-bg : #9b9b9b;
+$hover: #cfcfcf;
 $task-interview-bg: #f6df6b;
+$task-compleate-bg: #86793b;
 $task-call-bg: #6bf6ca;
 
 .headline-control
@@ -49,7 +50,7 @@ $task-call-bg: #6bf6ca;
     }
     .grid-cell-today
     {
-        background-color: $active-day-bg;
+        //background-color: $active-day-bg;
         border-radius: 5px;
         border: $today-border;
     }
@@ -73,7 +74,7 @@ $task-call-bg: #6bf6ca;
     }
     .task-compleate
     {
-        background-color: gray; //Исправить
+        background-color: $task-compleate-bg; //Исправить
     }
     .task-call
     {
@@ -87,8 +88,8 @@ $task-call-bg: #6bf6ca;
     .more
     {
         position: absolute; 
-        bottom: 1px;
-        right: 3px;
+        bottom: 7px;
+        right: 7px;
 
         width: 10px;
         height: 10px;

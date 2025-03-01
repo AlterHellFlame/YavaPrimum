@@ -56,95 +56,6 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "DeleteTask",
-    "RelativePath": "api/Tasks/DeleteTask{taskId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "CommitTask",
-    "RelativePath": "api/Tasks/Interview/{taskId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "status",
-        "Type": "YavaPrimum.Core.DTO.StringRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "RepeatInterview",
-    "RelativePath": "api/Tasks/RepeatInterview/{taskId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "dateTime",
-        "Type": "YavaPrimum.Core.DTO.StringRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "UpdateTask",
-    "RelativePath": "api/Tasks/UpdateTask{taskId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "newTask",
-        "Type": "YavaPrimum.Core.DTO.InterviewCreateRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
-    "Method": "Crt",
-    "RelativePath": "api/User",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "YavaPrimum.API.Controllers.HRController",
     "Method": "ChangeNewIntreview",
     "RelativePath": "change-task",
@@ -171,7 +82,7 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "CheckCode",
     "RelativePath": "checkCode/{email}",
     "HttpMethod": "POST",
@@ -202,15 +113,15 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.HRController",
-    "Method": "CreateNewIntreview",
-    "RelativePath": "create-task",
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "CreateNewTask",
+    "RelativePath": "create-new-task",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
+        "Name": "taskRequest",
         "Type": "YavaPrimum.Core.DTO.InterviewCreateRequest",
         "IsRequired": true
       }
@@ -228,36 +139,26 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.HRController",
-    "Method": "GetPostsCountres",
-    "RelativePath": "get-posts-country",
-    "HttpMethod": "GET",
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
+    "Method": "crt",
+    "RelativePath": "crt",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.PostCountryResponce, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.HRController",
-    "Method": "GetHRTasks",
-    "RelativePath": "get-tasks",
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GetAllTasks",
+    "RelativePath": "get-all-tasks",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TaskResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -269,6 +170,66 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetNotifications",
+    "RelativePath": "get-notifications",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.NotificationsResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetPostsCountries",
+    "RelativePath": "get-posts-countries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.PostCountryResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetUserData",
+    "RelativePath": "get-user-data",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "Login",
     "RelativePath": "login",
     "HttpMethod": "POST",
@@ -294,7 +255,28 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "UpdateTaskStatus",
+    "RelativePath": "new-status-for-task/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "NewPass",
     "RelativePath": "newPass/{email}",
     "HttpMethod": "POST",
@@ -326,6 +308,22 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "ReadNotification",
+    "RelativePath": "read-notification/{taskId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "Register",
     "RelativePath": "register",
     "HttpMethod": "POST",
@@ -334,7 +332,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "YavaPrimum.Core.DTO.RegisterUserRequest",
+        "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
         "IsRequired": true
       }
     ],
@@ -351,7 +349,7 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "SendToEmail",
     "RelativePath": "sendToEmail",
     "HttpMethod": "POST",
@@ -367,26 +365,6 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
-    "Method": "GetUserData",
-    "RelativePath": "userData",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "YavaPrimum.Core.DTO.UserResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",

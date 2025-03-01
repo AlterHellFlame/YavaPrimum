@@ -1,18 +1,21 @@
 import { DateTime } from "luxon";
 import { Candidate } from "./Candidate.interface";
+import { User } from "./User.interface";
 
 export interface Tasks
 {
-    taskResponseId: string,
+    taskId: string,
+    user: User,
     candidate: Candidate,
-    status: boolean
+    status: string
+    post: string;
     dateTime: DateTime,
-    taskType: string
 }
 
 export interface TasksRequest
 {
     candidate: Candidate,
     dateTime: string,
+    post: string,
 }
 

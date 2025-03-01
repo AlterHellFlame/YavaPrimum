@@ -3,6 +3,6 @@
     public class Post
     {
         public Guid PostId { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
     }
 }

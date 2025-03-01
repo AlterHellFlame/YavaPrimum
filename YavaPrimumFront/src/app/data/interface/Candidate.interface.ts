@@ -1,12 +1,10 @@
 export interface Candidate 
 {
+  surname: string;
   firstName: string;
-  secondName: string;
-  surName: string;
+  patronymic: string;
   email: string;
-  telephone: string;
-  post: string;
+  phone: string;
   country: string;
-  interviewStatus: number;
 
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("YavaPrimum.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57bfd972195200575f6390a5659f604be458a417")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+622dbee5d06c60da6df0a12b181a793114abe46d")]
 [assembly: System.Reflection.AssemblyProductAttribute("YavaPrimum.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("YavaPrimum.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

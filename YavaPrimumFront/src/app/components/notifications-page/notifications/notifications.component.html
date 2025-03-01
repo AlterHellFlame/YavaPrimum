@@ -1,0 +1,25 @@
+<div class="container">
+  <h4 class="mb-4 text-center">Уведомления</h4>
+  <div *ngIf="notifications.length === 0" class="alert alert-info text-center">
+      У вас нет новых уведомлений.
+  </div>
+  <div *ngFor="let notification of notifications" class="card mb-3 shadow-sm" [ngClass]="{'bg-light': notification.isReaded}">
+    <div class="card-body">
+        <div class="d-flex">
+            <img src="https://localhost:7247/{{notification.task.user.imgUrl}}" alt="User Image" class="rounded-circle me-3" width="50" height="50">
+            <div class="w-100">    
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title text-primary">{{ notification.task.user.surname }} {{ notification.task.user.firstName }} {{ notification.task.user.patronymic }}</h5>
+                    <small class="text-muted">{{ toFormat(notification.dateTime.toString()) }}</small>
+                </div>
+                <p class="card-text">{{ notification.textMessage }}</p>
+                <div class="d-flex justify-content-end">
+                <button *ngIf="!notification.isReaded" (click)="markAsRead(notification)" class="btn btn-outline-success btn-sm">
+                    Отметить как прочитанное
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

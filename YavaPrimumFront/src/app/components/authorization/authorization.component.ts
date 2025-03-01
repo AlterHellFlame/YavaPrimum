@@ -33,11 +33,18 @@ export class AuthorizationComponent {
         
         if (response == "HR") 
         {
-          this.router.navigate(['/account/HR']);
+          localStorage.setItem('isHR', 'true');
+          this.router.navigate(['/account/hr']);
         } 
         else if (response == "Кадровик") 
         {
-          this.router.navigate(['/account/PO']);
+          localStorage.setItem('isHR', 'false');
+          this.router.navigate(['/account/po']);
+        }
+        else if (response == "!Админ") 
+        {
+            localStorage.setItem('isHR', 'false');
+            this.router.navigate(['/account/admin']);
         }
       },
       error: (error) => {

@@ -13,22 +13,19 @@ namespace YavaPrimum.Core.Services
         private ICompanyService _companyService;
         private ICountryService _countryService;
         private IPostService _postService;
-        private ITaskTypeService _taskTypeService;
 
         public CandidateService(YavaPrimumDBContext dBContext,
             ICompanyService companyService,
             ICountryService countryService,
-            IPostService postService,
-            ITaskTypeService taskTypeService)
+            IPostService postService)
         {
             _dBContext = dBContext;
             _companyService = companyService;
             _countryService = countryService;
             _postService = postService;
-            _taskTypeService = taskTypeService;
         }
 
-        public async Task<List<CandidateRequestResponse>> GetAll()
+        /*public async Task<List<CandidateRequestResponse>> GetAll()
         {
             return await _dBContext.Candidate
                 .Select(c => new CandidateRequestResponse(
@@ -43,16 +40,16 @@ namespace YavaPrimum.Core.Services
                     c.InterviewStatus
                 ))
                 .ToListAsync();
-        }
+        }*/
 
         public async Task<Candidate> GetById(Guid id)
         {
-            return await _dBContext.Candidate
+            return new Candidate(); /*await _dBContext.Candidate
                 .Include(c => c.Post)
                 .Include(c => c.Country)
                 .Include(c => c.HR)
                 .Include(c => c.OP)
-                .FirstOrDefaultAsync(c => c.CandidateId == id);
+                .FirstOrDefaultAsync(c => c.CandidateId == id);*/
         }
 
         public async Task<Guid> Create(Candidate candidate)
@@ -65,7 +62,7 @@ namespace YavaPrimum.Core.Services
 
         public async Task<Guid> Create(CandidateRequestResponse candidateRequest)
         {
-            Candidate candidate = new Candidate()
+            /*Candidate candidate = new Candidate()
             {
                 CandidateId = Guid.NewGuid(),
                 FirstName = candidateRequest.FirstName,
@@ -80,14 +77,14 @@ namespace YavaPrimum.Core.Services
 
             Console.WriteLine("Попытка добавить кандидата " + candidate.SecondName);
             await _dBContext.Candidate.AddAsync(candidate);
-            await _dBContext.SaveChangesAsync();
+            await _dBContext.SaveChangesAsync();*/
 
-            return candidate.CandidateId;
+            return new Guid();//candidate.CandidateId;
         }
 
         public async Task<Guid> Update(Candidate candidate, CandidateRequestResponse candidateRequest)
         {
-            candidate.SecondName = candidateRequest.SecondName;
+            /*candidate.SecondName = candidateRequest.SecondName;
             candidate.FirstName = candidateRequest.FirstName;
             candidate.SurName = candidateRequest.SurName;
             candidate.Email = candidateRequest.Email;
@@ -96,10 +93,14 @@ namespace YavaPrimum.Core.Services
             candidate.Post = await _postService.GetByName(candidateRequest.Post);
             candidate.InterviewStatus = candidateRequest.InterviewStatus;
 
-            await _dBContext.SaveChangesAsync();
+            await _dBContext.SaveChangesAsync();*/
 
-            return candidate.CandidateId;
+            return new Guid(); //candidate.CandidateId;
         }
 
+        public Task<List<CandidateRequestResponse>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

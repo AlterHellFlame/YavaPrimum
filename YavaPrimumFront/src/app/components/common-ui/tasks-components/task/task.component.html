@@ -1,0 +1,29 @@
+<div class="card task-card bg-white mb-4" *ngIf="task" [ngClass]="{'passed': task.status == 'Выполнено'}">
+    <div>
+      <span class="d-flex justify-content-between">
+        <p class="fs-4">{{task.dateTime.toFormat('HH:mm')}}</p>
+      <p class="text-success">{{task.status}}</p>
+      </span>
+    <p>{{task.post}}</p>
+    <p class="candidate_FIO">{{task.candidate.surname}} {{task.candidate.firstName}} {{task.candidate.patronymic}}</p>
+    <span class="d-flex column-gap-3 flex-wrap">
+        <span class="d-inline-flex">
+          <i class="bi bi-telephone"></i>
+          <p>{{task.candidate.phone}}</p>
+        </span>
+        <span class="d-inline-flex">
+          <i class="bi bi-envelope"></i>
+          <p>{{task.candidate.email}}</p>
+        </span>
+    </span>
+      <span class="d-flex justify-content-end gap-1 mt-2">
+        <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
+        data-bs-target="#Interview" (click)="onButtonClick()"*ngIf="task.status != 'Выполнено'">Собеседовать</button>
+  
+        <button type="button" class="bi bi-pen btn btn-outline-secondary"data-bs-toggle="modal" 
+        data-bs-target="#ChangeCandidate" (click)="onButtonClick()">Изменить</button>
+    </span>
+  </div>
+  
+  
+  

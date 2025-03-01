@@ -4,6 +4,7 @@
     {
         public Guid CountryId { get; set; }
         public string Name { get; set; }
+        public string PhoneMask { get; set; }
     }
 }
 

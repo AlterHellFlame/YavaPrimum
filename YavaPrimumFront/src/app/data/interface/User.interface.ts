@@ -1,11 +1,10 @@
 export interface User 
 {
+    surname: string;
     firstName: string;
-    secondName: string;
-    surName: string;
+    patronymic: string;
     post: string;
     company: string;
-    country: string;
     email : string;
     phone : string;
     imgUrl : string;

@@ -1,15 +1,15 @@
 ﻿namespace YavaPrimum.Core.DTO
 {
-    public record CandidateRequestResponse(
-        Guid CandidateId,
-        string FirstName,
-        string SecondName,
-        string SurName,
-        string Email,
-        string Telephone,
-        string Post,
-        string Country,
-        int InterviewStatus
-    );
+    public class CandidateRequestResponse
+    {
+
+        public string Surname { get; set; }
+        public string FirstName { get; set; }
+        public string Patronymic { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Country { get; set; }
+    }
+
 }
 

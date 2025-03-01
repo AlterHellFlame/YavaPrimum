@@ -3,6 +3,9 @@ import { AuthorizationComponent } from './components/authorization/authorization
 import { HeaderComponent } from './components/header/header.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HrComponent } from './components/HR-page/hr/hr.component';
+import { UserDataComponent } from './components/user-data/user-data.component';
+import { NotificationsComponent } from './components/notifications-page/notifications/notifications.component';
+import { AdminComponent } from './components/admin-page/admin/admin.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'log-in', pathMatch: 'full' },
@@ -10,9 +13,11 @@ export const routes: Routes = [
     {
       path: 'account', component: HeaderComponent,
       children: [
-        { path: 'HR', component: HrComponent }
-        /*{ path: 'PO', component: PoMainPageComponent },
-        { path: 'userData', component: UserDataComponent },*/
+        { path: 'hr', component: HrComponent },
+        { path: 'po', component: HrComponent },
+        { path: 'userData', component: UserDataComponent },
+        { path: 'notifications', component: NotificationsComponent },
+        { path: 'admin', component: AdminComponent}
       ]
     },
     { path: '**', component: NotFoundComponent },

@@ -27,6 +27,26 @@
         cursor: pointer;
         font-size: large;
     }
+
+    .notify-container
+    {
+        position: relative;
+        display: inline-flex;
+        margin-right: 10px;
+    }
+    .notify
+        {
+            background-color: red;
+            border-radius: 100%;
+            width: 17px;
+            height: 17px;
+            font-size: x-small;
+            text-align: center;
+            
+            position: relative;
+            left: 25px;
+            top: -3px;
+        }
 }
 
 .page

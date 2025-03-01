@@ -33,14 +33,14 @@ namespace YavaPrimum.API
 
             builder.Services.AddDbContext<YavaPrimumDBContext>();
 
-            builder.Services.AddScoped<IHRService, HRService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ICandidateService, CandidateService>();
             builder.Services.AddScoped<ITasksService, TaskService>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<ICountryService, CountryService>();
             builder.Services.AddScoped<ICompanyService, CompanyService>();
-            builder.Services.AddScoped<ITaskTypeService, TaskTypeService>();
+            builder.Services.AddScoped<INotificationsService, NotificationsService>();
 
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 

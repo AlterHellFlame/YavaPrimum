@@ -1,7 +1,7 @@
 ﻿namespace YavaPrimum.Core.DTO
 {
     public record LoginUserRequest(
-        string EMail,
+        string Email,
         string Password
     );
 }

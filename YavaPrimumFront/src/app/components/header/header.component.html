@@ -1,8 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <h3 routerLink="HR">YavaPrimum</h3>
-    <span routerLink="userData" class="d-inline-flex toUserData">
-        <img id="photo" class="photo mx-1" src="https://localhost:7247/{{user.imgUrl}}" [alt]="user.secondName">
-        <p>{{user.secondName}} {{user.firstName}}</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <h3 (click)="navigateTo('account/hr')">YavaPrimum</h3>
+
+    <span class="d-inline-flex toUserData">
+        <span class="notify-container" (click)="navigateTo('account/notifications')">
+            <div class="notify" *ngIf="countOfNotify > 0">{{countOfNotify}}</div>
+            <i class="bi bi-bell"></i>
+        </span>
+        <img id="photo" class="photo mx-1" src="https://localhost:7247/{{user.imgUrl}}" [alt]="user.surname">
+        <p (click)="navigateTo('account/userData')">{{user.surname}} {{user.firstName}}</p>
     </span>
 </nav>
 <div class="page">

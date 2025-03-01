@@ -5,6 +5,281 @@
     "version": "1.0"
   },
   "paths": {
+    "/crt": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestResponse"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestResponse"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sendToEmail": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/checkCode/{email}": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/newPass/{email}": {
+      "post": {
+        "tags": [
+          "AuthContriller"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Candidate": {
       "post": {
         "tags": [
@@ -66,57 +341,6 @@
         }
       }
     },
-    "/create-task": {
-      "post": {
-        "tags": [
-          "HR"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/change-task": {
       "post": {
         "tags": [
@@ -168,82 +392,6 @@
         }
       }
     },
-    "/get-tasks": {
-      "get": {
-        "tags": [
-          "HR"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskResponse"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskResponse"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/get-posts-country": {
-      "get": {
-        "tags": [
-          "HR"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PostCountryResponce"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PostCountryResponce"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PostCountryResponce"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Tasks": {
       "get": {
         "tags": [
@@ -282,91 +430,96 @@
         }
       }
     },
-    "/api/Tasks/Interview/{taskId}": {
-      "post": {
+    "/get-all-tasks": {
+      "get": {
         "tags": [
           "Tasks"
         ],
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              }
             }
           }
+        }
+      }
+    },
+    "/create-new-task": {
+      "post": {
+        "tags": [
+          "Tasks"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StringRequest"
+                "$ref": "#/components/schemas/InterviewCreateRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StringRequest"
+                "$ref": "#/components/schemas/InterviewCreateRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StringRequest"
+                "$ref": "#/components/schemas/InterviewCreateRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Tasks/RepeatInterview/{taskId}": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Tasks/UpdateTask{taskId}": {
+    "/new-status-for-task/{taskId}": {
       "put": {
         "tags": [
           "Tasks"
@@ -386,17 +539,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
+                "$ref": "#/components/schemas/StringRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
+                "$ref": "#/components/schemas/StringRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/InterviewCreateRequest"
+                "$ref": "#/components/schemas/StringRequest"
               }
             }
           }
@@ -408,10 +561,115 @@
         }
       }
     },
-    "/api/Tasks/DeleteTask{taskId}": {
-      "delete": {
+    "/get-user-data": {
+      "get": {
         "tags": [
-          "Tasks"
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-posts-countries": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostCountryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostCountryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostCountryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-notifications": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/read-notification/{taskId}": {
+      "post": {
+        "tags": [
+          "User"
         ],
         "parameters": [
           {
@@ -430,310 +688,6 @@
           }
         }
       }
-    },
-    "/register": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterUserRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterUserRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterUserRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginUserRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginUserRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginUserRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/sendToEmail": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/checkCode/{email}": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/newPass/{email}": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StringRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/User": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/userData": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -745,19 +699,19 @@
             "type": "string",
             "format": "uuid"
           },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
           "firstName": {
             "type": "string",
             "nullable": true
           },
-          "secondName": {
+          "patronymic": {
             "type": "string",
             "nullable": true
           },
-          "surName": {
-            "type": "string",
-            "nullable": true
-          },
-          "telephone": {
+          "phone": {
             "type": "string",
             "nullable": true
           },
@@ -765,21 +719,8 @@
             "type": "string",
             "nullable": true
           },
-          "interviewStatus": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "post": {
-            "$ref": "#/components/schemas/Post"
-          },
           "country": {
             "$ref": "#/components/schemas/Country"
-          },
-          "hr": {
-            "$ref": "#/components/schemas/User"
-          },
-          "op": {
-            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -787,19 +728,15 @@
       "CandidateRequestResponse": {
         "type": "object",
         "properties": {
-          "candidateId": {
+          "surname": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
           },
           "firstName": {
             "type": "string",
             "nullable": true
           },
-          "secondName": {
-            "type": "string",
-            "nullable": true
-          },
-          "surName": {
+          "patronymic": {
             "type": "string",
             "nullable": true
           },
@@ -807,21 +744,13 @@
             "type": "string",
             "nullable": true
           },
-          "telephone": {
-            "type": "string",
-            "nullable": true
-          },
-          "post": {
+          "phone": {
             "type": "string",
             "nullable": true
           },
           "country": {
             "type": "string",
             "nullable": true
-          },
-          "interviewStatus": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -853,6 +782,10 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "phoneMask": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -866,6 +799,10 @@
           "interviewDate": {
             "type": "string",
             "nullable": true
+          },
+          "post": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -873,11 +810,42 @@
       "LoginUserRequest": {
         "type": "object",
         "properties": {
-          "eMail": {
+          "email": {
             "type": "string",
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationsResponse": {
+        "type": "object",
+        "properties": {
+          "notificationsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TasksResponse"
+          },
+          "recipient": {
+            "$ref": "#/components/schemas/UserRequestResponse"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "textMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "isReaded": {
+            "type": "boolean"
+          },
+          "status": {
             "type": "string",
             "nullable": true
           }
@@ -898,7 +866,7 @@
         },
         "additionalProperties": false
       },
-      "PostCountryResponce": {
+      "PostCountryResponse": {
         "type": "object",
         "properties": {
           "posts": {
@@ -908,49 +876,11 @@
             },
             "nullable": true
           },
-          "countres": {
+          "countries": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RegisterUserRequest": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "secondName": {
-            "type": "string",
-            "nullable": true
-          },
-          "surName": {
-            "type": "string",
-            "nullable": true
-          },
-          "imgUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "post": {
-            "type": "string",
             "nullable": true
           }
         },
@@ -966,44 +896,6 @@
         },
         "additionalProperties": false
       },
-      "TaskResponse": {
-        "type": "object",
-        "properties": {
-          "taskResponseId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "dateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "taskType": {
-            "type": "string",
-            "nullable": true
-          },
-          "candidate": {
-            "$ref": "#/components/schemas/CandidateRequestResponse"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskType": {
-        "type": "object",
-        "properties": {
-          "taskTypeId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Tasks": {
         "type": "object",
         "properties": {
@@ -1012,20 +904,68 @@
             "format": "uuid"
           },
           "status": {
-            "type": "boolean"
+            "$ref": "#/components/schemas/TasksStatus"
           },
           "dateTime": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
-          "taskType": {
-            "$ref": "#/components/schemas/TaskType"
+          "candidatePost": {
+            "$ref": "#/components/schemas/Post"
           },
           "user": {
             "$ref": "#/components/schemas/User"
           },
           "candidate": {
             "$ref": "#/components/schemas/Candidate"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TasksResponse": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/CandidateRequestResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TasksStatus": {
+        "type": "object",
+        "properties": {
+          "tasksStatusId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "messageTemplate": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1037,15 +977,15 @@
             "type": "string",
             "format": "uuid"
           },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
           "firstName": {
             "type": "string",
             "nullable": true
           },
-          "secondName": {
-            "type": "string",
-            "nullable": true
-          },
-          "surName": {
+          "patronymic": {
             "type": "string",
             "nullable": true
           },
@@ -1054,6 +994,14 @@
             "nullable": true
           },
           "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordHash": {
             "type": "string",
             "nullable": true
           },
@@ -1062,51 +1010,22 @@
           },
           "post": {
             "$ref": "#/components/schemas/Post"
-          },
-          "userRegisterInfo": {
-            "$ref": "#/components/schemas/UserRegisterInfo"
           }
         },
         "additionalProperties": false
       },
-      "UserRegisterInfo": {
+      "UserRequestResponse": {
         "type": "object",
         "properties": {
-          "userRegisterInfoId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "passwordHash": {
+          "surname": {
             "type": "string",
             "nullable": true
           },
-          "email": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserResponse": {
-        "type": "object",
-        "properties": {
           "firstName": {
             "type": "string",
             "nullable": true
           },
-          "secondName": {
-            "type": "string",
-            "nullable": true
-          },
-          "surName": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
+          "patronymic": {
             "type": "string",
             "nullable": true
           },
@@ -1114,15 +1033,19 @@
             "type": "string",
             "nullable": true
           },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
           "email": {
             "type": "string",
             "nullable": true
           },
-          "post": {
+          "company": {
             "type": "string",
             "nullable": true
           },
-          "country": {
+          "post": {
             "type": "string",
             "nullable": true
           }

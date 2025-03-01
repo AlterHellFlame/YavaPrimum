@@ -3,11 +3,13 @@
     public class Tasks
     {
         public Guid TasksId { get; set; }
-        public bool Status { get; set; } = false;
-        public DateTime DateTime { get; set; }
+        public TasksStatus Status { get; set; }
 
-        public TaskType TaskType { get; set; }
+        public DateTime? DateTime { get; set; }
+
+        public Post CandidatePost { get; set; }
         public User User { get; set; }
         public Candidate Candidate { get; set; }
+
     }
 }

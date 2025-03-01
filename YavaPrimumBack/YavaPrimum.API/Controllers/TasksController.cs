@@ -3,6 +3,7 @@ using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
+using YavaPrimum.Core.Services;
 
 namespace YavaPrimum.API.Controllers
 {
@@ -10,15 +11,27 @@ namespace YavaPrimum.API.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly YavaPrimumDBContext _dBContext;
-        private readonly ITasksService _tasksService;
+        private ICandidateService _candidateService;
+        private ICountryService _countryService;
+        private IPostService _postService;
+        private IUserService _userService;
+        private IJwtProvider _jwtProvider;
+        private ITasksService _tasksService;
 
-        public TasksController(ITasksService tasksService,
-            YavaPrimumDBContext dBContext,
-            ICandidateService candidateService)
+        public TasksController(
+            ICandidateService candidateService,
+            ICountryService countryService,
+            IPostService postService,
+            IUserService userService,
+            IJwtProvider jwtProvider,
+            ITasksService tasksService)
         {
+            _candidateService = candidateService;
+            _countryService = countryService;
+            _postService = postService;
+            _userService = userService;
+            _jwtProvider = jwtProvider;
             _tasksService = tasksService;
-            _dBContext = dBContext;
         }
 
         [HttpGet]
@@ -27,8 +40,104 @@ namespace YavaPrimum.API.Controllers
             return Ok(await _tasksService.GetAll());
         }
 
+        [HttpGet("/get-all-tasks")]
+        public async Task<ActionResult<List<TasksResponse>>> GetAllTasks()
+        {
+            Console.WriteLine("get-all-tasks");
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok(new List<TasksResponse>());
+            }
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
 
-        [HttpPost("Interview/{taskId:guid}")]
+            List<Tasks> tasks = await _tasksService.GetAllByUserId(
+                await _jwtProvider.GetUserIdFromToken(token));
+
+            List<TasksResponse> taskResponses = await _tasksService.ConvertToFront(tasks);
+
+            return Ok(taskResponses);
+        }
+
+        [HttpPost("/create-new-task")]
+        public async Task<ActionResult<Guid>> CreateNewTask([FromBody] InterviewCreateRequest taskRequest)
+        {
+            Console.WriteLine("create-new-task" + taskRequest.Candidate.Surname + " " + taskRequest);
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok(new List<TasksResponse>());
+            }
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+
+            Candidate candidate = new Candidate()
+            {
+                CandidateId = new Guid(),
+                Surname = taskRequest.Candidate.Surname,
+                FirstName = taskRequest.Candidate.FirstName,
+                Patronymic = taskRequest.Candidate.Patronymic,
+                Email = taskRequest.Candidate.Email,
+                Country = await _countryService.GetByName(taskRequest.Candidate.Country),
+                Phone = taskRequest.Candidate.Phone
+            };
+
+            Tasks task = new Tasks()
+            {
+                TasksId = new Guid(),
+                Candidate = candidate,
+                DateTime = Convert.ToDateTime(taskRequest.InterviewDate),
+                Status = await _tasksService.GetStatusByName("Собеседование"),
+                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
+            };
+
+            await _candidateService.Create(candidate);
+            await _tasksService.Create(task);
+            return Ok(task.TasksId);
+        }
+
+        [HttpPut("/new-status-for-task/{taskId:guid}")]
+        public async Task<ActionResult> UpdateTaskStatus(Guid taskId, [FromBody] StringRequest status)
+        {
+            if(status.Value == "passed")
+            {
+                status.Value = "Подбор кадровика";
+            }
+            // Получаем задачу по идентификатору
+            Tasks task = await _tasksService.GetById(taskId);
+            await _tasksService.SetNewStatus(task, status.Value);
+
+            if (status.Value == "Подбор кадровика")
+            {
+                Console.WriteLine("Рассылка для поиска кадровика");
+                
+                await _tasksService.SetNewStatus(task, "Выполнено");
+
+                // Создаем новый идентификатор для пользователя
+                Guid userId = new Guid("7fc78775-1e04-4b47-bb62-516d99a6f0e4");
+
+                // Создаем новую задачу
+                /*Tasks newTask = new Tasks
+                {
+                    TasksId = Guid.NewGuid(),
+
+                    Status = await _tasksService.GetStatusByName("Задать дату"),
+                    Candidate = task.Candidate,
+                    User = await _userService.GetById(userId) //TODO Заменить на актуальный идентификатор пользователя
+                };
+
+                // Сохраняем новую задачу
+                Guid newTaskId = await _tasksService.Create(newTask);
+                Console.WriteLine(newTaskId);*/
+            }
+
+            return Ok();
+        }
+
+
+
+
+        /*[HttpPost("Interview/{taskId:guid}")]
         public async Task<ActionResult> CommitTask(Guid taskId, StringRequest status)
         {
             Console.WriteLine(status.Value);
@@ -72,7 +181,7 @@ namespace YavaPrimum.API.Controllers
             Console.WriteLine("Удаляю");
             await _tasksService.Delete(taskId);
             return Ok();
-        }
+        }*/
 
     }
 }

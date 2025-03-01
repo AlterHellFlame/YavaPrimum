@@ -1,50 +1,43 @@
-import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DateTime, Info, Interval } from 'luxon';
-import { Tasks } from '../../data/interface/Tasks.interface';
+import { DateTime } from 'luxon';
+import { Injectable } from '@angular/core';
+import { Tasks, TasksRequest } from '../../data/interface/Tasks.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Candidate } from '../../data/interface/Candidate.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
-
   baseApiUrl = 'https://localhost:7247/';
-  constructor(private http : HttpClient){
-    this.LoadAllTasks();
-  }
- 
-  private allTasks : Tasks[] = [];
-
-  //Активный таск
-  private taskClickSubject: BehaviorSubject<Tasks | null> = new BehaviorSubject<Tasks| null>(null); 
-  taskClick$ = this.taskClickSubject.asObservable(); 
+  private allTasks: Tasks[] = [];
   
-  setClickedTask(task: Tasks) 
-  { 
-    console.log("1.Задать " + task.taskResponseId + " " + task.candidate.secondName)
-    this.taskClickSubject.next(task); 
+
+  constructor(private http: HttpClient) {
   }
 
-  public LoadAllTasks() : void
-  {
-    console.log("LoadAllTasks");
-    this.http.get<Tasks[]>(`${this.baseApiUrl}get-tasks`, { withCredentials: true }).subscribe(data =>
-    {
-      this.allTasks = data.map(task => (
-        {
-          ...task,
-          dateTime: DateTime.fromISO(task.dateTime as unknown as string)
-        }));
-        console.log("Все таски юзера " + this.allTasks);
-    }
-    )
+  public loadAllTasks(): Observable<Tasks[]> {
+    return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-tasks`, { withCredentials: true });
   }
 
-  public GetAllTasks() : Tasks[]
-  {
+  public getAllTasks(): Tasks[] {
     console.log("GetAllTasks " + this.allTasks);
     return this.allTasks;
+  }
+
+  public setAllTasks(tasks: Tasks[]): void {
+    this.allTasks = tasks;
+    console.log("SetAllTasks " + this.allTasks);
+    this.getAllTasks()
+    
+  }
+
+  public getTasksOfDay(day: DateTime): Tasks[] {
+    //console.log("Получение задач для дня: " + day.day + " из: " + this.allTasks);
+    let tasks = this.allTasks
+      .filter(task => task.dateTime.hasSame(day, 'day'))
+      .sort((a, b) => a.dateTime.valueOf() - b.dateTime.valueOf());
+    return tasks;
   }
 
   public filterAndSortTasks(tasks: Tasks[]): Tasks[] 
@@ -57,75 +50,57 @@ export class TaskService {
     {
       return task.dateTime.month === currentMonth 
       && task.dateTime.year === currentYear 
-      && task.status === true;
+      /*&& task.status === true*/;
     });
     
     // Сортировка задач по возрастанию даты
     return filteredTasks.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis());
   }
-  
 
-  public Interview(taskId :string, status: string) : void
-  {
+  public newStatus(tasksId: string, status: string): void {
+    console.log('newStatus ' + status + ' for id ' + tasksId);
     const payload = { value: status };
 
-    this.http.post(`${this.baseApiUrl}api/Tasks/Interview/${taskId}`, payload, { withCredentials: true })
-    .subscribe(
-      response => {
-        console.log('Успешный ответ:', response);
-        
-      },
-      error => {
-        console.error('Ошибка:', error);
-      }
-    );
-  
-  }
-
-  public RepeatInterview(taskId: string, dateTime: string): Observable<any> {
-    console.log("Повторяем " + taskId + " с датой " + dateTime + " Типа " + typeof(dateTime));
-
-    const payload = { value: dateTime };
-
-    return this.http.post(
-      `${this.baseApiUrl}api/Tasks/RepeatInterview/${taskId}`,
-      payload, 
+    this.http.put(`${this.baseApiUrl}new-status-for-task/${tasksId}`, payload, 
       {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' } 
-      }
-    );
-  }
-  
-
-  public DeleteTask(taskId :string) : void
-  {
-    this.http.delete(`${this.baseApiUrl}api/Tasks/DeleteTask${taskId}`, { withCredentials: true })
-    .subscribe(
-      response => {
-        console.log('Успешный ответ:', response);
-      },
-      error => {
-        console.error('Ошибка:', error);
-      }
-    );
-  
-  
-  }
-
-  public getTasksOfDay(day: DateTime): Tasks[]
-  {
-    //if(this.allTasks.length == 0) this.LoadAllTasks();
-    console.log("getTasksOfDay " +  day.day +" из : " + this.allTasks);
-    let tasks =  this.allTasks
-      .filter(task => task.dateTime.hasSame(day, 'day'))
-      .sort((a, b) => {
-        if (a.status !== b.status) {
-          return a.status ? 1 : -1;
+      }).subscribe(
+        response => {
+            console.log('Status updated successfully');
+        },
+        error => {
+            console.error('Error updating status', error);
         }
-        return a.dateTime.valueOf() - b.dateTime.valueOf();
-      });
-      return tasks;
+    );
+}
+
+
+  public addNewTask(payload: {surname: string; firstName: string; patronymic: string;
+    country: string; phone: string; email: string;
+    post: string;
+    interviewDate: string;
+  }) : Observable<TasksRequest>{
+    
+    // Создаем task объект, соответствующий структуре InterviewCreateRequest
+    const task = {
+      candidate: {
+        surname: payload.surname,
+        firstName: payload.firstName,
+        patronymic: payload.patronymic,
+        email: payload.email,
+        phone: payload.phone,
+        country: payload.country
+      },
+      interviewDate: payload.interviewDate,
+      post: payload.post
+    };
+    
+    console.log(task);
+    // Отправляем POST запрос
+    return this.http.post<TasksRequest>(`${this.baseApiUrl}create-new-task`, task, {
+      withCredentials: true,
+    });
   }
   
 }
