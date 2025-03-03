@@ -1,3 +1,10 @@
+/*.fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;  //Значение z-index для отображения над другими элементами 
+}*/
+
 .navbar
 {
     border-bottom: 1px solid lightgray ;

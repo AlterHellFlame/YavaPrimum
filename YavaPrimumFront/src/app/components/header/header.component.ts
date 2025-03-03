@@ -4,6 +4,7 @@ import { UserService } from '../../services/user/user.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { NotifyService } from '../../services/notify/notify.service';
 
 @Component({
   selector: 'app-header',
@@ -21,10 +22,10 @@ export class HeaderComponent implements OnInit{
     email: "",
     post: "",
     phone: "",
-    imgUrl: "profile_photo/default.jpg",
+    imgUrl: "default.jpg",
   };
 
-  constructor(public userService: UserService, private router: Router){}
+  constructor(public userService: UserService, private router: Router, private notify: NotifyService){}
 
   countOfNotify = 0;
   ngOnInit(): void {
@@ -33,11 +34,17 @@ export class HeaderComponent implements OnInit{
         this.user = user
       }
     )
-    this.userService.getNotifications().subscribe(notifications =>
+    this.notify.getNotifications().subscribe(notifications =>
       {
-        this.countOfNotify = notifications.length;
-      }
-    )
+        this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;
+      });
+
+    this.notify.addReceiveListener((message) => {
+      this.notify.getNotifications().subscribe(notifications =>
+        {
+          this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;
+        });
+    });
     
   }
 

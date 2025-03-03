@@ -1,41 +1,5 @@
 [
   {
-    "ContainingType": "CandidateController",
-    "Method": "CreateCandidat",
-    "RelativePath": "api/Candidate",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "candidateRequest",
-        "Type": "YavaPrimum.Core.DTO.CandidateRequestResponse",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Guid",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CandidateController",
-    "Method": "GetCandidates",
-    "RelativePath": "api/Candidate",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetTasks",
     "RelativePath": "api/Tasks",
@@ -46,32 +10,6 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DataBase.Models.Tasks, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.HRController",
-    "Method": "ChangeNewIntreview",
-    "RelativePath": "change-task",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "YavaPrimum.Core.DTO.InterviewCreateRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Guid",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -229,6 +167,27 @@
     ]
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GiveCandidateToPo",
+    "RelativePath": "give-candidate-to-po/{notificationId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "Login",
     "RelativePath": "login",
@@ -309,13 +268,13 @@
   {
     "ContainingType": "YavaPrimum.API.Controllers.UserController",
     "Method": "ReadNotification",
-    "RelativePath": "read-notification/{taskId}",
-    "HttpMethod": "POST",
+    "RelativePath": "read-notification/{notificationId}",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "taskId",
+        "Name": "notificationId",
         "Type": "System.Guid",
         "IsRequired": true
       }

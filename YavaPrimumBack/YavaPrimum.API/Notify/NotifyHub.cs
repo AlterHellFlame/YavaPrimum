@@ -19,13 +19,13 @@ namespace YavaPrimum.API.Notify
         public async Task SendToUser(string message)
         {
             Console.WriteLine("Сообщение для кадровика: " + message);
-            await this.Clients.User("2C0BA6CA-F14C-4733-B567-A1D851314259".ToLower()).SendAsync("Receive", message);
+            await this.Clients.All.SendAsync("Receive", message);
         }
 
         public async Task SendToCountry(string message)
         {
             Console.WriteLine("Сообщение для кадровика: " + message);
-            await this.Clients.User("2C0BA6CA-F14C-4733-B567-A1D851314259".ToLower()).SendAsync("Receive", message);
+            await this.Clients.All.SendAsync("Receive", message);
         }
 
         public async Task Grouping(string message)

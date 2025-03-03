@@ -1,6 +1,7 @@
 .card
 {
   width: 50%;
+  min-width: 500px;
 }
 
 .container
@@ -8,4 +9,9 @@
   display: flex;
   flex-direction: column;
   align-items: center
+}
+
+.readed
+{
+  background-color: lightgray;
 }

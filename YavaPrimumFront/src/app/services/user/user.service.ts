@@ -16,9 +16,4 @@ export class UserService {
   {
       return this.http.get<User>(`${this.baseApiUrl}get-user-data`, { withCredentials: true });
   }
-
-  public getNotifications() : Observable<Notifications[]>
-  {
-      return this.http.get<Notifications[]>(`${this.baseApiUrl}get-notifications`, { withCredentials: true });
-  }
 }

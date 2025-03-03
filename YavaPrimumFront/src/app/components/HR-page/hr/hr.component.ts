@@ -40,7 +40,7 @@ export class HrComponent implements OnInit {
         this.loading = false;
       }
     });
-    
+    console.log("Этот пользователь HR? " + this.isHr)
   }
 
   public getTasks(day: any) : void

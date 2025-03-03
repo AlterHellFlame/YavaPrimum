@@ -77,13 +77,41 @@ namespace YavaPrimum.API.Controllers
             }
             string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
 
-            return await _notificationsService.GetNotificatonsByUserId(await _jwtProvider.GetUserIdFromToken(token));
+            return await _notificationsService.GetAllByUserId(await _jwtProvider.GetUserIdFromToken(token));
         }
 
-        [HttpPost("/read-notification/{taskId:guid}")]
-        public async Task<ActionResult> ReadNotification(Guid taskId)
+        [HttpPut("/read-notification/{notificationId:guid}")]
+        public async Task<ActionResult> ReadNotification(Guid notificationId)
         {
-            _notificationsService.ReadNotification(taskId);
+
+            Console.WriteLine("Сообщение прочитано");
+
+            Notifications notification = await _notificationsService.GetById(notificationId);
+
+            if (notification.ArchiveTasks.Status.Name == "Собеседование пройдено")
+            {
+                if (HttpContext.Request.Cookies.Count == 0)
+                {
+                    Console.WriteLine("Куков нет");
+                    return Ok();
+                }
+                string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+
+
+                Tasks newTask = new Tasks
+                {
+                    TasksId = Guid.NewGuid(),
+
+                    Status = await _tasksService.GetStatusByName("Взят кандидат"),
+                    Candidate = notification.ArchiveTasks.Task.Candidate,
+                    CandidatePost = notification.ArchiveTasks.Task.CandidatePost,
+                    User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
+                };
+
+                await _tasksService.Create(newTask);
+            }
+            await _notificationsService.ReadNotification(notificationId);
             return Ok();
         }
 

@@ -24,36 +24,69 @@ namespace YavaPrimum.Core.Services
             _userService = userService;
         }
 
-        public async Task<List<NotificationsResponse>> GetNotificatonsByUserId(Guid id)
+        public async Task<Notifications> GetById(Guid id)
+        {
+
+            Notifications n = await _dbContext.Notifications
+                .Include(t => t.ArchiveTasks)
+                 .Include(t => t.ArchiveTasks.Status)
+                .Include(c => c.ArchiveTasks.Task.Candidate)
+                .Include(c => c.ArchiveTasks.Task.Candidate.Country)
+                .Include(c => c.ArchiveTasks.Task.Candidate)
+                .Include(u => u.ArchiveTasks.Task.CandidatePost)
+                .Include(u => u.ArchiveTasks.Task.User)
+                .Include(u => u.ArchiveTasks.Task.User.Company)
+                .Include(u => u.ArchiveTasks.Task.User.Company.Country)
+                .Include(u => u.ArchiveTasks.Task.User.Post)
+                .Include(u => u.ArchiveTasks.Task.Status)
+                .Include(u => u.ArchiveTasks.Task)
+                .Include(r => r.Recipient)
+                .Include(r => r.Recipient.Post)
+                .Include(r => r.Recipient.Company)
+                .Include(r => r.Recipient.Company.Country)
+                .Where(r => r.NotificationsId == id)
+                .FirstOrDefaultAsync();
+
+            return n;
+        }
+
+        public async Task<List<NotificationsResponse>> GetAllByUserId(Guid id)
         {
             List<Notifications> notifications = await _dbContext.Notifications
-                .Include(t => t.Task)
-                .Include(t => t.Status)
-                .Include(c => c.Task.Candidate)
-                .Include(c => c.Task.Candidate.Country)
-                .Include(c => c.Task.Candidate)
-                .Include(u => u.Task.User)
-                .Include(u => u.Task.User.Company)
-                .Include(u => u.Task.User.Company.Country)
-                .Include(u => u.Task.User.Post)
+                .Include(t => t.ArchiveTasks)
+                .Include(t => t.ArchiveTasks.Status)
+                .Include(c => c.ArchiveTasks.Task.Candidate)
+                .Include(c => c.ArchiveTasks.Task.Candidate.Country)
+                .Include(c => c.ArchiveTasks.Task.Candidate)
+                .Include(u => u.ArchiveTasks.Task.CandidatePost)
+                .Include(u => u.ArchiveTasks.Task.User)
+                .Include(u => u.ArchiveTasks.Task.User.Company)
+                .Include(u => u.ArchiveTasks.Task.User.Company.Country)
+                .Include(u => u.ArchiveTasks.Task.User.Post)
+                .Include(u => u.ArchiveTasks.Task.Status)
+                .Include(u => u.ArchiveTasks.Task)
                 .Include(r => r.Recipient)
                 .Include(r => r.Recipient.Post)
                 .Include(r => r.Recipient.Company)
                 .Include(r => r.Recipient.Company.Country)
                 .Where(r => r.Recipient.UserId == id)
+                .OrderByDescending(n => n.ArchiveTasks.DateTimeOfCreated) // Сортировка по дате создания (от новой к старой)
                 .ToListAsync();
 
             List<NotificationsResponse> notificationsResponse = new List<NotificationsResponse>();
 
             foreach (var notification in notifications)
             {
+
                 notificationsResponse.Add(new NotificationsResponse
                 {
-                    Task = await _tasksService.ConvertToFront(notification.Task),
-                    DateTime = notification.DateTime,
+                    NotificationsId = notification.NotificationsId,
+                    Task = await _tasksService.ConvertToFront(task: notification.ArchiveTasks.Task),
+                    DateTime = notification.ArchiveTasks.DateTimeOfCreated,
                     IsReaded = notification.IsReaded,
                     TextMessage = notification.TextMessage,
-                    Recipient = await _userService.ConvertToFront(notification.Recipient)
+                    Recipient = await _userService.ConvertToFront(notification.Recipient),
+                    Status = notification.ArchiveTasks.Status.Name,
                 });
             }
             if (notificationsResponse != null)
@@ -65,19 +98,8 @@ namespace YavaPrimum.Core.Services
 
         public async Task ReadNotification(Guid id)
         {
-            Notifications notification = await _dbContext.Notifications
-            /*.Include(t => t.Task)
-            .Include(t => t.Status)
-            .Include(c => c.Task.Candidate)
-            .Include(c => c.Task.Candidate.Country)
-            .Include(c => c.Task.Candidate)
-            .Include(r => r.Recipient)
-            .Include(r => r.Recipient.Post)
-            .Include(r => r.Recipient.Company)
-            .Include(r => r.Recipient.Company.Country)*/
-            .Where(r => r.NotificationsId == id)
-            .FirstOrDefaultAsync();
-
+            Notifications notification = await GetById(id);
+            Console.WriteLine(notification.ToString);
             notification.IsReaded = true;
 
             _dbContext.Update(notification);

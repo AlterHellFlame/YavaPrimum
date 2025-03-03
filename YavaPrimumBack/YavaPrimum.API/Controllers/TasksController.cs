@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -17,6 +18,7 @@ namespace YavaPrimum.API.Controllers
         private IUserService _userService;
         private IJwtProvider _jwtProvider;
         private ITasksService _tasksService;
+        private INotificationsService _notificationsService;
 
         public TasksController(
             ICandidateService candidateService,
@@ -24,7 +26,8 @@ namespace YavaPrimum.API.Controllers
             IPostService postService,
             IUserService userService,
             IJwtProvider jwtProvider,
-            ITasksService tasksService)
+            ITasksService tasksService,
+            INotificationsService notificationsService)
         {
             _candidateService = candidateService;
             _countryService = countryService;
@@ -32,6 +35,7 @@ namespace YavaPrimum.API.Controllers
             _userService = userService;
             _jwtProvider = jwtProvider;
             _tasksService = tasksService;
+            _notificationsService = notificationsService;
         }
 
         [HttpGet]
@@ -87,8 +91,9 @@ namespace YavaPrimum.API.Controllers
                 TasksId = new Guid(),
                 Candidate = candidate,
                 DateTime = Convert.ToDateTime(taskRequest.InterviewDate),
-                Status = await _tasksService.GetStatusByName("Собеседование"),
-                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
+                Status = await _tasksService.GetStatusByName("Назначено собеседование"),
+                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token)),
+                CandidatePost = await _postService.GetByName(taskRequest.Post)
             };
 
             await _candidateService.Create(candidate);
@@ -101,13 +106,17 @@ namespace YavaPrimum.API.Controllers
         {
             if(status.Value == "passed")
             {
-                status.Value = "Подбор кадровика";
+                status.Value = "Собеседование пройдено";
+            }
+            else if (status.Value == "failed")
+            {
+                status.Value = "Собеседование не пройдено";
             }
             // Получаем задачу по идентификатору
             Tasks task = await _tasksService.GetById(taskId);
             await _tasksService.SetNewStatus(task, status.Value);
 
-            if (status.Value == "Подбор кадровика")
+            /*if (status.Value == "Подбор кадровика")
             {
                 Console.WriteLine("Рассылка для поиска кадровика");
                 
@@ -117,7 +126,7 @@ namespace YavaPrimum.API.Controllers
                 Guid userId = new Guid("7fc78775-1e04-4b47-bb62-516d99a6f0e4");
 
                 // Создаем новую задачу
-                /*Tasks newTask = new Tasks
+                Tasks newTask = new Tasks
                 {
                     TasksId = Guid.NewGuid(),
 
@@ -128,8 +137,62 @@ namespace YavaPrimum.API.Controllers
 
                 // Сохраняем новую задачу
                 Guid newTaskId = await _tasksService.Create(newTask);
-                Console.WriteLine(newTaskId);*/
+                Console.WriteLine(newTaskId);
+            }*/
+
+            return Ok();
+        }
+
+        [HttpPut("/give-candidate-to-po/{notificationId:guid}")]
+        public async Task<ActionResult> GiveCandidateToPo(Guid notificationId, [FromBody] StringRequest status)
+        {
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok();
             }
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+            Notifications notification = await _notificationsService.GetById(notificationId);
+
+
+            Tasks newTask = new Tasks
+            {
+                TasksId = Guid.NewGuid(),
+
+                Status = await _tasksService.GetStatusByName("Взят кандидат"),
+                Candidate = notification.ArchiveTasks.Task.Candidate,
+                CandidatePost = notification.ArchiveTasks.Task.CandidatePost,
+                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
+            };
+
+            // Получаем задачу по идентификатору
+            /*Tasks task = await _tasksService.GetById(taskId);
+            await _tasksService.SetNewStatus(task, status.Value);*/
+
+            /*if (status.Value == "Подбор кадровика")
+            {
+                Console.WriteLine("Рассылка для поиска кадровика");
+                
+                await _tasksService.SetNewStatus(task, "Выполнено");
+
+                // Создаем новый идентификатор для пользователя
+                Guid userId = new Guid("7fc78775-1e04-4b47-bb62-516d99a6f0e4");
+
+                // Создаем новую задачу
+                Tasks newTask = new Tasks
+                {
+                    TasksId = Guid.NewGuid(),
+
+                    Status = await _tasksService.GetStatusByName("Задать дату"),
+                    Candidate = task.Candidate,
+                    User = await _userService.GetById(userId) //TODO Заменить на актуальный идентификатор пользователя
+                };
+
+                // Сохраняем новую задачу
+                Guid newTaskId = await _tasksService.Create(newTask);
+                Console.WriteLine(newTaskId);
+            }*/
 
             return Ok();
         }

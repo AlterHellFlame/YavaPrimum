@@ -86,6 +86,35 @@ namespace YavaPrimum.Core.Services
             return tasksResponse;
         }
 
+        public async Task<List<TasksResponse>> ConvertArchiveToFront(List<ArchiveTasks> tasks)
+        {
+            List<Task<TasksResponse>> taskResponseTasks = tasks.Select(task => ConvertArchiveToFront(task)).ToList();
+            TasksResponse[] taskResponses = await Task.WhenAll(taskResponseTasks);
+            return taskResponses.ToList();
+        }
+
+        public async Task<TasksResponse> ConvertArchiveToFront(ArchiveTasks task)
+        {
+            TasksResponse tasksResponse = new TasksResponse
+            {
+                TaskId = task.ArchiveTasksId,
+                Status = task.Status.Name,
+                DateTime = task.DateTimeOfCreated,
+                User = task.Task.User,
+                Candidate = new CandidateRequestResponse
+                {
+                    Surname = task.Task.Candidate.Surname,
+                    FirstName = task.Task.Candidate.FirstName,
+                    Patronymic = task.Task.Candidate.Patronymic,
+                    Email = task.Task.Candidate.Email,
+                    Phone = task.Task.Candidate.Phone,
+                    Country = task.Task.Candidate.Country.Name
+                }
+            };
+
+            return tasksResponse;
+        }
+
 
         public async Task Delete(Guid taskId)
         {

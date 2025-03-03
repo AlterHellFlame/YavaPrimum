@@ -22,6 +22,30 @@ namespace YavaPrimum.Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.ArchiveTasks", b =>
+                {
+                    b.Property<Guid>("ArchiveTasksId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTimeOfCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StatusTasksStatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TasksId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ArchiveTasksId");
+
+                    b.HasIndex("StatusTasksStatusId");
+
+                    b.HasIndex("TasksId");
+
+                    b.ToTable("ArchiveTasks");
+                });
+
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Candidate", b =>
                 {
                     b.Property<Guid>("CandidateId")
@@ -103,19 +127,13 @@ namespace YavaPrimum.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("ArchiveTasksId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsReaded")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("RecipientUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StatusTasksStatusId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TasksId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TextMessage")
@@ -124,11 +142,9 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasKey("NotificationsId");
 
+                    b.HasIndex("ArchiveTasksId");
+
                     b.HasIndex("RecipientUserId");
-
-                    b.HasIndex("StatusTasksStatusId");
-
-                    b.HasIndex("TasksId");
 
                     b.ToTable("Notifications");
                 });
@@ -258,6 +274,25 @@ namespace YavaPrimum.Core.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.ArchiveTasks", b =>
+                {
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.TasksStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusTasksStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.Tasks", "Task")
+                        .WithMany()
+                        .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Candidate", b =>
                 {
                     b.HasOne("YavaPrimum.Core.DataBase.Models.Country", "Country")
@@ -282,29 +317,21 @@ namespace YavaPrimum.Core.Migrations
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Notifications", b =>
                 {
+                    b.HasOne("YavaPrimum.Core.DataBase.Models.ArchiveTasks", "ArchiveTasks")
+                        .WithMany()
+                        .HasForeignKey("ArchiveTasksId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("YavaPrimum.Core.DataBase.Models.User", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.TasksStatus", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusTasksStatusId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("YavaPrimum.Core.DataBase.Models.Tasks", "Task")
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ArchiveTasks");
 
                     b.Navigation("Recipient");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Tasks", b =>

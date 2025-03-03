@@ -10,5 +10,5 @@ export interface Notifications
     isReaded: boolean,
     dateTime: DateTime,
     textMessage: string,
-    Status: string
+    status: string
 }

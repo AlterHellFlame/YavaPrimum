@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
 import { Notifications } from '../../../data/interface/Notifications.interface';
 import { DateTime } from 'luxon';
+import { NotifyService } from '../../../services/notify/notify.service';
 
 @Component({
   selector: 'app-notifications',
@@ -13,16 +14,25 @@ import { DateTime } from 'luxon';
 export class NotificationsComponent implements OnInit {
   notifications: Notifications[] = [];
 
-  constructor(public userService: UserService) {}
+  constructor(public notify: NotifyService) {}
 
   ngOnInit(): void {
-    this.userService.getNotifications().subscribe(notifications =>
+    this.notify.getNotifications().subscribe(notifications =>
       {
         this.notifications = notifications;
-        console.log('BRUH' + notifications[0].task.user.surname)
+        console.log(notifications[0].notificationsId)
 
-      }
-    )
+      });
+
+    
+    this.notify.addReceiveListener((message) => {
+      this.notify.getNotifications().subscribe(notifications =>
+        {
+          this.notifications = notifications;
+          console.log(notifications[0].notificationsId)
+  
+        });
+    });
   }
 
   public toFormat(dateTime: string): string
@@ -30,6 +40,15 @@ export class NotificationsComponent implements OnInit {
     return DateTime.fromISO(dateTime).toFormat('dd.MM.yy HH:mm').toString();
   }
 
-  markAsRead(notification: Notifications): void {
+  markAsRead(notification: Notifications): void 
+  {
+    console.log('Читаем сообщение' + notification.notificationsId );
+    this.notify.readNotification(notification.notificationsId).subscribe(
+      t => 
+      {
+        console.log('Успех');
+        notification.isReaded = true;
+      }
+    );
   }
 }

@@ -9,7 +9,9 @@ namespace YavaPrimum.Core.Interfaces
         Task<List<Tasks>> GetAll();
         Task<List<Tasks>> GetAllByUserId(Guid userId);
         Task<List<TasksResponse>> ConvertToFront(List<Tasks> tasks);
-        Task<TasksResponse> ConvertToFront(Tasks tasks);
+        Task<TasksResponse> ConvertToFront(Tasks task);
+        Task<List<TasksResponse>> ConvertArchiveToFront(List<ArchiveTasks> tasks);
+        Task<TasksResponse> ConvertArchiveToFront(ArchiveTasks task);
         Task Delete(Guid taskId);
         Task PassedInterview(Guid taskId);
         Task FaidInterview(Guid taskId);

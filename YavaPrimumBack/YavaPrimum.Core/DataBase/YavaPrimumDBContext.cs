@@ -46,13 +46,32 @@ namespace YavaPrimum.Core.DataBase
 
 
             modelBuilder.Entity<Notifications>()
-                .HasOne(t => t.Status)
+                .HasOne(t => t.ArchiveTasks)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction); // Указываем NO ACTION при удалении
 
+            modelBuilder.Entity<ArchiveTasks>()
+                .HasOne(a => a.Task)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction); // вместо DeleteBehavior.Cascade
 
-            modelBuilder.Entity<Tasks>()
-           .ToTable(tb => tb.HasTrigger("trg_updTask_crtNotification"));
+            modelBuilder.Entity<ArchiveTasks>()
+                .HasOne(a => a.Status)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Tasks>(entity =>
+            {
+                entity.ToTable("Tasks");
+                entity.ToTable(tb => tb.HasTrigger("trg_AfterUpdate_Tasks"));
+                entity.ToTable(tb => tb.HasTrigger("trg_AfterInsert_Tasks"));
+            });
+
+            modelBuilder.Entity<TasksStatus>(entity =>
+            {
+                entity.ToTable("TasksStatus");
+                entity.ToTable(tb => tb.HasTrigger("trg_AfterUpdate_TasksStatus"));
+            });
         }
 
     }

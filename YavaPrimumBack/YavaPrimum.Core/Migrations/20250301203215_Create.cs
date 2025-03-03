@@ -162,31 +162,48 @@ namespace YavaPrimum.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArchiveTasks",
+                columns: table => new
+                {
+                    ArchiveTasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StatusTasksStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateTimeOfCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArchiveTasks", x => x.ArchiveTasksId);
+                    table.ForeignKey(
+                        name: "FK_ArchiveTasks_TasksStatus_StatusTasksStatusId",
+                        column: x => x.StatusTasksStatusId,
+                        principalTable: "TasksStatus",
+                        principalColumn: "TasksStatusId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArchiveTasks_Tasks_TasksId",
+                        column: x => x.TasksId,
+                        principalTable: "Tasks",
+                        principalColumn: "TasksId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Notifications",
                 columns: table => new
                 {
                     NotificationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArchiveTasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RecipientUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TextMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsReaded = table.Column<bool>(type: "bit", nullable: false),
-                    StatusTasksStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IsReaded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.NotificationsId);
                     table.ForeignKey(
-                        name: "FK_Notifications_TasksStatus_StatusTasksStatusId",
-                        column: x => x.StatusTasksStatusId,
-                        principalTable: "TasksStatus",
-                        principalColumn: "TasksStatusId");
-                    table.ForeignKey(
-                        name: "FK_Notifications_Tasks_TasksId",
-                        column: x => x.TasksId,
-                        principalTable: "Tasks",
-                        principalColumn: "TasksId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Notifications_ArchiveTasks_ArchiveTasksId",
+                        column: x => x.ArchiveTasksId,
+                        principalTable: "ArchiveTasks",
+                        principalColumn: "ArchiveTasksId");
                     table.ForeignKey(
                         name: "FK_Notifications_User_RecipientUserId",
                         column: x => x.RecipientUserId,
@@ -194,6 +211,16 @@ namespace YavaPrimum.Core.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArchiveTasks_StatusTasksStatusId",
+                table: "ArchiveTasks",
+                column: "StatusTasksStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArchiveTasks_TasksId",
+                table: "ArchiveTasks",
+                column: "TasksId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Candidate_CountryId",
@@ -206,19 +233,14 @@ namespace YavaPrimum.Core.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Notifications_ArchiveTasksId",
+                table: "Notifications",
+                column: "ArchiveTasksId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_RecipientUserId",
                 table: "Notifications",
                 column: "RecipientUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_StatusTasksStatusId",
-                table: "Notifications",
-                column: "StatusTasksStatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_TasksId",
-                table: "Notifications",
-                column: "TasksId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_CandidateId",
@@ -256,6 +278,9 @@ namespace YavaPrimum.Core.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "ArchiveTasks");
 
             migrationBuilder.DropTable(
                 name: "Tasks");

@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
+import { Notifications } from '../../data/interface/Notifications.interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotifyService {
-  
+  baseApiUrl = 'https://localhost:7247/';
   private hubConnection: signalR.HubConnection;
 
-  constructor() {
+  constructor(private http : HttpClient) {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7247/chat')
       .build();
@@ -45,4 +48,16 @@ export class NotifyService {
       console.error('Соединение отсутствует');
     }
   }
+
+  public getNotifications() : Observable<Notifications[]>
+  {
+      return this.http.get<Notifications[]>(`${this.baseApiUrl}get-notifications`, { withCredentials: true });
+  }
+
+  public readNotification(notificationId : string) : Observable<object>
+  {
+      return this.http.put(`${this.baseApiUrl}read-notification/${notificationId}`, {}, { withCredentials: true });
+  }
+
+
 }
