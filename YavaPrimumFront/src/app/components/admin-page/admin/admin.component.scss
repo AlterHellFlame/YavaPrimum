@@ -1,0 +1,40 @@
+.table 
+{
+  width: 15vw;
+  font-size: small;
+
+  input
+  {
+    font-size: smaller;
+    padding: 2px;
+  }
+
+}
+
+.photo
+{
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+}
+
+.btn-mini
+{
+  font-size: small !important;
+  padding: 2px !important;
+}
+  
+.contain {
+  display: flex;
+}
+
+.chart-container
+{
+  width: 40%;
+}
+
+.headline-control
+{
+    cursor: pointer;
+}
+

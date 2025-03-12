@@ -17,18 +17,23 @@ export class TaskService {
   }
 
   public loadAllTasks(): Observable<Tasks[]> {
-    return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-tasks`, { withCredentials: true });
+    return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-tasks-of-user`, { withCredentials: true });
   }
 
-  public getAllTasks(): Tasks[] {
+  public getAllTasksOfUser(): Tasks[] {
     console.log("GetAllTasks " + this.allTasks);
     return this.allTasks;
+  }
+
+  
+  public getAllTasks(): Observable<Tasks[]> {
+    return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-tasks`, { withCredentials: true });
   }
 
   public setAllTasks(tasks: Tasks[]): void {
     this.allTasks = tasks;
     console.log("SetAllTasks " + this.allTasks);
-    this.getAllTasks()
+    this.getAllTasksOfUser()
     
   }
 

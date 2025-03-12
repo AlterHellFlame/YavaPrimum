@@ -1,6 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <h3 (click)="navigateTo('account/hr')">YavaPrimum</h3>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <span class="d-inline-flex align-items-center" >
+        <h3>YavaPrimum</h3>
+        <span class="d-inline-flex panel gap-2">
+            <p *ngIf="isAdmin" (click)="navigateTo('account/admin')">Главная</p>
+            <p *ngIf="isAdmin" (click)="navigateTo('account/charts')">Статистика</p>
+            <p *ngIf="!isAdmin" (click)="navigateTo('account/hr')">Главная</p>
+        </span>
+    </span>
     <span class="d-inline-flex toUserData">
         <span class="notify-container" (click)="navigateTo('account/notifications')">
             <div class="notify" *ngIf="countOfNotify > 0">{{countOfNotify}}</div>

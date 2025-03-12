@@ -27,7 +27,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Запрос");
-    this.allTasks = this.taskService.getAllTasks();
+    this.allTasks = this.taskService.getAllTasksOfUser();
     this.computeDaysOfMonth();
     this.setActiveDay(this.today);
   }

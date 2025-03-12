@@ -34,24 +34,26 @@ export class AuthorizationComponent {
         if (response == "HR") 
         {
           localStorage.setItem('isHR', 'true');
+          localStorage.setItem('isAdmin', 'false');
           this.router.navigate(['/account/hr']);
         } 
         else if (response == "Кадровик") 
         {
           localStorage.setItem('isHR', 'false');
+          localStorage.setItem('isAdmin', 'false');
           this.router.navigate(['/account/po']);
         }
         else if (response == "!Админ") 
         {
             localStorage.setItem('isHR', 'false');
+            localStorage.setItem('isAdmin', 'true');
             this.router.navigate(['/account/admin']);
         }
       },
       error: (error) => {
-        console.error('Ошибка входа:', error);
         if(error.status == 500)
         {
-          this.loginError = 'Ошибка входа';
+          this.loginError = 'Неверный логин или пароль';
         }
         else
         {

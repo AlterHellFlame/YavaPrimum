@@ -77,7 +77,6 @@ namespace YavaPrimum.Core.Services
 
             foreach (var notification in notifications)
             {
-
                 notificationsResponse.Add(new NotificationsResponse
                 {
                     NotificationsId = notification.NotificationsId,
@@ -89,12 +88,19 @@ namespace YavaPrimum.Core.Services
                     Status = notification.ArchiveTasks.Status.Name,
                 });
             }
-            if (notificationsResponse != null)
+
+            if (notificationsResponse.Count > 0)
             {
-                Console.WriteLine("Уведомлений у" + notificationsResponse[0].Recipient.Surname + " : " + notificationsResponse.Count);
+                Console.WriteLine("Уведомлений у " + notificationsResponse[0].Recipient.Surname + " : " + notificationsResponse.Count);
             }
+            else
+            {
+                Console.WriteLine("Уведомлений нет.");
+            }
+
             return notificationsResponse;
         }
+
 
         public async Task ReadNotification(Guid id)
         {

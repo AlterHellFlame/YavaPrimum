@@ -70,7 +70,7 @@ namespace YavaPrimum.Core.Services
                 Email = userRequestResponce.Email,
                 Phone = userRequestResponce.Phone,
 
-                ImgUrl = userRequestResponce.ImgUrl,
+                ImgUrl = "default.jpg",
                 PasswordHash = passwordHash,
                 Post = await _postService.GetByName(userRequestResponce.Post),
                 Company = await _companyService.GetByName(userRequestResponce.Company),

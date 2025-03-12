@@ -1,17 +1,21 @@
-.card
-{
-  width: 50%;
-  min-width: 500px;
-}
-
 .container
 {
   display: flex;
   flex-direction: column;
-  align-items: center
-}
+  align-items: center;
 
-.readed
+  .form-check {
+    left: 350px;
+    width: 250px;
+  }
+
+.card
 {
-  background-color: lightgray;
+  width: 50%;
+  min-width: 500px;
+
+  &.readed {
+    background-color: #f8f9fa;
+  }
+}
 }

@@ -7,6 +7,8 @@ namespace YavaPrimum.Core.Interfaces
     {
         Task<Guid> Create(Tasks task);
         Task<List<Tasks>> GetAll();
+        Task<List<ArchiveTasks>> GetAllAcrhive();
+        Task<List<ArchiveTasks>> GetAllAcrhiveByUserId(Guid userId);
         Task<List<Tasks>> GetAllByUserId(Guid userId);
         Task<List<TasksResponse>> ConvertToFront(List<Tasks> tasks);
         Task<TasksResponse> ConvertToFront(Tasks task);

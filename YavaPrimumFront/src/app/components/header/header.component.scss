@@ -1,9 +1,9 @@
-/*.fixed-top {
+.fixed-top {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1030;  //Значение z-index для отображения над другими элементами 
-}*/
+}
 
 .navbar
 {
@@ -17,6 +17,11 @@
     justify-content: space-between;
     align-items: center;
 
+
+    .panel
+    {
+        margin-left: 100px;
+    }
     .photo
     {
         border-radius: 100%;
@@ -25,11 +30,6 @@
     }
 
     .toUserData
-    {
-        cursor: pointer;
-        font-size: large;
-    }
-    .toUserData:hover
     {
         cursor: pointer;
         font-size: large;
@@ -58,5 +58,6 @@
 
 .page
 {
+    margin-top: 60px;
     padding: 0px 20px;
 }

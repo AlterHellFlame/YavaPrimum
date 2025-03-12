@@ -1,5 +1,6 @@
 export interface PostsCountries
 {
     posts: string[],
-    countries: string[]
+    countries: string[],
+    companies: string[]
 }

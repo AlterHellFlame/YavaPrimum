@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Threading.Tasks;
 using YavaPrimum.Core.DataBase.Models;
 
@@ -20,6 +21,7 @@ namespace YavaPrimum.Core.DataBase
         public DbSet<Country> Country { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Notifications> Notifications { get; set; }
+        public DbSet<ArchiveTasks> ArchiveTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,6 +74,20 @@ namespace YavaPrimum.Core.DataBase
                 entity.ToTable("TasksStatus");
                 entity.ToTable(tb => tb.HasTrigger("trg_AfterUpdate_TasksStatus"));
             });
+
+            modelBuilder.Entity<Notifications>(entity =>
+            {
+                entity.ToTable("Notifications");
+                entity.ToTable(tb => tb.HasTrigger("trg_AfterUpdate_Notifications"));
+            });
+
+            /*modelBuilder.Entity<Notifications>(entity =>
+            {
+                entity.ToTable("Notifications");
+                entity.ToTable(tb => tb.HasTrigger("trg_AfterUpdate_Notifications"));
+                entity.Property(e => e.IsReaded).Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+                entity.Property(e => e.IsReaded).Metadata.SetBeforeSaveBehavior(PropertySaveBehavior.Ignore);
+            });*/
         }
 
     }

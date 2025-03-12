@@ -29,7 +29,7 @@
       
   
         <ng-container *ngFor="let task of getTasksForDay(dayOfMonth) | slice:0:4">
-          <div class="task-interview px-1" [ngClass]="{'task-compleate': task.status == 'Выполнено'}">
+          <div class="task-interview px-1" [ngClass]="{'task-compleate': task.typeStatus == 2}">
             {{task.dateTime.toFormat("HH:mm")}} {{task.candidate.surname}}
           </div>
         </ng-container>

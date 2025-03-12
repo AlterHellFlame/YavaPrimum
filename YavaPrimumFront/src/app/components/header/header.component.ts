@@ -14,7 +14,9 @@ import { NotifyService } from '../../services/notify/notify.service';
 })
 export class HeaderComponent implements OnInit{
   
+  isAdmin: boolean = (localStorage.getItem('isAdmin') === 'true'? true : false);
   user: User = {
+    userId: "",
     surname: "Пользователь",
     firstName: "не найден",
     patronymic: "",
@@ -40,6 +42,7 @@ export class HeaderComponent implements OnInit{
       });
 
     this.notify.addReceiveListener((message) => {
+      window.location.reload();
       this.notify.getNotifications().subscribe(notifications =>
         {
           this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;

@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -32,27 +33,72 @@ namespace YavaPrimum.Core.Services
             return await _dBContext.Tasks
                 .Include(t => t.Status)
                 .Include(t => t.User)
+                .Include(t => t.User.Company)
+                .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.CandidatePost)
+                .ToListAsync();
+        }
+
+        public async Task<List<ArchiveTasks>> GetAllAcrhive()
+        {
+            return await _dBContext.ArchiveTasks
+                .Include(t => t.Status)
+                .Include(t => t.Task)
+                .Include(t => t.Task.User)
+                .Include(t => t.Task.User.Post)
+                .Include(t => t.Task.User.Company)
+                .Include(t => t.Task.User.Company.Country)
+                .Include(t => t.Task.Candidate)
+                .Include(t => t.Task.Candidate.Country)
+                .Include(t => t.Task.CandidatePost)
+                .Where(t => t.Status.TypeStatus != -1)
+                .ToListAsync();
+        }
+
+
+        public async Task<List<ArchiveTasks>> GetAllAcrhiveByUserId(Guid userId)
+        {
+            return await _dBContext.ArchiveTasks
+                .Include(t => t.Status)
+                .Include(t => t.Task)
+                .Include(t => t.Task.User)
+                .Include(t => t.Task.User.Post)
+                .Include(t => t.Task.User.Company)
+                .Include(t => t.Task.User.Company.Country)
+                .Include(t => t.Task.Candidate)
+                .Include(t => t.Task.Candidate.Country)
+                .Include(t => t.Task.CandidatePost)
+                .Where(t => t.Task.User.UserId == userId && t.Status.TypeStatus != -1)
                 .ToListAsync();
         }
 
         public async Task<Tasks> GetById(Guid taskId)
         {
             return await _dBContext.Tasks
-                .Include(t => t.Candidate)
-                .Include(t => t.Candidate.Country)
                 .Include(t => t.Status)
                 .Include(t => t.User)
+                .Include(t => t.User.Post)
+                .Include(t => t.User.Company)
+                .Include(t => t.User.Company.Country)
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.CandidatePost)
                 .FirstOrDefaultAsync(t => t.TasksId == taskId);
         }
 
         public async Task<List<Tasks>> GetAllByUserId(Guid userId)
         {
             return await _dBContext.Tasks
-                .Include(t => t.Candidate)
-                .Include(t => t.Candidate.Country)
                 .Include(t => t.Status)
                 .Include(t => t.User)
+                .Include(t => t.User.Post)
+                .Include(t => t.User.Company)
+                .Include(t => t.User.Company.Country)
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.CandidatePost)
                 .Where(t => t.User.UserId == userId)
                 .ToListAsync();
         }
@@ -70,8 +116,20 @@ namespace YavaPrimum.Core.Services
             {
                 TaskId = task.TasksId,
                 Status = task.Status.Name,
+                TypeStatus = task.Status.TypeStatus,
                 DateTime = task.DateTime,
-                User = task.User,
+                User = new UserRequestResponse()
+                {
+                    UserId = task.User.UserId,
+                    Surname = task.User.Surname,
+                    FirstName = task.User.FirstName,
+                    Patronymic = task.User.Patronymic,
+                    Post = task.User.Post.Name,
+                    Company = task.User.Company.Name,
+                    Email = task.User.Email,
+                    Phone = task.User.Phone,
+                    ImgUrl = task.User.ImgUrl
+                },
                 Candidate = new CandidateRequestResponse
                 {
                     Surname = task.Candidate.Surname,
@@ -99,8 +157,20 @@ namespace YavaPrimum.Core.Services
             {
                 TaskId = task.ArchiveTasksId,
                 Status = task.Status.Name,
+                TypeStatus = task.Status.TypeStatus,
                 DateTime = task.DateTimeOfCreated,
-                User = task.Task.User,
+                User = new UserRequestResponse()
+                {
+                    UserId = task.Task.User.UserId,
+                    Surname = task.Task.User.Surname,
+                    FirstName = task.Task.User.FirstName,
+                    Patronymic = task.Task.User.Patronymic,
+                    Post = task.Task.User.Post.Name,
+                    Company = task.Task.User.Company.Name,
+                    Email = task.Task.User.Email,
+                    Phone = task.Task.User.Phone,
+                    ImgUrl = task.Task.User.ImgUrl
+                },
                 Candidate = new CandidateRequestResponse
                 {
                     Surname = task.Task.Candidate.Surname,

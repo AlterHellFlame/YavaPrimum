@@ -146,7 +146,12 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasIndex("RecipientUserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", null, t =>
+                        {
+                            t.HasTrigger("trg_AfterUpdate_Notifications");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.Post", b =>
@@ -195,9 +200,11 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks", t =>
+                    b.ToTable("Tasks", null, t =>
                         {
-                            t.HasTrigger("trg_updTask_crtNotification");
+                            t.HasTrigger("trg_AfterInsert_Tasks");
+
+                            t.HasTrigger("trg_AfterUpdate_Tasks");
                         });
 
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
@@ -222,7 +229,12 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasKey("TasksStatusId");
 
-                    b.ToTable("TasksStatus");
+                    b.ToTable("TasksStatus", null, t =>
+                        {
+                            t.HasTrigger("trg_AfterUpdate_TasksStatus");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("YavaPrimum.Core.DataBase.Models.User", b =>

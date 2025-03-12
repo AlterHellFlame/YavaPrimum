@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -14,6 +15,7 @@ namespace YavaPrimum.API.Controllers
         private ICandidateService _candidateService;
         private ICountryService _countryService;
         private IPostService _postService;
+        private ICompanyService _companyService;
         private IUserService _userService;
         private IJwtProvider _jwtProvider;
         private ITasksService _tasksService;
@@ -26,7 +28,8 @@ namespace YavaPrimum.API.Controllers
             IUserService userService,
             IJwtProvider jwtProvider,
             ITasksService tasksService,
-            INotificationsService notificationsService)
+            INotificationsService notificationsService,
+            ICompanyService companyService)
         {
             _candidateService = candidateService;
             _countryService = countryService;
@@ -35,8 +38,37 @@ namespace YavaPrimum.API.Controllers
             _jwtProvider = jwtProvider;
             _tasksService = tasksService;
             _notificationsService = notificationsService;
+            _companyService = companyService;
         }
 
+
+        [HttpPost("/update-user-data")]
+        public async Task<ActionResult<UserRequestResponse>> UpdateUserData([FromBody] UserRequestResponse request)
+        {
+            User user = await _userService.GetById(request.UserId);
+
+
+            user.Surname = request.Surname;
+            user.FirstName = request.FirstName;
+            user.Patronymic = request.Patronymic;
+            user.Company = await _companyService.GetByName(request.Company);
+            user.Email = request.Email;
+            user.Phone = request.Phone;
+
+            user.Post = await _postService.GetByName(request.Post);
+            await _userService.UpdateUser(user);
+
+            return Ok();
+        }
+
+
+        [HttpDelete("/delete-user/{userId:guid}")]
+        public async Task<ActionResult<UserRequestResponse>> DeleteUser(Guid userId)
+        {
+            await _userService.DeleteUserById(userId);
+
+            return Ok();
+        }
 
         [HttpGet("/get-user-data")]
         public async Task<ActionResult<UserRequestResponse>> GetUserData()
@@ -51,17 +83,26 @@ namespace YavaPrimum.API.Controllers
             return await _userService.GetByIdToFront(await _jwtProvider.GetUserIdFromToken(token));
         }
 
+        [HttpGet("/get-all-users-data")]
+        public async Task<ActionResult<List<UserRequestResponse>>> GetAllUsersData()
+        {
+
+            return await _userService.ConvertToFront(await _userService.GetAll());
+        }
+
 
         [HttpGet("/get-posts-countries")]
         public async Task<ActionResult<List<PostCountryResponse>>> GetPostsCountries()
         {
             List<Post> Posts = await _postService.GetAll();
             List<Country> Countries = await _countryService.GetAll();
+            List<Company> Companies = await _companyService.GetAll();
 
             PostCountryResponse postCountry = new PostCountryResponse()
             {
                 Posts = Posts.Select(post => post.Name).ToList(),
                 Countries = Countries.Select(country => country.Name).ToList(),
+                Companies = Companies.Select(company => company.Name).ToList()
             };
             return Ok(postCountry);
         }
@@ -98,7 +139,6 @@ namespace YavaPrimum.API.Controllers
                 string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
 
 
-
                 Tasks newTask = new Tasks
                 {
                     TasksId = Guid.NewGuid(),
@@ -106,7 +146,8 @@ namespace YavaPrimum.API.Controllers
                     Status = await _tasksService.GetStatusByName("Взят кандидат"),
                     Candidate = notification.ArchiveTasks.Task.Candidate,
                     CandidatePost = notification.ArchiveTasks.Task.CandidatePost,
-                    User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
+                    User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token)),
+                    DateTime = DateTime.Now.AddDays(7) // Текущая дата + 7 дней
                 };
 
                 await _tasksService.Create(newTask);

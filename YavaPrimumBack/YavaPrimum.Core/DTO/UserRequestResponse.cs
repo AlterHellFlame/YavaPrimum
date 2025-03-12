@@ -4,6 +4,7 @@ namespace YavaPrimum.Core.DTO
 {
     public class UserRequestResponse
     {
+        public Guid UserId { get; set; }
         public string Surname { get; set; }
         public string FirstName { get; set; }
         public string Patronymic { get; set; } // Отчество

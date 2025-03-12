@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Tasks } from '../../../../data/interface/Tasks.interface';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OptionalDataService } from '../../../../services/optional-data/optional-data.service';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './change-task.component.scss'
 })
 export class ChangeTaskComponent implements OnInit {
-  task!: Tasks;
+  @Input() task!: Tasks;
   form!: FormGroup;
   posts: string[] = [];
   countries: string[] = [];
@@ -54,24 +54,22 @@ export class ChangeTaskComponent implements OnInit {
   }
 
   private subscribeToTaskSelection(): void {
-    /*this.taskService.taskClick$.subscribe(task => {
-      if (task) {
-        this.task = task;
+    
+      if (this.task) {
         this.form.patchValue({
-          secondName: task.candidate.secondName,
-          firstName: task.candidate.firstName,
-          surName: task.candidate.surName,
-          post: task.candidate.post,
-          country: task.candidate.country,
-          telephone: task.candidate.telephone,
-          email: task.candidate.email,
-          interviewDate: task.dateTime.toFormat("yyyy-MM-dd'T'HH:mm")
+          secondName: this.task.candidate.surname,
+          firstName: this.task.candidate.firstName,
+          surName: this.task.candidate.patronymic,
+          candidatePost: this.task.candidatePost,
+          country: this.task.candidate.country,
+          telephone: this.task.candidate.phone,
+          email: this.task.candidate.email,
+          interviewDate: this.task.dateTime.toFormat("yyyy-MM-dd'T'HH:mm")
         });
         console.log('Form initialized with task:', this.form.value);
       } else {
-        console.error('Task not found');
+        console.error('task not found');
       }
-    });*/
   }
 
   onSubmit(): void {
@@ -79,7 +77,7 @@ export class ChangeTaskComponent implements OnInit {
       const formValue = this.form.value;
       console.log('Form submitted:', formValue);
 
-      /*this.candidateService.changeCandidateAndInterview(formValue, this.task.taskResponseId).subscribe(() => {
+      /*this.candidateService.changeCandidateAndInterview(formValue, this.taskResponseId).subscribe(() => {
         console.log('Candidate updated successfully');
         window.location.reload();
       });*/

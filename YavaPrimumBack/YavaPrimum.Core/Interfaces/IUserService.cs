@@ -7,9 +7,12 @@ namespace YavaPrimum.Core.Interfaces
     {
         Task<User> GetByEMail(string email);
         Task<bool> IsUserExistByEMail(string email);
+        Task UpdateUser(User user);
+        Task DeleteUserById(Guid id);
         Task<User> GetById(Guid id);
         Task<List<User>> GetAll();
         Task<UserRequestResponse> GetByIdToFront(Guid id);
         Task<UserRequestResponse> ConvertToFront(User user);
+        Task<List<UserRequestResponse>> ConvertToFront(List<User> users);
     }
 }

@@ -87,6 +87,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "delete-user/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetAllTasks",
     "RelativePath": "get-all-tasks",
@@ -97,6 +123,46 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GetAllTasksOfUser",
+    "RelativePath": "get-all-tasks-of-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetAllUsersData",
+    "RelativePath": "get-all-users-data",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.UserRequestResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -165,27 +231,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "GiveCandidateToPo",
-    "RelativePath": "give-candidate-to-po/{notificationId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "notificationId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "status",
-        "Type": "YavaPrimum.Core.DTO.StringRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
@@ -324,6 +369,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "UpdateUserData",
+    "RelativePath": "update-user-data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",

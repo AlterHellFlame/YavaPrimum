@@ -75,14 +75,14 @@ export class AddTaskComponent implements OnInit {
         console.log('Кандидат на приём успешно отправлен');
         this.notify.SendToUser("Habib");
         window.location.reload();
-        this.taskService.getAllTasks();
+        this.taskService.getAllTasksOfUser();
       });
 
       /*this.candidateService.addCandidateAndInterview(formValue).subscribe(() => {
         console.log('Кандидат на приём успешно отправлен');
         this.notify.SendToUser("Habib");
         window.location.reload();
-        this.taskService.getAllTasks();
+        this.taskService.getAllTasksOfUser();
       });*/
     } else {
       console.log('Форма не валидна');

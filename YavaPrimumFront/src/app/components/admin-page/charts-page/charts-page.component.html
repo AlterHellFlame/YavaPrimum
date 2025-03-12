@@ -1,0 +1,43 @@
+<div class="container mt-5">
+    <h2>Отчеты и диаграммы</h2>
+    <button class="btn btn-primary mb-4" (click)="exportToExcel()">Экспорт в Excel</button>
+    <div class="row">
+  
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <h4>Статистика отказов</h4>
+        <canvas baseChart
+                [type]="'bar'"
+                [data]="rejectionStatsChartData"
+                [options]="chartOptions">
+        </canvas>
+      </div>
+
+      <div class="col-md-6">
+        <h4>План мероприятий</h4>
+        <canvas baseChart
+                [type]="'bar'"
+                [data]="eventPlanChartData"
+                [options]="chartOptions">
+        </canvas>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Статистика по найму</h4>
+        <canvas baseChart
+                [type]="'bar'"
+                [data]="recruitmentStatsChartData"
+                [options]="chartOptions">
+        </canvas>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Мониторинг работы HR и рекрутеров</h4>
+        <canvas baseChart
+                [type]="'pie'"
+                [data]="hrPerformanceChartData"
+                [options]="chartOptions">
+        </canvas>
+      </div>
+    </div>
+  </div>

@@ -1,1 +1,182 @@
-<p>admin works!</p>
+
+
+<!-- Модальное окно для добавления/редактирования пользователя -->
+<ng-container *ngIf="isLoad">
+<div class="modal fade" id="userModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">{{ isEditMode ? 'Редактировать пользователя' : 'Добавить пользователя' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-2">
+            <label for="surname" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="surname" [(ngModel)]="currentUser.surname" name="surname" placeholder="Иванов" required>
+          </div>
+          <div class="mb-2">
+            <label for="firstName" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="currentUser.firstName" name="firstName" placeholder="Иван" required>
+          </div>
+          <div class="mb-2">
+            <label for="patronymic" class="form-label">Отчество</label>
+            <input type="text" class="form-control" id="patronymic" [(ngModel)]="currentUser.patronymic" name="patronymic" placeholder="Иванович">
+          </div>
+          <div class="mb-2">
+            <label for="company" class="form-label">Компания</label>
+            <select class="form-select" id="company" [(ngModel)]="currentUser.company" name="company" required>
+              <option *ngFor="let company of companies" [value]="company">{{ company }}</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="currentUser.email" name="email" required placeholder="email@gmail.com">
+          </div>
+          <div class="mb-2">
+            <label for="post" class="form-label">Должность</label>
+            <select class="form-select" id="post" [(ngModel)]="currentUser.post" name="post" required>
+              <option value="HR">HR</option>
+              <option value="Кадровик">Кадровик</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label for="phone" class="form-label">Телефон</label>
+            <input type="text" class="form-control" id="phone" [(ngModel)]="currentUser.phone" name="phone" placeholder="+375 ## ###-##-##">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Обновить' : 'Добавить' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>
+
+<span>
+  <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#userModal" (click)="openModal()">
+    Добавить пользователя
+  </button>
+</span>
+<div class="contain">
+  <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <!-- Заголовки столбцов -->
+            <th></th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Компания</th>
+            <th>Email</th>
+            <th>Должность</th>
+            <th>Телефон</th>
+            <th></th>
+          </tr>
+          <!-- Строка фильтрации -->
+          <tr>
+            <th></th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Фамилия"
+                [(ngModel)]="filters.surname"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Имя"
+                [(ngModel)]="filters.firstName"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Отчество"
+                [(ngModel)]="filters.patronymic"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Компания"
+                [(ngModel)]="filters.company"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                [(ngModel)]="filters.email"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Должность"
+                [(ngModel)]="filters.post"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Телефон"
+                [(ngModel)]="filters.phone"
+                (input)="applyFilters()"
+              />
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers" (click)="getAllTasksOfUser(user)">
+            <td><img id="photo" class="photo mx-1" src="https://localhost:7247/{{user.imgUrl}}" [alt]="user.surname"></td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.patronymic }}</td>
+            <td>{{ user.company }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.post }}</td>
+            <td>{{ user.phone }}</td>
+            <td>
+              <span class="d-flex gap-1">
+              <button type="button" class="bi btn-mini bi-pen btn btn-outline-success"data-bs-toggle="modal" 
+              data-bs-target="#userModal" (click)="openEditModal(user)"></button>
+              <button type="button" class="bi btn-mini bi-trash btn btn-outline-danger" (click)="deleteUser(user)"></button>
+             </span> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <span class="chart-container d-flex flex-column">
+    <!-- Диаграмма -->
+    <span class="d-flex gap-1 justify-content-center">
+        <div class="headline-control" (click)="changeMonth(-1)"><i class="bi bi-caret-left"></i></div>
+        <p style="width: 70px;">{{activeMonthToString}}</p>
+        <div class="headline-control" (click)="changeMonth(1)"><i class="bi bi-caret-right"></i></div>
+    </span>
+      <canvas baseChart
+      [type]="'line'"
+      [data]="taskChartData"
+      [options]="taskChartOptions">
+  </canvas>   
+    </span>
+</div>

@@ -7,8 +7,9 @@ export interface Tasks
     taskId: string,
     user: User,
     candidate: Candidate,
-    status: string
-    post: string;
+    status: string,
+    typeStatus: number,
+    candidatePost: string;
     dateTime: DateTime,
 }
 

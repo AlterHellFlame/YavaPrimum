@@ -123,7 +123,6 @@ namespace YavaPrimum.API.Controllers
 
             HttpContext.Response.Cookies.Append(JwtProvider.CookiesName, token, new CookieOptions()
             {
-                HttpOnly = true,
                 Secure = true, // Используйте true, если у вас HTTPS
                 SameSite = SameSiteMode.Lax, // Или Strict в зависимости от ваших требований
                 Expires = DateTime.UtcNow.AddHours(12)
@@ -133,6 +132,7 @@ namespace YavaPrimum.API.Controllers
 
             return Ok(user.Post.Name);
         }
+
 
         [HttpPost("/sendToEmail")]
         public async Task<ActionResult<bool>> SendToEmail([FromBody] StringRequest email)

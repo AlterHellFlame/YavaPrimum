@@ -41,11 +41,23 @@ namespace YavaPrimum.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Tasks>>> GetTasks()
         {
-            return Ok(await _tasksService.GetAll());
+            return Ok(await _tasksService.GetAllAcrhive());
         }
 
         [HttpGet("/get-all-tasks")]
         public async Task<ActionResult<List<TasksResponse>>> GetAllTasks()
+        {
+
+            List<TasksResponse> taskResponses = await _tasksService.ConvertArchiveToFront(await _tasksService.GetAllAcrhive());
+
+            taskResponses = taskResponses.OrderBy(tr => tr.DateTime).ToList();
+
+            return Ok(taskResponses);
+        }
+
+
+        [HttpGet("/get-all-tasks-of-user")]
+        public async Task<ActionResult<List<TasksResponse>>> GetAllTasksOfUser()
         {
             Console.WriteLine("get-all-tasks");
             if (HttpContext.Request.Cookies.Count == 0)
@@ -59,7 +71,7 @@ namespace YavaPrimum.API.Controllers
                 await _jwtProvider.GetUserIdFromToken(token));
 
             List<TasksResponse> taskResponses = await _tasksService.ConvertToFront(tasks);
-
+            Console.WriteLine("tasks " + taskResponses);
             return Ok(taskResponses);
         }
 
@@ -104,14 +116,15 @@ namespace YavaPrimum.API.Controllers
         [HttpPut("/new-status-for-task/{taskId:guid}")]
         public async Task<ActionResult> UpdateTaskStatus(Guid taskId, [FromBody] StringRequest status)
         {
-            if(status.Value == "passed")
+            /*if(status.Value == "passed")
             {
                 status.Value = "Собеседование пройдено";
             }
-            else if (status.Value == "failed")
+            else if (status.Value == "faild")
             {
                 status.Value = "Собеседование не пройдено";
-            }
+            }*/
+
             // Получаем задачу по идентификатору
             Tasks task = await _tasksService.GetById(taskId);
             await _tasksService.SetNewStatus(task, status.Value);
@@ -143,7 +156,7 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-        [HttpPut("/give-candidate-to-po/{notificationId:guid}")]
+        /*[HttpPut("/give-candidate-to-po/{notificationId:guid}")]
         public async Task<ActionResult> GiveCandidateToPo(Guid notificationId, [FromBody] StringRequest status)
         {
             if (HttpContext.Request.Cookies.Count == 0)
@@ -163,8 +176,9 @@ namespace YavaPrimum.API.Controllers
                 Status = await _tasksService.GetStatusByName("Взят кандидат"),
                 Candidate = notification.ArchiveTasks.Task.Candidate,
                 CandidatePost = notification.ArchiveTasks.Task.CandidatePost,
-                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token))
-            };
+                User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token)),
+                DateTime = DateTime.Now.AddDays(7) // Текущая дата + 7 дней
+            };*/
 
             // Получаем задачу по идентификатору
             /*Tasks task = await _tasksService.GetById(taskId);
@@ -193,9 +207,9 @@ namespace YavaPrimum.API.Controllers
                 Guid newTaskId = await _tasksService.Create(newTask);
                 Console.WriteLine(newTaskId);
             }*/
-
+            /*
             return Ok();
-        }
+        }*/
 
 
 
