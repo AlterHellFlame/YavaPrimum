@@ -20,7 +20,9 @@ namespace YavaPrimum.Core.Services
 
         public async Task<bool> VerifyCode(string email, string code)
         {
-            return _verificationCodes.TryGetValue(email, out var storedCode) && storedCode == code;
+            bool isExit =  _verificationCodes.TryGetValue(email, out var storedCode);
+
+            return (isExit && storedCode == code);
         }
     }
 

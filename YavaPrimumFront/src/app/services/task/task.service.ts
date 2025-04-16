@@ -21,7 +21,7 @@ export class TaskService {
   }
 
   public getAllTasksOfUser(): Tasks[] {
-    console.log("GetAllTasks " + this.allTasks);
+    //console.log("GetAllTasks " + this.allTasks);
     return this.allTasks;
   }
 
@@ -30,9 +30,13 @@ export class TaskService {
     return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-tasks`, { withCredentials: true });
   }
 
+  public getAllArchiveTasks(): Observable<Tasks[]> {
+    return this.http.get<Tasks[]>(`${this.baseApiUrl}get-all-archive-tasks`, { withCredentials: true });
+  }
+
   public setAllTasks(tasks: Tasks[]): void {
     this.allTasks = tasks;
-    console.log("SetAllTasks " + this.allTasks);
+    //console.log("SetAllTasks " + this.allTasks);
     this.getAllTasksOfUser()
     
   }
@@ -106,6 +110,11 @@ export class TaskService {
     return this.http.post<TasksRequest>(`${this.baseApiUrl}create-new-task`, task, {
       withCredentials: true,
     });
+  }
+
+    
+  public getAllCandidatesOfUser(): Observable<Candidate[]> {
+    return this.http.get<Candidate[]>(`${this.baseApiUrl}get-all-candidates-of-user`, { withCredentials: true });
   }
   
 }

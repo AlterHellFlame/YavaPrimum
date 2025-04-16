@@ -18,6 +18,16 @@
     align-items: center;
 
 
+    .nav-link {
+        cursor: pointer; /* Курсор в виде указателя */
+        transition: transform 0.2s ease; /* Плавное увеличение */
+        display: inline-block; /* Чтобы transform работал корректно */
+    }
+    
+    .nav-link:hover {
+        transform: scale(1.01); /* Увеличение текста на 10% */
+    }
+
     .panel
     {
         margin-left: 100px;
@@ -60,4 +70,5 @@
 {
     margin-top: 60px;
     padding: 0px 20px;
+    
 }

@@ -2,13 +2,14 @@
     <span class="d-inline-flex align-items-center" >
         <h3>YavaPrimum</h3>
         <span class="d-inline-flex panel gap-2">
-            <p *ngIf="isAdmin" (click)="navigateTo('account/admin')">Главная</p>
-            <p *ngIf="isAdmin" (click)="navigateTo('account/charts')">Статистика</p>
-            <p *ngIf="!isAdmin" (click)="navigateTo('account/hr')">Главная</p>
+            <p *ngIf="isAdmin" (click)="navigateTo('account/admin')" class="nav-link">Главная</p>
+            <p *ngIf="isAdmin" (click)="navigateTo('account/charts')" class="nav-link">Статистика</p>
+            <p *ngIf="!isAdmin" (click)="navigateTo('account/hr')" class="nav-link">Главная</p>
+            <p *ngIf="!isAdmin" (click)="navigateTo('account/candidates')" class="nav-link">Кандидаты</p>
         </span>
     </span>
     <span class="d-inline-flex toUserData">
-        <span class="notify-container" (click)="navigateTo('account/notifications')">
+        <span *ngIf="!isAdmin" class="notify-container" (click)="navigateTo('account/notifications')">
             <div class="notify" *ngIf="countOfNotify > 0">{{countOfNotify}}</div>
             <i class="bi bi-bell"></i>
         </span>

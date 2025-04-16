@@ -18,8 +18,17 @@
         border-radius: 100%;
         border: 2px solid #e9ecef;
         margin-right: 15px;
+
+        transition: transform 0.3s ease, filter 0.3s ease; /* Плавные переходы для трансформации и фильтра */
+        display: block; /* Убедимся, что изображение является блочным элементом */
     }
 
+    .photo:hover {
+        transform: scale(0.9); /* Увеличение изображения на 10% */
+        filter: brightness(0.8); /* Затемнение изображения до 80% яркости */
+    }
+
+    
     .name {
         font-size: 1.5rem;
         font-weight: 600;

@@ -24,8 +24,7 @@ export class HrComponent implements OnInit {
   tasks: Tasks[] = [];
   loading: boolean = true;
   activeTask: Tasks = this.tasks[0]; 
-  constructor(private taskService: TaskService)
-  {}
+  constructor(private taskService: TaskService){}
 
   ngOnInit(): void {
     this.taskService.loadAllTasks().subscribe({

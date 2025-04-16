@@ -7,6 +7,7 @@ import { UserDataComponent } from './components/user-data/user-data.component';
 import { NotificationsComponent } from './components/notifications-page/notifications/notifications.component';
 import { AdminComponent } from './components/admin-page/admin/admin.component';
 import { ChartsPageComponent } from './components/admin-page/charts-page/charts-page.component';
+import { CandidatePageComponent } from './components/candidate-page/candidate-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'log-in', pathMatch: 'full' },
@@ -19,7 +20,8 @@ export const routes: Routes = [
         { path: 'userData', component: UserDataComponent },
         { path: 'notifications', component: NotificationsComponent },
         { path: 'admin', component: AdminComponent},
-        { path: 'charts', component: ChartsPageComponent}
+        { path: 'charts', component: ChartsPageComponent},
+        { path: 'candidates', component: CandidatePageComponent}
       ]
     },
     { path: '**', component: NotFoundComponent },

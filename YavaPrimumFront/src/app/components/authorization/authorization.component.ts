@@ -3,12 +3,11 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({//Спросить Сашу
   selector: 'app-authorization',
   standalone: true,
-  imports: [FormsModule, CommonModule, HttpClientModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './authorization.component.html',
   styleUrl: './authorization.component.scss',
   providers: [AuthService]
@@ -65,8 +64,10 @@ export class AuthorizationComponent {
 
   }
 
+  emailToPass: string = "";
   newPass(form: NgForm) {
     if (this.status === 0) {
+      this.emailToPass = form.value.emailToPass;
       this.authService.sendToEmail(form.value.emailToPass).subscribe(
         res => {
           if (res) {
@@ -78,10 +79,13 @@ export class AuthorizationComponent {
         }
       );
     } else if (this.status === 1) {
-      this.authService.checkCode(form.value.emailToPass, form.value.codeToPass).subscribe(
+      console.log(this.emailToPass )
+      this.authService.checkCode(this.emailToPass, form.value.codeToPass).subscribe(
         res => {
+          alert("Код введен неверно");
           if (res) {
             form.controls['codeToPass'].disable();
+
             this.status++;
           } else {
             form.controls['codeToPass'].setErrors({ 'invalidCode': true });
@@ -89,7 +93,7 @@ export class AuthorizationComponent {
         }
       );
     } else if (this.status === 2) {
-      this.authService.newPass(form.value.emailToPass, form.value.passToPass).subscribe(
+      this.authService.newPass(this.emailToPass , form.value.passToPass).subscribe(
         res => {
           this.Close(form);
         }

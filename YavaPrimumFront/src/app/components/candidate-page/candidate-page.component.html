@@ -1,0 +1,29 @@
+<div class="filter-section">
+  <!-- Фильтры -->
+  <input 
+    type="text" 
+    class="form-control" 
+    placeholder="Фильтр по фамилии" 
+    [(ngModel)]="filter.surname" />
+  <input 
+    type="text" 
+    class="form-control" 
+    placeholder="Фильтр по имени" 
+    [(ngModel)]="filter.firstName" />
+</div>
+
+<!-- Карточки кандидатов -->
+<div class="candidate-cards row">
+  <div class="col-md-4" *ngFor="let candidate of filteredCandidates">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Фамилия: {{ candidate.surname }}</h5>
+        <p class="card-text">Имя: {{ candidate.firstName }}</p>
+        <p class="card-text">Отчество: {{ candidate.patronymic }}</p>
+        <p class="card-text">Email: {{ candidate.email }}</p>
+        <p class="card-text">Телефон: {{ candidate.phone }}</p>
+        <p class="card-text">Страна: {{ candidate.country }}</p>
+      </div>
+    </div>
+  </div>
+</div>

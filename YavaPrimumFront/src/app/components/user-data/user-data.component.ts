@@ -86,17 +86,17 @@ export class UserDataComponent implements OnInit {
       labels: allDates,
       datasets: [
         {
-          label: 'Количество задач',
-          data: taskCounts,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-        },
-        {
           label: 'Количество выполненных задач',
           data: tasksWithStatus2Counts,
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+        },
+        {
+          label: 'Количество задач',
+          data: taskCounts,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
         },
       ],

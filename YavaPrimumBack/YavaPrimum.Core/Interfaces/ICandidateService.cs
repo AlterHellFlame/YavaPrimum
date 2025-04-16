@@ -10,7 +10,7 @@ namespace YavaPrimum.Core.Interfaces
         Task<List<CandidateRequestResponse>> GetAll();
         Task<Candidate> GetById(Guid id);
         Task<Guid> Update(Candidate candidate, CandidateRequestResponse candidateRequest);
-
+        Task<List<CandidateRequestResponse>> GetCandidatesData();
 
     }
 }

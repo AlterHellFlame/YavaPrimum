@@ -3,48 +3,24 @@
   "WorkspaceRootPath": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|solutionrelative:yavaprimum.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|solutionrelative:yavaprimum.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\dto\\userrequestresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\dto\\userrequestresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.api\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|solutionrelative:yavaprimum.api\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\dto\\postcountryresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\dto\\postcountryresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\interfaces\\itasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\interfaces\\itasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\interfaces\\icandidateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\interfaces\\icandidateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\services\\notificationsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\services\\notificationsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\database\\yavaprimumdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\database\\yavaprimumdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.api\\notify\\notifyhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85B73742-261F-4098-99B1-B87D744AA0D7}|YavaPrimum.API\\YavaPrimum.API.csproj|solutionrelative:yavaprimum.api\\notify\\notifyhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|d:\\\u0434\u0438\u043F\u043B\u043E\u043C\\yavaprimum\\yavaprimumback\\yavaprimum.core\\services\\candidateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FD25AC2-D5DE-4977-B418-9AF1FD3D846C}|YavaPrimum.Core\\YavaPrimum.Core.csproj|solutionrelative:yavaprimum.core\\services\\candidateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,136 +58,64 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.API\\Controllers\\UserController.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\UserController.cs",
-              "RelativeToolTip": "YavaPrimum.API\\Controllers\\UserController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAADwvzcAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T13:31:49.362Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "YavaPrimumDBContext.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DataBase\\YavaPrimumDBContext.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.Core\\DataBase\\YavaPrimumDBContext.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DataBase\\YavaPrimumDBContext.cs",
-              "RelativeToolTip": "YavaPrimum.Core\\DataBase\\YavaPrimumDBContext.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAnwEUAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T08:06:50.601Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "TasksController.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\TasksController.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.API\\Controllers\\TasksController.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\TasksController.cs",
-              "RelativeToolTip": "YavaPrimum.API\\Controllers\\TasksController.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAiwFoAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T12:45:35.614Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "NotifyHub.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Notify\\NotifyHub.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.API\\Notify\\NotifyHub.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Notify\\NotifyHub.cs",
-              "RelativeToolTip": "YavaPrimum.API\\Notify\\NotifyHub.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAABBwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T21:22:45.95Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "NotificationsService.cs",
               "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\NotificationsService.cs",
               "RelativeDocumentMoniker": "YavaPrimum.Core\\Services\\NotificationsService.cs",
               "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\NotificationsService.cs",
               "RelativeToolTip": "YavaPrimum.Core\\Services\\NotificationsService.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAABBwFMAAABLAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T21:26:22.599Z"
+              "WhenOpened": "2025-04-16T15:03:30.526Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.API\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "YavaPrimum.API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAAHEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T12:23:04.483Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserRequestResponse.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DTO\\UserRequestResponse.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.Core\\DTO\\UserRequestResponse.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DTO\\UserRequestResponse.cs",
-              "RelativeToolTip": "YavaPrimum.Core\\DTO\\UserRequestResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T15:13:59.327Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PostCountryResponse.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DTO\\PostCountryResponse.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.Core\\DTO\\PostCountryResponse.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\DTO\\PostCountryResponse.cs",
-              "RelativeToolTip": "YavaPrimum.Core\\DTO\\PostCountryResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T13:07:04.166Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "TaskService.cs",
               "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\TaskService.cs",
               "RelativeDocumentMoniker": "YavaPrimum.Core\\Services\\TaskService.cs",
               "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\TaskService.cs",
               "RelativeToolTip": "YavaPrimum.Core\\Services\\TaskService.cs",
-              "ViewState": "AgIAAPUAAAAAAAAAAADwvxABAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAsBAAAAAAAAAAApwCEBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T16:08:34.476Z"
+              "WhenOpened": "2025-04-16T14:40:45.964Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ITasksService.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\ITasksService.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.Core\\Interfaces\\ITasksService.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\ITasksService.cs",
-              "RelativeToolTip": "YavaPrimum.Core\\Interfaces\\ITasksService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA0AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ICandidateService.cs",
+              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\ICandidateService.cs",
+              "RelativeDocumentMoniker": "YavaPrimum.Core\\Interfaces\\ICandidateService.cs",
+              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\ICandidateService.cs",
+              "RelativeToolTip": "YavaPrimum.Core\\Interfaces\\ICandidateService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T23:03:09.026Z"
+              "WhenOpened": "2025-04-16T13:27:49.951Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\IUserService.cs",
-              "RelativeDocumentMoniker": "YavaPrimum.Core\\Interfaces\\IUserService.cs",
-              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Interfaces\\IUserService.cs",
-              "RelativeToolTip": "YavaPrimum.Core\\Interfaces\\IUserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAATAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "TasksController.cs",
+              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\TasksController.cs",
+              "RelativeDocumentMoniker": "YavaPrimum.API\\Controllers\\TasksController.cs",
+              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\Controllers\\TasksController.cs",
+              "RelativeToolTip": "YavaPrimum.API\\Controllers\\TasksController.cs",
+              "ViewState": "AgIAAPgAAAAAAAAAAAAAAJgAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T12:21:48.796Z"
+              "WhenOpened": "2025-04-15T18:57:39.338Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CandidateService.cs",
+              "DocumentMoniker": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\CandidateService.cs",
+              "RelativeDocumentMoniker": "YavaPrimum.Core\\Services\\CandidateService.cs",
+              "ToolTip": "D:\\\u0414\u0438\u043F\u043B\u043E\u043C\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.Core\\Services\\CandidateService.cs",
+              "RelativeToolTip": "YavaPrimum.Core\\Services\\CandidateService.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAwGsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T18:52:11.334Z"
             }
           ]
         }

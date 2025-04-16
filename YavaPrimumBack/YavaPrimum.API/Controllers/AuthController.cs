@@ -142,7 +142,7 @@ namespace YavaPrimum.API.Controllers
                 return BadRequest("Некорректные данные");
             }
 
-            string ret = await _authService.SendMessageToEmail(email.Value, "123456", "Смена пароля");
+            string ret = await _authService.SendMessageToEmail(email.Value, await _codeVerificationService.GenerateCode(email.Value), "Смена пароля");
             if (ret != null)
             {
                 return true;

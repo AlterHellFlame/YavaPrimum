@@ -102,7 +102,8 @@ namespace YavaPrimum.API.Controllers
             {
                 Posts = Posts.Select(post => post.Name).ToList(),
                 Countries = Countries.Select(country => country.Name).ToList(),
-                Companies = Companies.Select(company => company.Name).ToList()
+                Companies = Companies.Select(company => company.Name).ToList(),
+                PhoneMask = Countries.Select(country => country.PhoneMask).ToList()
             };
             return Ok(postCountry);
         }

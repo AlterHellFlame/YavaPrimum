@@ -114,6 +114,46 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GetAllArchiveTasks",
+    "RelativePath": "get-all-archive-tasks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "GetAllCandidatesOfUser",
+    "RelativePath": "get-all-candidates-of-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.CandidateRequestResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetAllTasks",
     "RelativePath": "get-all-tasks",
     "HttpMethod": "GET",

@@ -356,6 +356,44 @@
         }
       }
     },
+    "/get-all-archive-tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/get-all-tasks-of-user": {
       "get": {
         "tags": [
@@ -386,6 +424,44 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/TasksResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-all-candidates-of-user": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidateRequestResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidateRequestResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidateRequestResponse"
                   }
                 }
               }
@@ -936,6 +1012,13 @@
             "nullable": true
           },
           "companies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "phoneMask": {
             "type": "array",
             "items": {
               "type": "string"

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -98,9 +99,47 @@ namespace YavaPrimum.Core.Services
             return new Guid(); //candidate.CandidateId;
         }
 
-        public Task<List<CandidateRequestResponse>> GetAll()
+        public async Task<List<CandidateRequestResponse>> GetAll()
         {
-            throw new NotImplementedException();
+            // Получаем список кандидатов из базы данных
+            List<Candidate> candidates = await _dBContext.Candidate
+                .Include(c => c.Country)
+                .ToListAsync();
+
+            // Преобразуем список кандидатов в список CandidateRequestResponse
+            List<CandidateRequestResponse> candidatesList = candidates.Select(c => new CandidateRequestResponse
+            {
+                Surname = c.Surname,
+                FirstName = c.FirstName,
+                Patronymic = c.Patronymic,
+                Email = c.Email,
+                Phone = c.Phone,
+                Country = c.Country.Name // Преобразуем объект Country в строку (если Country не null)
+            }).ToList();
+
+            return candidatesList;
         }
+
+        public async Task<List<CandidateRequestResponse>> GetCandidatesData()
+        {
+            // Получаем список кандидатов из базы данных
+            List<Candidate> candidates = await _dBContext.Candidate
+                .Include(c => c.Country)
+                .ToListAsync();
+
+            // Преобразуем список кандидатов в список CandidateRequestResponse
+            List<CandidateRequestResponse> candidatesList = candidates.Select(c => new CandidateRequestResponse
+            {
+                Surname = c.Surname,
+                FirstName = c.FirstName,
+                Patronymic = c.Patronymic,
+                Email = c.Email,
+                Phone = c.Phone,
+                Country = c.Country.Name // Преобразуем объект Country в строку (если Country не null)
+            }).ToList();
+
+            return candidatesList;
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 wwwroot\default.jpg
+wwwroot\profile_photo\ava1.png
+wwwroot\profile_photo\ava2.png
+wwwroot\profile_photo\ava3.png
+wwwroot\profile_photo\ava4.png
+wwwroot\profile_photo\ava5.png
+wwwroot\profile_photo\ava6.png
 wwwroot\profile_photo\default.jpg
-wwwroot\profile_photo\Kinich.jpg
-wwwroot\profile_photo\Кинич2.jpg
-wwwroot\profile_photo\Пз.png
-wwwroot\profile_photo\Пикса.png

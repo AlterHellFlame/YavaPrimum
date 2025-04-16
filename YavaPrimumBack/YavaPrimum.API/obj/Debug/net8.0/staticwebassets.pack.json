@@ -5,24 +5,32 @@
       "PackagePath": "staticwebassets\\default.jpg"
     },
     {
-      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
-      "PackagePath": "staticwebassets\\profile_photo\\Kinich.jpg"
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava1.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava1.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava2.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava2.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava3.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava3.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava4.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava4.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava5.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava5.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava6.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava6.png"
     },
     {
       "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.jpg",
       "PackagePath": "staticwebassets\\profile_photo\\default.jpg"
-    },
-    {
-      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Кинич2.jpg",
-      "PackagePath": "staticwebassets\\profile_photo\\Кинич2.jpg"
-    },
-    {
-      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пз.png",
-      "PackagePath": "staticwebassets\\profile_photo\\Пз.png"
-    },
-    {
-      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пикса.png",
-      "PackagePath": "staticwebassets\\profile_photo\\Пикса.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.YavaPrimum.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

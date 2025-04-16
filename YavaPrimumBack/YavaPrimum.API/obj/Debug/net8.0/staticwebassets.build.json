@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "o7GoZLqPC6fTJg+we7U9NZ5JuQ2IrGxZh7uvKmvKJAc=",
+  "Hash": "y7jmiKq2RoGz03mK9VILpwI5gnO3ZR0ByDHm2XS773Q=",
   "Source": "YavaPrimum.API",
   "BasePath": "_content/YavaPrimum.API",
   "Mode": "Default",
@@ -38,6 +38,132 @@
       "OriginalItemSpec": "wwwroot\\default.jpg"
     },
     {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava1.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava1#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "drnn071bdr",
+      "Integrity": "99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava1.png"
+    },
+    {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava2.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "f8je2svqlv",
+      "Integrity": "3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava2.png"
+    },
+    {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava3.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava3#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ahv2x7353r",
+      "Integrity": "Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava3.png"
+    },
+    {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava4.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava4#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3lng1tyg9p",
+      "Integrity": "mc/EcidafdaKHUrwMukPGf6CYd3yXzOYNs57TtOKKUg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava4.png"
+    },
+    {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava5.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava5#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vcbyt7wbsr",
+      "Integrity": "/+awdXZ0Xbh03wZ+8W2IRixYz9BIL8AGl2PZo7nGmOw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava5.png"
+    },
+    {
+      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava6.png",
+      "SourceId": "YavaPrimum.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
+      "BasePath": "_content/YavaPrimum.API",
+      "RelativePath": "profile_photo/ava6#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "htdpyyntpo",
+      "Integrity": "NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\profile_photo\\ava6.png"
+    },
+    {
       "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.jpg",
       "SourceId": "YavaPrimum.API",
       "SourceType": "Discovered",
@@ -57,90 +183,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\profile_photo\\default.jpg"
-    },
-    {
-      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
-      "SourceId": "YavaPrimum.API",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
-      "BasePath": "_content/YavaPrimum.API",
-      "RelativePath": "profile_photo/Kinich#[.{fingerprint}]?.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "6famuvwz92",
-      "Integrity": "vqefwTyZRJ3YW/Cyn6n7yTzUcVFCD4zLrRyLMKpw8DI=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\profile_photo\\Kinich.jpg"
-    },
-    {
-      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Кинич2.jpg",
-      "SourceId": "YavaPrimum.API",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
-      "BasePath": "_content/YavaPrimum.API",
-      "RelativePath": "profile_photo/Кинич2#[.{fingerprint}]?.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "uhynkbj7u4",
-      "Integrity": "Yp72WGVHfb0WsYJLqbgdNHzHYhAoE8ECgnW8q3WmvAA=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\profile_photo\\Кинич2.jpg"
-    },
-    {
-      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пз.png",
-      "SourceId": "YavaPrimum.API",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
-      "BasePath": "_content/YavaPrimum.API",
-      "RelativePath": "profile_photo/Пз#[.{fingerprint}]?.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "ustmx5gl4l",
-      "Integrity": "ooqYJpUlFEKpHL20QlD0b8bQTFxuS0i3HTUbnKxJlmc=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\profile_photo\\Пз.png"
-    },
-    {
-      "Identity": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пикса.png",
-      "SourceId": "YavaPrimum.API",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\",
-      "BasePath": "_content/YavaPrimum.API",
-      "RelativePath": "profile_photo/Пикса#[.{fingerprint}]?.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "9g9qmru5gt",
-      "Integrity": "pwvLIn0WR7HQFVLAfodHBsmJtq5NtcHZOP9p2+Ql/ZQ=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\profile_photo\\Пикса.png"
     }
   ],
   "Endpoints": [
@@ -227,6 +269,498 @@
       ]
     },
     {
+      "Route": "profile_photo/ava1.drnn071bdr.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12859"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "drnn071bdr"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava1.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava1.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12859"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava2.f8je2svqlv.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6372"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f8je2svqlv"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava2.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6372"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava3.ahv2x7353r.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava3.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4899"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:52 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ahv2x7353r"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava3.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava3.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava3.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4899"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:04:52 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava4.3lng1tyg9p.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava4.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18984"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mc/EcidafdaKHUrwMukPGf6CYd3yXzOYNs57TtOKKUg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3lng1tyg9p"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava4.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mc/EcidafdaKHUrwMukPGf6CYd3yXzOYNs57TtOKKUg="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava4.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava4.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18984"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mc/EcidafdaKHUrwMukPGf6CYd3yXzOYNs57TtOKKUg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-mc/EcidafdaKHUrwMukPGf6CYd3yXzOYNs57TtOKKUg="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava5.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/+awdXZ0Xbh03wZ+8W2IRixYz9BIL8AGl2PZo7nGmOw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/+awdXZ0Xbh03wZ+8W2IRixYz9BIL8AGl2PZo7nGmOw="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava5.vcbyt7wbsr.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/+awdXZ0Xbh03wZ+8W2IRixYz9BIL8AGl2PZo7nGmOw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:59 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vcbyt7wbsr"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava5.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/+awdXZ0Xbh03wZ+8W2IRixYz9BIL8AGl2PZo7nGmOw="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava6.htdpyyntpo.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava6.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "14696"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "htdpyyntpo"
+        },
+        {
+          "Name": "label",
+          "Value": "profile_photo/ava6.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY="
+        }
+      ]
+    },
+    {
+      "Route": "profile_photo/ava6.png",
+      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava6.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "14696"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:05:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY="
+        }
+      ]
+    },
+    {
       "Route": "profile_photo/default.4q9d4uy5pt.jpg",
       "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.jpg",
       "Selectors": [],
@@ -305,334 +839,6 @@
         {
           "Name": "integrity",
           "Value": "sha256-hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Kinich.6famuvwz92.jpg",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "6604081"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/jpeg"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"vqefwTyZRJ3YW/Cyn6n7yTzUcVFCD4zLrRyLMKpw8DI=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 12 Sep 2024 15:35:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "6famuvwz92"
-        },
-        {
-          "Name": "label",
-          "Value": "profile_photo/Kinich.jpg"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-vqefwTyZRJ3YW/Cyn6n7yTzUcVFCD4zLrRyLMKpw8DI="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Kinich.jpg",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Kinich.jpg",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "6604081"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/jpeg"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"vqefwTyZRJ3YW/Cyn6n7yTzUcVFCD4zLrRyLMKpw8DI=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 12 Sep 2024 15:35:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-vqefwTyZRJ3YW/Cyn6n7yTzUcVFCD4zLrRyLMKpw8DI="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Кинич2.jpg",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Кинич2.jpg",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7251825"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/jpeg"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Yp72WGVHfb0WsYJLqbgdNHzHYhAoE8ECgnW8q3WmvAA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 12 Sep 2024 15:37:32 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-Yp72WGVHfb0WsYJLqbgdNHzHYhAoE8ECgnW8q3WmvAA="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Кинич2.uhynkbj7u4.jpg",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Кинич2.jpg",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7251825"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/jpeg"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Yp72WGVHfb0WsYJLqbgdNHzHYhAoE8ECgnW8q3WmvAA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 12 Sep 2024 15:37:32 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "uhynkbj7u4"
-        },
-        {
-          "Name": "label",
-          "Value": "profile_photo/Кинич2.jpg"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-Yp72WGVHfb0WsYJLqbgdNHzHYhAoE8ECgnW8q3WmvAA="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Пз.png",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пз.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "50681"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"ooqYJpUlFEKpHL20QlD0b8bQTFxuS0i3HTUbnKxJlmc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 06 Jun 2023 13:06:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-ooqYJpUlFEKpHL20QlD0b8bQTFxuS0i3HTUbnKxJlmc="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Пз.ustmx5gl4l.png",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пз.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "50681"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"ooqYJpUlFEKpHL20QlD0b8bQTFxuS0i3HTUbnKxJlmc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 06 Jun 2023 13:06:02 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "ustmx5gl4l"
-        },
-        {
-          "Name": "label",
-          "Value": "profile_photo/Пз.png"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-ooqYJpUlFEKpHL20QlD0b8bQTFxuS0i3HTUbnKxJlmc="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Пикса.9g9qmru5gt.png",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пикса.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "170733"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"pwvLIn0WR7HQFVLAfodHBsmJtq5NtcHZOP9p2+Ql/ZQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 04 Sep 2022 11:54:13 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "9g9qmru5gt"
-        },
-        {
-          "Name": "label",
-          "Value": "profile_photo/Пикса.png"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-pwvLIn0WR7HQFVLAfodHBsmJtq5NtcHZOP9p2+Ql/ZQ="
-        }
-      ]
-    },
-    {
-      "Route": "profile_photo/Пикса.png",
-      "AssetFile": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\Пикса.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "170733"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"pwvLIn0WR7HQFVLAfodHBsmJtq5NtcHZOP9p2+Ql/ZQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 04 Sep 2022 11:54:13 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-pwvLIn0WR7HQFVLAfodHBsmJtq5NtcHZOP9p2+Ql/ZQ="
         }
       ]
     }

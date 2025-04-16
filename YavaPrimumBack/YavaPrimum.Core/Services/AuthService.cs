@@ -104,31 +104,36 @@ namespace YavaPrimum.Core.Services
         {
             if (!await _userService.IsUserExistByEMail(email)) return null;
 
-            MailAddress mailFrom = new MailAddress("yavaprimum@mail.ru", "YavaPrimum");
-            MailAddress mailTo = new MailAddress(email);
-            MailMessage message = new MailMessage(mailFrom, mailTo);
-            message.Body = myMessage;
-            //message.Body = $"Ваш код доступа: {await _codeVerificationService.GenerateCode(email)}. Не сообщайте его никому ";
-            message.Subject = subject;
-
-            SmtpClient smtpClient = new SmtpClient()
-            {
-                Host = "smtp.mail.ru",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(mailFrom.Address, "vuy7pBNKJC1LEESaksGN")
-            };
             try
             {
+                MailAddress mailFrom = new MailAddress("yavaprimum@mail.ru", "YavaPrimum");
+                MailAddress mailTo = new MailAddress(email);
+                MailMessage message = new MailMessage(mailFrom, mailTo);
+                message.Body = myMessage;
+                //message.Body = $"Ваш код доступа: {await _codeVerificationService.GenerateCode(email)}. Не сообщайте его никому ";
+                message.Subject = subject;
+
+                SmtpClient smtpClient = new SmtpClient()
+                {
+                    Host = "smtp.mail.ru",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(mailFrom.Address, "vuy7pBNKJC1LEESaksGN")
+                };
                 smtpClient.Send(message);
+                Console.WriteLine(message);
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine("Ошибка отправки сообщения на почту");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("Ошибка почты " + e);
             }
-            Console.WriteLine(message);
+
             return email;
         }
     }

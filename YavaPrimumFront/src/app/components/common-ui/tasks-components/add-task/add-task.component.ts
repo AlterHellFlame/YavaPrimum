@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss']
 })
@@ -36,26 +36,26 @@ export class AddTaskComponent implements OnInit {
     this.form = new FormGroup({
       surname: new FormControl('', Validators.required),
       firstName: new FormControl('', Validators.required),
-      patronymic: new FormControl('', Validators.required),
+      patronymic: new FormControl(''),
       post: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      interviewDate: new FormControl(DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm"), Validators.required)
-    });
+      phone: new FormControl('', Validators.required), //Validators.pattern('^\\+375[0-9]{9}$')),
+      email: new FormControl('', Validators.email),
+      interviewDate: new FormControl('', Validators.required),
+    });    
   }
 
   loadData(): void {
-    this.optionalDataService.getPostsAndCountry().subscribe(res => {
-      this.posts = res.posts;
-      this.countries = res.countries;
+    this.optionalDataService.getPostsAndCountry().subscribe((res) => {
+      this.posts = res.posts || [];
+      this.countries = res.countries || [];
 
-      // Устанавливаем начальные значения для полей формы
-      this.form.patchValue({
-        post: this.posts[0],
-        country: this.countries[0]
-      });
-      console.log("loadData");
+      if (this.posts.length > 0 && this.countries.length > 0) {
+        this.form.patchValue({
+          post: this.posts[0],
+          country: this.countries[0],
+        });
+      }
     });
   }
 

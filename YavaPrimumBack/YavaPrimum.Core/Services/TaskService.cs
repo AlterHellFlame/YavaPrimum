@@ -33,6 +33,7 @@ namespace YavaPrimum.Core.Services
             return await _dBContext.Tasks
                 .Include(t => t.Status)
                 .Include(t => t.User)
+                .Include(t => t.User.Post)
                 .Include(t => t.User.Company)
                 .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
@@ -273,9 +274,93 @@ namespace YavaPrimum.Core.Services
         public async Task SetNewStatus(Tasks task, string status)
         {
             task.Status = await GetStatusByName(status);
-            _dBContext.Tasks.Update(task);
-            _dBContext.SaveChanges();
+            await _dBContext.SaveChangesAsync();
+
+
+            await HandleTaskInsertionAsync(task);
         }
+
+        public async Task HandleTaskInsertionAsync(Tasks insertedTask)
+        {
+            // Проверка входного параметра
+            if (insertedTask == null)
+                throw new ArgumentNullException(nameof(insertedTask));
+
+            // Добавление записи в таблицу ArchiveTasks
+            var archiveTask = new ArchiveTasks
+            {
+                ArchiveTasksId = Guid.NewGuid(),
+                Task = insertedTask,
+                Status = insertedTask.Status,
+                DateTimeOfCreated = DateTime.Now //Абоба
+            };
+            await _dBContext.ArchiveTasks.AddAsync(archiveTask);
+            await _dBContext.SaveChangesAsync();
+
+            // Получение имени нового статуса задачи
+            var newStatusName = insertedTask.Status?.Name;
+            if (string.IsNullOrWhiteSpace(newStatusName))
+                throw new InvalidOperationException("Имя статуса задачи отсутствует или некорректно.");
+
+            Console.WriteLine($"{newStatusName} Новый статус");
+            Console.WriteLine($"{insertedTask.TasksId} Кому назначаем");
+
+            // Логика обработки статуса "Взят кандидат"
+            if (newStatusName == "Взят кандидат")
+            {
+                // Пометка соответствующих уведомлений как прочитанных
+                await MarkNotificationsAsReadAsync(insertedTask.Candidate.CandidateId);
+
+                // Получение идентификатора статуса "Назначен приём"
+                var meetingStatus = await _dBContext.TasksStatus
+                    .Where(ts => ts.Name == "Назначен приём")
+                    .FirstOrDefaultAsync();
+
+                if (meetingStatus == null)
+                    throw new InvalidOperationException("Статус 'Назначен приём' не найден.");
+
+                Console.WriteLine($"{meetingStatus.TasksStatusId} Статус ID");
+
+                // Установка даты встречи через неделю
+                var meetingDate = DateTime.Now.AddDays(7);
+                Console.WriteLine($"{meetingDate} Дата встречи");
+
+                // Обновление задачи: новый статус и дата
+                insertedTask.Status = meetingStatus;
+                insertedTask.DateTime = meetingDate;
+
+                _dBContext.Tasks.Update(insertedTask);
+                await _dBContext.SaveChangesAsync();
+            }
+        }
+
+
+        private async Task MarkNotificationsAsReadAsync(Guid candidateId)
+        {
+            var notifications = await _dBContext.Notifications
+                .Where(x => x.ArchiveTasks.Task.Candidate.CandidateId == candidateId &&
+                            x.ArchiveTasks.Task.Status.Name == "Собеседование пройдено")
+                .ToListAsync(); // Directly retrieve the notification objects
+
+            foreach (var notification in notifications)
+            {
+                notification.IsReaded = true;
+            }
+
+            _dBContext.Notifications.UpdateRange(notifications);
+            await _dBContext.SaveChangesAsync();
+
+
+            foreach (var notification in notifications)
+            {
+                notification.IsReaded = true;
+            }
+
+            _dBContext.Notifications.UpdateRange(notifications);
+            await _dBContext.SaveChangesAsync();
+        }
+
+
     }
 }
 

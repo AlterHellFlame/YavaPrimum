@@ -13,5 +13,6 @@ namespace YavaPrimum.Core.DTO
         public List<string> Posts { get; set; }
         public List<string> Countries { get; set; }
         public List<string> Companies { get; set; }
+        public List<string> PhoneMask { get; set; }
     }
 }

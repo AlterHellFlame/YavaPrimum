@@ -48,12 +48,24 @@ namespace YavaPrimum.API.Controllers
         public async Task<ActionResult<List<TasksResponse>>> GetAllTasks()
         {
 
+            List<TasksResponse> taskResponses = await _tasksService.ConvertToFront(await _tasksService.GetAll());
+
+            taskResponses = taskResponses.OrderBy(tr => tr.DateTime).ToList();
+
+            return Ok(taskResponses);
+        }
+
+        [HttpGet("/get-all-archive-tasks")]
+        public async Task<ActionResult<List<TasksResponse>>> GetAllArchiveTasks()
+        {
+
             List<TasksResponse> taskResponses = await _tasksService.ConvertArchiveToFront(await _tasksService.GetAllAcrhive());
 
             taskResponses = taskResponses.OrderBy(tr => tr.DateTime).ToList();
 
             return Ok(taskResponses);
         }
+
 
 
         [HttpGet("/get-all-tasks-of-user")]
@@ -74,6 +86,24 @@ namespace YavaPrimum.API.Controllers
             Console.WriteLine("tasks " + taskResponses);
             return Ok(taskResponses);
         }
+
+        [HttpGet("/get-all-candidates-of-user")]
+        public async Task<ActionResult<List<CandidateRequestResponse>>> GetAllCandidatesOfUser()
+        {
+            Console.WriteLine("get-all-candidates");
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return Ok(new List<TasksResponse>());
+            }
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+            List<CandidateRequestResponse> candidates = await _candidateService.GetAll();
+
+            Console.WriteLine("tasks " + candidates);
+            return Ok(candidates);
+        }
+
 
         [HttpPost("/create-new-task")]
         public async Task<ActionResult<Guid>> CreateNewTask([FromBody] InterviewCreateRequest taskRequest)
@@ -116,42 +146,11 @@ namespace YavaPrimum.API.Controllers
         [HttpPut("/new-status-for-task/{taskId:guid}")]
         public async Task<ActionResult> UpdateTaskStatus(Guid taskId, [FromBody] StringRequest status)
         {
-            /*if(status.Value == "passed")
-            {
-                status.Value = "Собеседование пройдено";
-            }
-            else if (status.Value == "faild")
-            {
-                status.Value = "Собеседование не пройдено";
-            }*/
-
+          
             // Получаем задачу по идентификатору
+            Console.WriteLine(status);
             Tasks task = await _tasksService.GetById(taskId);
             await _tasksService.SetNewStatus(task, status.Value);
-
-            /*if (status.Value == "Подбор кадровика")
-            {
-                Console.WriteLine("Рассылка для поиска кадровика");
-                
-                await _tasksService.SetNewStatus(task, "Выполнено");
-
-                // Создаем новый идентификатор для пользователя
-                Guid userId = new Guid("7fc78775-1e04-4b47-bb62-516d99a6f0e4");
-
-                // Создаем новую задачу
-                Tasks newTask = new Tasks
-                {
-                    TasksId = Guid.NewGuid(),
-
-                    Status = await _tasksService.GetStatusByName("Задать дату"),
-                    Candidate = task.Candidate,
-                    User = await _userService.GetById(userId) //TODO Заменить на актуальный идентификатор пользователя
-                };
-
-                // Сохраняем новую задачу
-                Guid newTaskId = await _tasksService.Create(newTask);
-                Console.WriteLine(newTaskId);
-            }*/
 
             return Ok();
         }
