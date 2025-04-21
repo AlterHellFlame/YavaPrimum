@@ -1,28 +1,117 @@
-<div class="filter-section">
+<div class="filter-section mb-2">
   <!-- Фильтры -->
-  <input 
-    type="text" 
-    class="form-control" 
-    placeholder="Фильтр по фамилии" 
-    [(ngModel)]="filter.surname" />
-  <input 
-    type="text" 
-    class="form-control" 
-    placeholder="Фильтр по имени" 
-    [(ngModel)]="filter.firstName" />
+  <div class="form-group">
+    <label for="statusFilter" class="form-label">Фильтр по фамилии</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Иванов"
+      [(ngModel)]="filter.surname"
+    />
+   </div>
+    <div class="form-group">
+    <label for="statusFilter" class="form-label">Фильтр по имени</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Иван"
+      [(ngModel)]="filter.firstName"
+    />
+  </div>
+  <!-- Фильтр статуса через выпадающий список -->
+  <div class="form-group">
+    <label for="statusFilter" class="form-label">Фильтр по статусу</label>
+    <select id="statusFilter" class="form-control" [(ngModel)]="filterStatus">
+      <option value="all">Все</option>
+      <option value="completed">Только выполненные</option>
+      <option value="incomplete">Только невыполненные</option>
+    </select>
+  </div>
 </div>
 
 <!-- Карточки кандидатов -->
 <div class="candidate-cards row">
   <div class="col-md-4" *ngFor="let candidate of filteredCandidates">
-    <div class="card">
+    <div class="card mb-4 border-0 shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">Фамилия: {{ candidate.surname }}</h5>
-        <p class="card-text">Имя: {{ candidate.firstName }}</p>
-        <p class="card-text">Отчество: {{ candidate.patronymic }}</p>
-        <p class="card-text">Email: {{ candidate.email }}</p>
-        <p class="card-text">Телефон: {{ candidate.phone }}</p>
-        <p class="card-text">Страна: {{ candidate.country }}</p>
+        <div class="d-flex align-items-center">
+          <div class="flex-grow-1">
+            <h4 class="card-title mb-1">
+              {{ candidate.candidate.surname }}
+              {{ candidate.candidate.firstName }}
+              {{ candidate.candidate.patronymic }}
+            </h4>
+            <p class="text-muted mb-0">{{ candidate.candidate.country }}</p>
+          </div>
+          <div class="flex-shrink-0">
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-opacity-10 text-success': allTasksCompleted(candidate),
+                'bg-opacity-10 text-warning': !allTasksCompleted(candidate)
+              }"
+            >
+              <i
+                class="bi me-1"
+                [ngClass]="{
+                  'bi-check-circle-fill': allTasksCompleted(candidate),
+                  'bi-exclamation-circle-fill': !allTasksCompleted(candidate)
+                }"
+              ></i>
+              {{
+                allTasksCompleted(candidate)
+                  ? "Все задачи выполнены"
+                  : "Есть невыполненные задачи"
+              }}
+            </span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <i class="bi bi-envelope text-muted me-2"></i>
+          <div class="text-muted mb-0">Email</div>
+          <div class="text-truncate">{{ candidate.candidate.email }}</div>
+        </div>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-telephone text-muted me-2"></i>
+          <div class="text-muted mb-0">Телефон</div>
+          <div>{{ candidate.candidate.phone }}</div>
+        </div>
+
+        <h5 class="mb-3">Задачи</h5>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Дата</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of candidate.tasks">
+                <td>{{ toFormat(task.dateTime) }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                      'bg-opacity-10 text-success': isTaskCompleted(task),
+                      'bg-opacity-10 text-warning': !isTaskCompleted(task)
+                    }"
+                  >
+                    <i
+                      class="bi me-1"
+                      [ngClass]="{
+                        'bi-check-circle-fill': isTaskCompleted(task),
+                        'bi-hourglass-split': !isTaskCompleted(task)
+                      }"
+                    ></i>
+                    {{ task.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

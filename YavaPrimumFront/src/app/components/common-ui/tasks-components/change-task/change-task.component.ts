@@ -60,7 +60,7 @@ export class ChangeTaskComponent implements OnInit {
           secondName: this.task.candidate.surname,
           firstName: this.task.candidate.firstName,
           surName: this.task.candidate.patronymic,
-          candidatePost: this.task.candidatePost,
+          post: this.task.candidate.post,
           country: this.task.candidate.country,
           telephone: this.task.candidate.phone,
           email: this.task.candidate.email,

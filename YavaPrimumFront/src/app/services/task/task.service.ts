@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { Injectable } from '@angular/core';
 import { Tasks, TasksRequest } from '../../data/interface/Tasks.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Candidate } from '../../data/interface/Candidate.interface';
+import { Candidate, CandidatesFullData } from '../../data/interface/Candidate.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -66,22 +66,24 @@ export class TaskService {
     return filteredTasks.sort((a, b) => a.dateTime.toMillis() - b.dateTime.toMillis());
   }
 
-  public newStatus(tasksId: string, status: string): void {
+  public async newStatus(tasksId: string, status: string): Promise<void> {
     console.log('newStatus ' + status + ' for id ' + tasksId);
     const payload = { value: status };
 
-    this.http.put(`${this.baseApiUrl}new-status-for-task/${tasksId}`, payload, 
-      {
-        withCredentials: true,
-        headers: { 'Content-Type': 'application/json' } 
-      }).subscribe(
-        response => {
-            console.log('Status updated successfully');
-        },
-        error => {
-            console.error('Error updating status', error);
+    try {
+      const response = await this.http.put(
+        `${this.baseApiUrl}new-status-for-task/${tasksId}`,
+        payload,
+        {
+          withCredentials: true,
+          headers: { 'Content-Type': 'application/json' },
         }
-    );
+      ).toPromise();
+      window.location.reload();
+      console.log('Status updated successfully:', response);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
 }
 
 
@@ -99,10 +101,10 @@ export class TaskService {
         patronymic: payload.patronymic,
         email: payload.email,
         phone: payload.phone,
-        country: payload.country
+        country: payload.country,
+        post: payload.post
       },
       interviewDate: payload.interviewDate,
-      post: payload.post
     };
     
     console.log(task);
@@ -113,8 +115,8 @@ export class TaskService {
   }
 
     
-  public getAllCandidatesOfUser(): Observable<Candidate[]> {
-    return this.http.get<Candidate[]>(`${this.baseApiUrl}get-all-candidates-of-user`, { withCredentials: true });
+  public getAllCandidatesOfUser(): Observable<CandidatesFullData[]> {
+    return this.http.get<CandidatesFullData[]>(`${this.baseApiUrl}get-all-candidates-of-user`, { withCredentials: true });
   }
   
 }

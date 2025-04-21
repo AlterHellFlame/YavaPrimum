@@ -14,12 +14,12 @@ namespace YavaPrimum.Core.Services
     public class UserService : IUserService
     {
         private readonly YavaPrimumDBContext _dbContext;
-        private readonly ITasksService _tasksService;
+        private readonly IConverterService _converterService;
 
-        public UserService(YavaPrimumDBContext dbContext, ITasksService tasksService)
+        public UserService(YavaPrimumDBContext dbContext, IConverterService converterService)
         {
             _dbContext = dbContext;
-            _tasksService = tasksService;
+            _converterService = converterService;
         }
 
         public async Task<User> GetByEMail(string email)
@@ -51,12 +51,16 @@ namespace YavaPrimum.Core.Services
         public async Task<User> GetById(Guid id)
         {
             return await _dbContext.User
+                .Include(p => p.Post)
+                .Include(c => c.Company)
+                .Include(co => co.Company.Country)
                 .Where(u => u.UserId == id)
                 .FirstOrDefaultAsync();
         }
 
         public async Task<List<User>> GetAll()
         {
+            Console.WriteLine("GetAll");
             return await _dbContext.User
                 .Include(p => p.Post)
                 .Include(c => c.Company)
@@ -72,8 +76,6 @@ namespace YavaPrimum.Core.Services
 
         }
 
-
-
         public async Task DeleteUserById(Guid id)
         {
             var user = await _dbContext.User.FindAsync(id); // Получение пользователя по идентификатору
@@ -85,46 +87,39 @@ namespace YavaPrimum.Core.Services
             }
         }
 
-
-
         public async Task<UserRequestResponse> GetByIdToFront(Guid id)
         {
+            Console.WriteLine("GetByIdToFront");
             User user = await _dbContext.User
                 .Include(p => p.Post)
+                .Include(c => c.Company)
                 .Include(c => c.Company.Country)
                 .Where(u => u.UserId == id)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
             if (user == null)
                 throw new ArgumentNullException("Пользователя с таким ID не существует");
 
-            UserRequestResponse userResponse = await ConvertToFront(user);
+            UserRequestResponse userResponse = await _converterService.ConvertToFront(user);
 
             return userResponse;
         }
 
-        public async Task<UserRequestResponse> ConvertToFront(User user)
+        public async Task<User> GetAnotherUserOfCandidate(Tasks task)
         {
-            UserRequestResponse userResponse =  new UserRequestResponse()
-            {
-                UserId = user.UserId,
-                Surname = user.Surname,
-                FirstName = user.FirstName,
-                Patronymic = user.Patronymic,
-                Post = user.Post.Name,
-                Company = user.Company.Name,
-                Email = user.Email,
-                Phone = user.Phone,
-                ImgUrl = user.ImgUrl
-            };
+            User? user = _dbContext.Tasks
+             .Include(u => u.User)
+             .Include(u => u.User.Post)
+             .Where(u => u.Candidate == task.Candidate && u.User.Post != task.User.Post)
+             .FirstOrDefault().User;
+            
 
-            return userResponse;
+            if (user == null)
+                throw new ArgumentNullException("Пользователя с таким ID не существует");
+
+            return user;
         }
 
-        public async Task<List<UserRequestResponse>> ConvertToFront(List<User> users)
-        {
-            List<Task<UserRequestResponse>> usersRequestResponse = users.Select(user => ConvertToFront(user)).ToList();
-            return (await Task.WhenAll(usersRequestResponse)).ToList();
-        }
+
     }
 }

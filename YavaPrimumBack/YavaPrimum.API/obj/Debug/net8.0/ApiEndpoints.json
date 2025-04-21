@@ -77,9 +77,29 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
-    "Method": "crt",
-    "RelativePath": "crt",
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "crtBase",
+    "RelativePath": "crtBase",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "crtCandidate",
+    "RelativePath": "crtCandidate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "crtTask",
+    "RelativePath": "crtTask",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -111,6 +131,26 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "deleteAll",
+    "RelativePath": "deleteAll",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "deleteTasks",
+    "RelativePath": "deleteTasks",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
@@ -182,7 +222,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.CandidateFullDataResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -213,7 +253,7 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "ContainingType": "YavaPrimum.API.Controllers.NotificationController",
     "Method": "GetNotifications",
     "RelativePath": "get-notifications",
     "HttpMethod": "GET",
@@ -351,7 +391,7 @@
     ]
   },
   {
-    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "ContainingType": "YavaPrimum.API.Controllers.NotificationController",
     "Method": "ReadNotification",
     "RelativePath": "read-notification/{notificationId}",
     "HttpMethod": "PUT",
@@ -414,6 +454,64 @@
           "application/json",
           "text/json"
         ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "SetDate",
+    "RelativePath": "set-date/{notificationId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "SetTime",
+    "RelativePath": "set-time/{notificationId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "UpdateAllNotificationsTextAsync",
+    "RelativePath": "updAllNotificationsText",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       }
     ]

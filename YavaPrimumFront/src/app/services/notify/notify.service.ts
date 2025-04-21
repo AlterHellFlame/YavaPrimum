@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { Notifications } from '../../data/interface/Notifications.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { DateTime } from 'luxon';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +60,22 @@ export class NotifyService {
       return this.http.put(`${this.baseApiUrl}read-notification/${notificationId}`, {}, { withCredentials: true });
   }
 
+  public setDate(notificationId : string, date: string) : Observable<object>
+  {
+      const dateTime = 
+      {
+        value: date
+      };
+      return this.http.put(`${this.baseApiUrl}set-date/${notificationId}`, dateTime, { withCredentials: true });
+  }
 
+  public setTime(notificationId : string, date: string) : Observable<object>
+  {
+    console.log(notificationId + " " + date)
+      const dateTime = 
+      {
+        value: date.toString()
+      };
+      return this.http.put(`${this.baseApiUrl}set-time/${notificationId}`, dateTime, { withCredentials: true });
+  }
 }

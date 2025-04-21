@@ -4,7 +4,8 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { Tasks } from '../../../data/interface/Tasks.interface';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
-import * as XLSX from 'xlsx';
+//import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
 
 // Константы для повторяющихся значений
 const CHART_COLORS = {
@@ -31,6 +32,25 @@ const CHART_COLORS = {
   INTERVIEW: {
     bg: 'rgba(255, 159, 64, 0.2)',
     border: 'rgba(255, 159, 64, 1)'
+  }
+};
+
+const EXCEL_STYLES = {
+  header: {
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: '4472C4' } },
+    font: { bold: true, color: { argb: 'FFFFFF' } },
+    alignment: { horizontal: 'center' }
+  },
+  title: {
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D9E1F2' } },
+    font: { bold: true, size: 14 }
+  },
+  dataHeader: {
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E9E9E9' } },
+    font: { bold: true }
+  },
+  dataRow: {
+    font: { color: { argb: '000000' } }
   }
 };
 
@@ -220,134 +240,104 @@ export class ChartsPageComponent implements OnInit {
 
 
 
-  exportToExcel(): void {
-    // Определяем стили для Excel
-    const styles = {
-      header: {
-        font: { bold: true, color: { rgb: 'FFFFFF' } },
-        fill: { fgColor: { rgb: '4472C4' } }, // Синий цвет заголовка
-        alignment: { horizontal: 'center' }
-      },
-      title: {
-        font: { bold: true, size: 14, color: { rgb: '000000' } },
-        fill: { fgColor: { rgb: 'D9E1F2' } } // Светло-синий фон
-      },
-      dataHeader: {
-        font: { bold: true },
-        fill: { fgColor: { rgb: 'E9E9E9' } } // Серый фон
-      },
-      dataRow: {
-        font: { color: { rgb: '000000' } }
-      }
-    };
-  
-    // Создаем книгу
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  
+  async exportToExcel(): Promise<void> {
+    // Создаем новую книгу Excel
+    /*const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'HR System';
+    workbook.created = new Date();
+
     // Добавляем отчеты
-    this.addReportToWorkbook(wb, 'Статистика отказов', this.rejectionStatsChartData, styles);
-    this.addReportToWorkbook(wb, 'План мероприятий', this.eventPlanChartData, styles);
-    this.addReportToWorkbook(wb, 'Статистика по найму', this.recruitmentStatsChartData, styles);
-    this.addReportToWorkbook(wb, 'Работа HR и рекрутеров', this.hrPerformanceChartData, styles);
-  
+    await this.addReportToWorkbook(workbook, 'Статистика отказов', this.rejectionStatsChartData);
+    await this.addReportToWorkbook(workbook, 'План мероприятий', this.eventPlanChartData);
+    await this.addReportToWorkbook(workbook, 'Статистика по найму', this.recruitmentStatsChartData);
+    await this.addReportToWorkbook(workbook, 'Работа HR и рекрутеров', this.hrPerformanceChartData);
+
     // Добавляем сводный лист
-    this.addSummarySheet(wb, styles);
-  
-    // Сохраняем файл
-    XLSX.writeFile(wb, 'HR_Отчеты.xlsx', { bookSST: true });
+    await this.addSummarySheet(workbook);
+
+    // Генерируем файл и сохраняем
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer]), 'HR_Отчеты.xlsx');
   }
-  
-  private addReportToWorkbook(
-    wb: XLSX.WorkBook,
+
+  private async addReportToWorkbook(
+    workbook: ExcelJS.Workbook,
     title: string,
-    chartData: ChartData<any, any, any>,
-    styles: any
-  ): void {
+    chartData: ChartData<any, any, any>
+  ): Promise<void> {
     if (!chartData.labels || !chartData.datasets?.[0]?.data) return;
-  
-    const data = [
-      // Заголовок отчета
-      [{ v: title, t: 's', s: styles.title }],
-      [], // Пустая строка
-  
-      // Заголовки столбцов
-      [
-        { v: 'Период', t: 's', s: styles.dataHeader },
-        { v: 'Количество', t: 's', s: styles.dataHeader }
-      ],
-  
-      // Данные
-      ...chartData.labels.map((label, i) => [
-        { v: label, t: 's', s: styles.dataRow },
-        { v: chartData.datasets[0].data[i], t: 'n', s: styles.dataRow }
-      ]),
-  
-/*      // Итого
-      [
-        { v: 'Итого', t: 's', s: styles.dataHeader },
-        { 
-          v: chartData.datasets[0].data.reduce((sum, val) => sum + val, 0) || 0;
-          t: 'n',
-          s: styles.dataHeader
-        }
-      ],*/
-  
-      [], [], // Пустые строки для разделения
-    ];
-  
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-    
+
+    const worksheet = workbook.addWorksheet(title.substring(0, 31)); // Ограничение длины имени листа
+
+    // Заголовок отчета
+    const titleRow = worksheet.addRow([title]);
+    titleRow.font = EXCEL_STYLES.title.font;
+    titleRow.fill = EXCEL_STYLES.title.fill;
+    worksheet.addRow([]); // Пустая строка
+
+    // Заголовки столбцов
+    const headerRow = worksheet.addRow(['Период', 'Количество']);
+    headerRow.eachCell(cell => {
+      cell.style = EXCEL_STYLES.dataHeader;
+    });
+
+    // Данные
+    chartData.labels.forEach((label, i) => {
+      const row = worksheet.addRow([label, chartData.datasets[0].data[i]]);
+      row.eachCell(cell => {
+        cell.style = EXCEL_STYLES.dataRow;
+      });
+    });
+
+    // Итого
+    const total = chartData.datasets[0].data.reduce((sum, val) => sum + val, 0);
+    const totalRow = worksheet.addRow(['Итого', total]);
+    totalRow.eachCell(cell => {
+      cell.style = EXCEL_STYLES.dataHeader;
+    });
+
     // Настраиваем ширину столбцов
-    ws['!cols'] = [{ width: 20 }, { width: 15 }];
-    
-    // Добавляем лист в книгу
-    XLSX.utils.book_append_sheet(wb, ws, title.substring(0, 31)); // Ограничение длины имени листа
-  }
-  
-  private addSummarySheet(wb: XLSX.WorkBook, styles: any): void {
-    const summaryData = [
-      // Заголовок
-      [{ v: 'Сводный отчет', t: 's', s: styles.title }],
-      [],
-      
-      // Заголовки столбцов
-      [
-        { v: 'Отчет', t: 's', s: styles.header },
-        { v: 'Всего', t: 's', s: styles.header }
-      ],
-      
-      // Данные
-      ...this.getSummaryRows(styles),
-      
-      // Пустые строки
-      [], []
+    worksheet.columns = [
+      { width: 20 },
+      { width: 15 }
     ];
-  
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(summaryData);
-    
-    // Настраиваем ширину столбцов
-    ws['!cols'] = [{ width: 30 }, { width: 15 }];
-    
-    // Добавляем лист в начало книги
-    wb.SheetNames.unshift('Сводный отчет');
-    wb.Sheets['Сводный отчет'] = ws;
   }
-  
-  private getSummaryRows(styles: any): any[] {
+
+  private async addSummarySheet(workbook: ExcelJS.Workbook): Promise<void> {
+    const worksheet = workbook.addWorksheet('Сводный отчет', 0); // Добавляем в начало
+
+    // Заголовок
+    const titleRow = worksheet.addRow(['Сводный отчет']);
+    titleRow.font = EXCEL_STYLES.title.font;
+    titleRow.fill = EXCEL_STYLES.title.fill;
+    worksheet.addRow([]); // Пустая строка
+
+    // Заголовки столбцов
+    const headerRow = worksheet.addRow(['Отчет', 'Всего']);
+    headerRow.eachCell(cell => {
+      cell.style = EXCEL_STYLES.header;
+    });
+
+    // Данные
     const reports = [
       { name: 'Статистика отказов', chart: this.rejectionStatsChartData },
       { name: 'План мероприятий', chart: this.eventPlanChartData },
       { name: 'Статистика по найму', chart: this.recruitmentStatsChartData },
       { name: 'Работа HR и рекрутеров', chart: this.hrPerformanceChartData }
     ];
-  
-    return reports.map(report => {
+
+    reports.forEach(report => {
       const total = report.chart.datasets?.[0]?.data?.reduce((sum, val) => sum + val, 0) || 0;
-      
-      return [
-        { v: report.name, t: 's', s: styles.dataRow },
-        { v: total, t: 'n', s: styles.dataRow }
-      ];
+      const row = worksheet.addRow([report.name, total]);
+      row.eachCell(cell => {
+        cell.style = EXCEL_STYLES.dataRow;
+      });
     });
+
+    // Настраиваем ширину столбцов
+    worksheet.columns = [
+      { width: 30 },
+      { width: 15 }
+    ];*/
   }
 }

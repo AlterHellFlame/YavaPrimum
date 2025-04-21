@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
   filteredUsers: User[] = [];
   currentUser: User | null = null;
   isEditMode = false;
-  isLoad = false;
+  //isLoad = true;
   isChartVisible = false;
 
   filters: UserFilters = {
@@ -94,6 +94,7 @@ export class AdminComponent implements OnInit {
       })
     ).subscribe(users => {
       this.users = users;
+      this.currentUser = this.users[0];
       this.filteredUsers = [...users];
     });
   }
@@ -113,7 +114,7 @@ export class AdminComponent implements OnInit {
     console.log("openEditModal")
     this.isEditMode = true;
     this.currentUser = { ...user };
-    this.isLoad = true;
+    //this.isLoad = true;
   }
 
   deleteUser(user: User): void {
@@ -127,18 +128,8 @@ export class AdminComponent implements OnInit {
 
   openModal(): void {
     this.isEditMode = false;
-    this.currentUser = {
-      userId: 'E9DA72EF-9045-4E95-AAFE-0295192A9064',
-      surname: '',
-      firstName: '',
-      patronymic: '',
-      imgUrl: 'default.jpg',
-      phone: '',
-      email: '',
-      company: this.companies[0] || '',
-      post: 'HR'
-    };
-    this.isLoad = true;
+    this.currentUser = this.users[0];
+    //this.isLoad = true;
   }
 
   closeModal(): void {

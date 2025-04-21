@@ -29,10 +29,19 @@
       
   
         <ng-container *ngFor="let task of getTasksForDay(dayOfMonth) | slice:0:4">
-          <div class="task-interview px-1" [ngClass]="{'task-compleate': task.typeStatus == 2}">
-            {{task.dateTime.toFormat("HH:mm")}} {{task.candidate.surname}}
+          <div class="px-1 task" [ngClass]="{
+          'task-interview ': task.typeStatus == 0, 
+          'task-compleate': task.typeStatus == 2, 
+          'task-call': task.typeStatus == 3, 
+          'task-call-compleate': task.typeStatus == 4}">
+
+            <span *ngIf="task.typeStatus != 3">
+              {{task.dateTime.toFormat("HH:mm")}}
+            </span>
+            {{task.candidate.surname}}
           </div>
         </ng-container>
+        
         
         <i  *ngIf="dayTaskLength > 4" class="bi bi-caret-down more"></i>
       </div>

@@ -74,14 +74,28 @@
               </div>
             </div>
             <div class="form-group">
+              <!-- <input
+              mask="+375 (00) 000-00-00"
+              placeholder="+375 (XX) XXX-XX-XX"
+              type="text"
+              class="form-control"
+              id="phone"
+              formControlName="phone"
+              [showMaskTyped]="true"
+              [validation]="true"
+            /> -->
+            <div class="form-group">
               <label for="phone" class="mt-1">Телефон</label>
               <input
-                placeholder="+375445559525"
                 type="text"
                 class="form-control"
                 id="phone"
+                placeholder="+375 (XX) XXX-XX-XX"
                 formControlName="phone"
+                input-mask="+375 (99) 999-99-99"
               />
+            </div>
+            
             </div>
             <div class="form-group">
               <label for="email" class="mt-1">Email</label>
@@ -100,6 +114,7 @@
                 class="form-control"
                 id="dateTime"
                 formControlName="interviewDate"
+                [min]="minDateTime"
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ namespace YavaPrimum.Core.DataBase
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-LOAQH83;Database=YavaPrimum;
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-LOAQH83;Database=YavaPrimumDB;
                 Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;");
         }
 
@@ -21,7 +21,7 @@ namespace YavaPrimum.Core.DataBase
         public DbSet<Country> Country { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Notifications> Notifications { get; set; }
-        public DbSet<ArchiveTasks> ArchiveTasks { get; set; }
+        //public DbSet<ArchiveTasks> ArchiveTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,17 +37,12 @@ namespace YavaPrimum.Core.DataBase
                 .OnDelete(DeleteBehavior.NoAction); // Указываем NO ACTION при удалении
 
             modelBuilder.Entity<Tasks>()
-                .HasOne(t => t.CandidatePost)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Tasks>()
                 .HasOne(t => t.Candidate)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction); // Указываем NO ACTION при удалении
 
 
-            modelBuilder.Entity<Notifications>()
+            /*modelBuilder.Entity<Notifications>()
                 .HasOne(t => t.ArchiveTasks)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction); // Указываем NO ACTION при удалении
@@ -61,7 +56,7 @@ namespace YavaPrimum.Core.DataBase
                 .HasOne(a => a.Status)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
-
+            */
             modelBuilder.Entity<Tasks>(entity =>
             {
                 entity.ToTable("Tasks");

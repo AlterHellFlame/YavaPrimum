@@ -8,6 +8,7 @@ $hover: #cfcfcf;
 $task-interview-bg: #f6df6b;
 $task-compleate-bg: #86793b;
 $task-call-bg: #6bf6ca;
+$task-call-compleate-bg: #4ca689;
 
 .headline-control
 {
@@ -64,13 +65,18 @@ $task-call-bg: #6bf6ca;
         border-radius: 5px;     
     }
 
-    .task-interview
+    .task
     {
         width: fit-content;
         margin-top: 2px;
         border-radius: 5px;
-        background-color: $task-interview-bg;
+        background-color: white;
         font-size: 10px;
+    }
+
+    .task-interview
+    {
+        background-color: $task-interview-bg;
     }
     .task-compleate
     {
@@ -78,11 +84,11 @@ $task-call-bg: #6bf6ca;
     }
     .task-call
     {
-        width: fit-content;
-        margin-top: 2px;
-        border-radius: 5px;
         background-color: $task-call-bg;
-        font-size: 10px;
+    }
+    .task-call-compleate
+    {
+        background-color: $task-call-compleate-bg; //Исправить
     }
 
     .more

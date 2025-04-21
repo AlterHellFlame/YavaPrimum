@@ -1,4 +1,0 @@
-D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\wwwroot\profile_photo\Kinich.jpg
-D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\wwwroot\profile_photo\Кинич2.jpg
-D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\wwwroot\profile_photo\Пз.png
-D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\wwwroot\profile_photo\Пикса.png

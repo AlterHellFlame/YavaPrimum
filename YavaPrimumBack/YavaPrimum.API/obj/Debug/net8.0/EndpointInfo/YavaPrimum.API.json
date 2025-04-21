@@ -5,18 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/crt": {
-      "post": {
-        "tags": [
-          "AuthContriller"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/register": {
       "post": {
         "tags": [
@@ -280,6 +268,139 @@
         }
       }
     },
+    "/crtBase": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/crtCandidate": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/crtTask": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deleteAll": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deleteTasks": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/updAllNotificationsText": {
+      "post": {
+        "tags": [
+          "Fill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get-notifications": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/read-notification/{notificationId}": {
+      "put": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Tasks": {
       "get": {
         "tags": [
@@ -407,7 +528,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TasksResponse"
+                    "$ref": "#/components/schemas/CandidateFullDataResponse"
                   }
                 }
               },
@@ -415,7 +536,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TasksResponse"
+                    "$ref": "#/components/schemas/CandidateFullDataResponse"
                   }
                 }
               },
@@ -423,7 +544,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TasksResponse"
+                    "$ref": "#/components/schemas/CandidateFullDataResponse"
                   }
                 }
               }
@@ -529,6 +650,90 @@
         "parameters": [
           {
             "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/set-date/{notificationId}": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StringRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/set-time/{notificationId}": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "notificationId",
             "in": "path",
             "required": true,
             "schema": {
@@ -755,67 +960,6 @@
           }
         }
       }
-    },
-    "/get-notifications": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NotificationsResponse"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NotificationsResponse"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NotificationsResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/read-notification/{notificationId}": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "notificationId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
     }
   },
   "components": {
@@ -847,8 +991,27 @@
             "type": "string",
             "nullable": true
           },
+          "post": {
+            "$ref": "#/components/schemas/Post"
+          },
           "country": {
             "$ref": "#/components/schemas/Country"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CandidateFullDataResponse": {
+        "type": "object",
+        "properties": {
+          "candidate": {
+            "$ref": "#/components/schemas/CandidateRequestResponse"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TasksResponse"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -873,6 +1036,10 @@
             "nullable": true
           },
           "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "post": {
             "type": "string",
             "nullable": true
           },
@@ -925,10 +1092,6 @@
             "$ref": "#/components/schemas/CandidateRequestResponse"
           },
           "interviewDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "post": {
             "type": "string",
             "nullable": true
           }
@@ -1018,9 +1181,9 @@
             },
             "nullable": true
           },
-          "phoneMask": {
-            "type": "array",
-            "items": {
+          "phoneMasks": {
+            "type": "object",
+            "additionalProperties": {
               "type": "string"
             },
             "nullable": true
@@ -1050,17 +1213,16 @@
           },
           "dateTime": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "candidatePost": {
-            "$ref": "#/components/schemas/Post"
+            "format": "date-time"
           },
           "user": {
             "$ref": "#/components/schemas/User"
           },
           "candidate": {
             "$ref": "#/components/schemas/Candidate"
+          },
+          "isArchive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

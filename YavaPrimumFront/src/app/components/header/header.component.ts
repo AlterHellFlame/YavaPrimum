@@ -25,17 +25,24 @@ export class HeaderComponent implements OnInit{
     post: "",
     phone: "",
     imgUrl: "default.jpg",
-  };
+  };;
 
   constructor(public userService: UserService, private router: Router, private notify: NotifyService){}
 
   countOfNotify = 0;
   ngOnInit(): void {
-    this.userService.getUserData().subscribe(user =>
-      {
-        this.user = user
+    this.userService.getUserData().subscribe({
+      next: (user) => {
+        this.user = user; // Если данные успешно получены
+      },
+      error: (err) => {
+        if(err == "166")
+        {
+          this.router.navigate(['/log-in']);
+        }
       }
-    )
+    });
+    
     this.notify.getNotifications().subscribe(notifications =>
       {
         this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;

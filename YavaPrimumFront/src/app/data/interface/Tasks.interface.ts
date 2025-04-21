@@ -9,7 +9,6 @@ export interface Tasks
     candidate: Candidate,
     status: string,
     typeStatus: number,
-    candidatePost: string;
     dateTime: DateTime,
 }
 

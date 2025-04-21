@@ -13,5 +13,9 @@ namespace YavaPrimum.Core.Interfaces
         Task<List<NotificationsResponse>> GetAllByUserId(Guid id);
         Task<Notifications> GetById(Guid id);
         Task ReadNotification(Guid id);
+        Task ReadNotificationOfCandidate(Guid candidateId);
+        Task SendCountryRecruiterNotifications(Tasks task);
+        Task SendMessage(Tasks task);
+        string GetMessageText(Tasks task);
     }
 }

@@ -20,6 +20,7 @@ namespace YavaPrimum.API.Controllers
         private IJwtProvider _jwtProvider;
         private ITasksService _tasksService;
         private INotificationsService _notificationsService;
+        private IConverterService _converterService;
 
         public UserController(
             ICandidateService candidateService,
@@ -29,7 +30,8 @@ namespace YavaPrimum.API.Controllers
             IJwtProvider jwtProvider,
             ITasksService tasksService,
             INotificationsService notificationsService,
-            ICompanyService companyService)
+            ICompanyService companyService,
+            IConverterService converterService)
         {
             _candidateService = candidateService;
             _countryService = countryService;
@@ -39,6 +41,7 @@ namespace YavaPrimum.API.Controllers
             _tasksService = tasksService;
             _notificationsService = notificationsService;
             _companyService = companyService;
+            _converterService = converterService;
         }
 
 
@@ -76,7 +79,7 @@ namespace YavaPrimum.API.Controllers
             if (HttpContext.Request.Cookies.Count == 0)
             {
                 Console.WriteLine("Куков нет");
-                return Ok(new List<TasksResponse>());
+                return StatusCode(166, "Куков нет"); // Возвращает код ошибки 166 с сообщением
             }
             string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
 
@@ -87,7 +90,7 @@ namespace YavaPrimum.API.Controllers
         public async Task<ActionResult<List<UserRequestResponse>>> GetAllUsersData()
         {
 
-            return await _userService.ConvertToFront(await _userService.GetAll());
+            return await _converterService.ConvertToFront(await _userService.GetAll());
         }
 
 
@@ -103,59 +106,12 @@ namespace YavaPrimum.API.Controllers
                 Posts = Posts.Select(post => post.Name).ToList(),
                 Countries = Countries.Select(country => country.Name).ToList(),
                 Companies = Companies.Select(company => company.Name).ToList(),
-                PhoneMask = Countries.Select(country => country.PhoneMask).ToList()
+                PhoneMasks = Countries.ToDictionary(country => country.Name, country => country.PhoneMask) // Создание словаря
             };
+
             return Ok(postCountry);
         }
 
-
-        [HttpGet("/get-notifications")]
-        public async Task<ActionResult<List<NotificationsResponse>>> GetNotifications()
-        {
-            if (HttpContext.Request.Cookies.Count == 0)
-            {
-                Console.WriteLine("Куков нет");
-                return Ok(new List<TasksResponse>());
-            }
-            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
-
-            return await _notificationsService.GetAllByUserId(await _jwtProvider.GetUserIdFromToken(token));
-        }
-
-        [HttpPut("/read-notification/{notificationId:guid}")]
-        public async Task<ActionResult> ReadNotification(Guid notificationId)
-        {
-
-            Console.WriteLine("Сообщение прочитано");
-
-            Notifications notification = await _notificationsService.GetById(notificationId);
-
-            if (notification.ArchiveTasks.Status.Name == "Собеседование пройдено")
-            {
-                if (HttpContext.Request.Cookies.Count == 0)
-                {
-                    Console.WriteLine("Куков нет");
-                    return Ok();
-                }
-                string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
-
-
-                Tasks newTask = new Tasks
-                {
-                    TasksId = Guid.NewGuid(),
-
-                    Status = await _tasksService.GetStatusByName("Взят кандидат"),
-                    Candidate = notification.ArchiveTasks.Task.Candidate,
-                    CandidatePost = notification.ArchiveTasks.Task.CandidatePost,
-                    User = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token)),
-                    DateTime = DateTime.Now.AddDays(7) // Текущая дата + 7 дней
-                };
-
-                await _tasksService.Create(newTask);
-            }
-            await _notificationsService.ReadNotification(notificationId);
-            return Ok();
-        }
 
     }
 }

@@ -8,6 +8,7 @@
         public string Patronymic { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Post {  get; set; }
         public string Country { get; set; }
     }
 

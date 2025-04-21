@@ -5,20 +5,23 @@ import { TaskService } from '../../../../services/task/task.service';
 import { OptionalDataService } from '../../../../services/optional-data/optional-data.service';
 import { NotifyService } from '../../../../services/notify/notify.service';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+  styleUrls: ['./add-task.component.scss'],
+  providers: [provideNgxMask()],
 })
 export class AddTaskComponent implements OnInit {
   form!: FormGroup;
   message: any;
   posts: string[] = [];
   countries: string[] = [];
-
+  minDateTime: string = ''; 
+  
   constructor(
     private optionalDataService: OptionalDataService,
     private notify: NotifyService,

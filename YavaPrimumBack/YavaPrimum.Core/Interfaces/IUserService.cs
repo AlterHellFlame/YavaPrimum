@@ -12,7 +12,6 @@ namespace YavaPrimum.Core.Interfaces
         Task<User> GetById(Guid id);
         Task<List<User>> GetAll();
         Task<UserRequestResponse> GetByIdToFront(Guid id);
-        Task<UserRequestResponse> ConvertToFront(User user);
-        Task<List<UserRequestResponse>> ConvertToFront(List<User> users);
+        Task<User> GetAnotherUserOfCandidate(Tasks task);
     }
 }

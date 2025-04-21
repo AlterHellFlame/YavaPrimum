@@ -23,12 +23,13 @@ export class TaskInterviewComponent
 
   }
 
-  public Interview(status: string)
+  public NewStatus(status: string)
   {
     console.log(this.task.candidate.surname + ' ' + this.task.taskId)
     this.taskService.newStatus(this.task.taskId, status);
+  
     this.notify.SendToUser("Хабиб-Абиб");
-    //window.location.reload();
+
   }
 
 

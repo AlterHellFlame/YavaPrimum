@@ -17,7 +17,7 @@ namespace YavaPrimum.Core.Services
         public async Task<List<Post>> GetAll()
         {
             return await _dbContext.Post
-                .Where(p => p.Name != "Admin")
+                .Where(p => p.Name != "!Админ")
                 .ToListAsync();
         }
 

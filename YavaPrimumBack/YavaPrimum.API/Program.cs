@@ -41,6 +41,7 @@ namespace YavaPrimum.API
             builder.Services.AddScoped<ICountryService, CountryService>();
             builder.Services.AddScoped<ICompanyService, CompanyService>();
             builder.Services.AddScoped<INotificationsService, NotificationsService>();
+            builder.Services.AddScoped<IConverterService, ConverterService>();
 
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 

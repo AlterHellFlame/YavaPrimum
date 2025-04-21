@@ -7,20 +7,15 @@ namespace YavaPrimum.Core.Interfaces
     {
         Task<Guid> Create(Tasks task);
         Task<List<Tasks>> GetAll();
-        Task<List<ArchiveTasks>> GetAllAcrhive();
-        Task<List<ArchiveTasks>> GetAllAcrhiveByUserId(Guid userId);
         Task<List<Tasks>> GetAllByUserId(Guid userId);
-        Task<List<TasksResponse>> ConvertToFront(List<Tasks> tasks);
-        Task<TasksResponse> ConvertToFront(Tasks task);
-        Task<List<TasksResponse>> ConvertArchiveToFront(List<ArchiveTasks> tasks);
-        Task<TasksResponse> ConvertArchiveToFront(ArchiveTasks task);
         Task Delete(Guid taskId);
-        Task PassedInterview(Guid taskId);
-        Task FaidInterview(Guid taskId);
         Task Update(Guid taskId, InterviewCreateRequest newTask);
         Task<Tasks> GetById(Guid taskId);
         Task RepeatInterview(Guid taskId, string dateTime);
         Task<TasksStatus> GetStatusByName(string name);
+        Task SetActive(Guid taskId);
+        Task SetNewDate(Tasks task, DateTime dateTime);
         Task SetNewStatus(Tasks tasks, string status);
+        Task<Tasks> GetLastActiveTask(Guid candidateId, Guid userId);
     }
 }

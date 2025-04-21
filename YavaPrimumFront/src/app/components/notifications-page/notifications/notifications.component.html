@@ -20,11 +20,19 @@
               <h5 class="card-title text-primary">{{ notification.task.user.surname }} {{ notification.task.user.firstName }} {{ notification.task.user.patronymic }}</h5>
               <small class="text-muted">{{ toFormat(notification.dateTime.toString()) }}</small>
             </div>
-            <p class="card-text">{{ notification.textMessage }}</p>
+            <p class="card-text">
+              Кандидат: <span class="fw-bold">{{notification.task.candidate.surname }} {{ notification.task.candidate.firstName }}</span> 
+            </p>
+            <p class="card-text">
+              Должность: <span class="fw-bold">{{ notification.task.candidate.post }}</span>
+            </p>          
+            <p class="card-text mt-1">{{ notification.textMessage }}</p>
             <div class="d-flex justify-content-end">
-              <button *ngIf="!notification.isReaded" (click)="markAsRead(notification)" class="btn btn-outline-success btn-sm">
-                {{ notification.status === 'Собеседование пройдено' ? 'Взять кандидата' : 'Прочитано' }}
-              </button>
+              <ng-container *ngIf="!notification.isReaded">
+                  <button (click)="markAsRead(notification)" class="btn btn-outline-success btn-sm">
+                    {{ getNotificationText(notification) }}
+                  </button>              
+              </ng-container>              
             </div>
           </div>
         </div>
@@ -32,3 +40,96 @@
     </div>
   </div>
   
+  <div #dateTimeModal class="modal fade" tabindex="-1" aria-labelledby="dateTimeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateTimeModalLabel">
+            {{ ['Собеседование пройдено', 'Дата отказана', ].includes(selectedNotification?.task!.status) ? 'Выберите дату' : 'Выберите время' }}
+          </h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="dateTimeInput" class="form-label">
+                {{  ['Собеседование пройдено', 'Дата отказана', ].includes(selectedNotification?.task!.status) ? 'Дата' : 'Время' }}        
+              </label>
+              <input 
+                *ngIf="['Собеседование пройдено', 'Дата отказана', ].includes(selectedNotification?.task!.status)" 
+                type="date" 
+                class="form-control" 
+                id="dateTimeInput" 
+                [(ngModel)]="selectedDate" 
+                name="selectedDate" 
+                [min]="minDate" 
+                required />
+  
+              <input 
+                *ngIf="['Дата подтверждена', 'Время отказано', ].includes(selectedNotification?.task!.status)" 
+                type="time" 
+                class="form-control" 
+                id="timeInput" 
+                [(ngModel)]="selectedTime" 
+                name="selectedTime" 
+                required />
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div #dateModal class="modal fade" class="modal fade" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateModalLabel">Выберите дату</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModalDate()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmitDate()">
+            <div class="mb-3">
+              <label for="dateInput" class="form-label">Дата</label>
+              <input 
+                type="date" 
+                class="form-control" 
+                id="dateInput" 
+                [(ngModel)]="selectedDate" 
+                name="selectedDate" 
+                [min]="minDate" 
+                required />
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div #timeModal class="modal fade" class="modal fade" tabindex="-1" aria-labelledby="timeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="timeModalLabel">Выберите время</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModalDate()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmitDate()">
+            <div class="mb-3">
+              <label for="dateInput" class="form-label">Время</label>
+              <input 
+              type="time" 
+              class="form-control" 
+              id="timeInput" 
+              [(ngModel)]="selectedTime" 
+              name="selectedTime" 
+              required />            
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> -->

@@ -11,12 +11,15 @@ namespace YavaPrimum.Core.Services
     public class TaskService : ITasksService
     {
         private readonly YavaPrimumDBContext _dBContext;
+        private readonly INotificationsService _notificationsService;
         private readonly ICandidateService _candidateService;
 
         public TaskService(YavaPrimumDBContext dBContext,
+            INotificationsService notificationsService,
             ICandidateService candidateService)
         {
             _dBContext = dBContext;
+            _notificationsService = notificationsService;
             _candidateService = candidateService;
         }
 
@@ -24,6 +27,34 @@ namespace YavaPrimum.Core.Services
         {
             await _dBContext.Tasks.AddAsync(task);
             await _dBContext.SaveChangesAsync();
+
+
+            /*if (task.Status.Name == "Взят кандидат")
+            {
+                // Пометка соответствующих уведомлений как прочитанных
+                //await _notificationsService.ReadNotificationOfCandidate(task.Candidate.CandidateId);
+
+                // Получение идентификатора статуса "Назначен приём"
+                var meetingStatus = await _dBContext.TasksStatus
+                    .Where(ts => ts.Name == "Назначен приём")
+                    .FirstOrDefaultAsync();
+
+                if (meetingStatus == null)
+                    throw new InvalidOperationException("Статус 'Назначен приём' не найден.");
+
+                Console.WriteLine($"{meetingStatus.TasksStatusId} Статус ID");
+
+                // Установка даты встречи через неделю
+                var meetingDate = DateTime.Now.AddDays(7);
+                Console.WriteLine($"{meetingDate} Дата встречи");
+
+                // Обновление задачи: новый статус и дата
+                task.Status = meetingStatus;
+                task.DateTime = meetingDate;
+
+                _dBContext.Tasks.Update(task);
+                await _dBContext.SaveChangesAsync();
+            }*/
 
             return task.TasksId;
         }
@@ -38,40 +69,7 @@ namespace YavaPrimum.Core.Services
                 .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
                 .Include(t => t.Candidate.Country)
-                .Include(t => t.CandidatePost)
-                .ToListAsync();
-        }
-
-        public async Task<List<ArchiveTasks>> GetAllAcrhive()
-        {
-            return await _dBContext.ArchiveTasks
-                .Include(t => t.Status)
-                .Include(t => t.Task)
-                .Include(t => t.Task.User)
-                .Include(t => t.Task.User.Post)
-                .Include(t => t.Task.User.Company)
-                .Include(t => t.Task.User.Company.Country)
-                .Include(t => t.Task.Candidate)
-                .Include(t => t.Task.Candidate.Country)
-                .Include(t => t.Task.CandidatePost)
-                .Where(t => t.Status.TypeStatus != -1)
-                .ToListAsync();
-        }
-
-
-        public async Task<List<ArchiveTasks>> GetAllAcrhiveByUserId(Guid userId)
-        {
-            return await _dBContext.ArchiveTasks
-                .Include(t => t.Status)
-                .Include(t => t.Task)
-                .Include(t => t.Task.User)
-                .Include(t => t.Task.User.Post)
-                .Include(t => t.Task.User.Company)
-                .Include(t => t.Task.User.Company.Country)
-                .Include(t => t.Task.Candidate)
-                .Include(t => t.Task.Candidate.Country)
-                .Include(t => t.Task.CandidatePost)
-                .Where(t => t.Task.User.UserId == userId && t.Status.TypeStatus != -1)
+                .Include(t => t.Candidate.Post)
                 .ToListAsync();
         }
 
@@ -85,7 +83,7 @@ namespace YavaPrimum.Core.Services
                 .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
                 .Include(t => t.Candidate.Country)
-                .Include(t => t.CandidatePost)
+                .Include(t => t.Candidate.Post)
                 .FirstOrDefaultAsync(t => t.TasksId == taskId);
         }
 
@@ -99,92 +97,11 @@ namespace YavaPrimum.Core.Services
                 .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
                 .Include(t => t.Candidate.Country)
-                .Include(t => t.CandidatePost)
+                .Include(t => t.Candidate.Post)
                 .Where(t => t.User.UserId == userId)
                 .ToListAsync();
         }
 
-        public async Task<List<TasksResponse>> ConvertToFront(List<Tasks> tasks)
-        {
-            List<Task<TasksResponse>> taskResponseTasks = tasks.Select(task => ConvertToFront(task)).ToList();
-            TasksResponse[] taskResponses = await Task.WhenAll(taskResponseTasks);
-            return taskResponses.ToList();
-        }
-
-        public async Task<TasksResponse> ConvertToFront(Tasks task)
-        {
-            TasksResponse tasksResponse = new TasksResponse
-            {
-                TaskId = task.TasksId,
-                Status = task.Status.Name,
-                TypeStatus = task.Status.TypeStatus,
-                DateTime = task.DateTime,
-                User = new UserRequestResponse()
-                {
-                    UserId = task.User.UserId,
-                    Surname = task.User.Surname,
-                    FirstName = task.User.FirstName,
-                    Patronymic = task.User.Patronymic,
-                    Post = task.User.Post.Name,
-                    Company = task.User.Company.Name,
-                    Email = task.User.Email,
-                    Phone = task.User.Phone,
-                    ImgUrl = task.User.ImgUrl
-                },
-                Candidate = new CandidateRequestResponse
-                {
-                    Surname = task.Candidate.Surname,
-                    FirstName = task.Candidate.FirstName,
-                    Patronymic = task.Candidate.Patronymic,
-                    Email = task.Candidate.Email,
-                    Phone = task.Candidate.Phone,
-                    Country = task.Candidate.Country.Name
-                }
-            };
-
-            return tasksResponse;
-        }
-
-        public async Task<List<TasksResponse>> ConvertArchiveToFront(List<ArchiveTasks> tasks)
-        {
-            List<Task<TasksResponse>> taskResponseTasks = tasks.Select(task => ConvertArchiveToFront(task)).ToList();
-            TasksResponse[] taskResponses = await Task.WhenAll(taskResponseTasks);
-            return taskResponses.ToList();
-        }
-
-        public async Task<TasksResponse> ConvertArchiveToFront(ArchiveTasks task)
-        {
-            TasksResponse tasksResponse = new TasksResponse
-            {
-                TaskId = task.ArchiveTasksId,
-                Status = task.Status.Name,
-                TypeStatus = task.Status.TypeStatus,
-                DateTime = task.DateTimeOfCreated,
-                User = new UserRequestResponse()
-                {
-                    UserId = task.Task.User.UserId,
-                    Surname = task.Task.User.Surname,
-                    FirstName = task.Task.User.FirstName,
-                    Patronymic = task.Task.User.Patronymic,
-                    Post = task.Task.User.Post.Name,
-                    Company = task.Task.User.Company.Name,
-                    Email = task.Task.User.Email,
-                    Phone = task.Task.User.Phone,
-                    ImgUrl = task.Task.User.ImgUrl
-                },
-                Candidate = new CandidateRequestResponse
-                {
-                    Surname = task.Task.Candidate.Surname,
-                    FirstName = task.Task.Candidate.FirstName,
-                    Patronymic = task.Task.Candidate.Patronymic,
-                    Email = task.Task.Candidate.Email,
-                    Phone = task.Task.Candidate.Phone,
-                    Country = task.Task.Candidate.Country.Name
-                }
-            };
-
-            return tasksResponse;
-        }
 
 
         public async Task Delete(Guid taskId)
@@ -194,24 +111,6 @@ namespace YavaPrimum.Core.Services
                 .ExecuteDeleteAsync();
 
             await _dBContext.SaveChangesAsync();
-        }
-
-        public async Task PassedInterview(Guid taskId)
-        {
-           /* (await _dBContext.Tasks
-                .FindAsync(taskId))
-                .Status = true;
-
-            await _dBContext.SaveChangesAsync();*/
-        }
-
-        public async Task FaidInterview(Guid taskId) //TODO поменять
-        {
-            /*(await _dBContext.Tasks
-                .FindAsync(taskId))
-                .Status = true;
-
-            await _dBContext.SaveChangesAsync();*/
         }
 
         public async Task Update(Guid taskId, InterviewCreateRequest newTask)
@@ -271,96 +170,131 @@ namespace YavaPrimum.Core.Services
             return _dBContext.TasksStatus.Where(t => t.Name == name).FirstOrDefault();
         }
 
+
+        public async Task SetActive(Guid taskId)
+        {
+            // Получаем задачу с указанным `taskId` и её Candidate
+            var task = await _dBContext.Tasks
+                .Include(t => t.Candidate)
+                .FirstOrDefaultAsync(t => t.TasksId == taskId);
+
+            // Проверяем, существует ли задача и её Candidate
+            if (task == null || task.Candidate == null)
+            {
+                throw new Exception("Задача или Candidate не найдены.");
+            }
+
+            // Находим все задачи с тем же Candidate, кроме текущей задачи
+            var tasksToArchive = await _dBContext.Tasks
+                .Where(t => t.Candidate.CandidateId == task.Candidate.CandidateId && t.TasksId != taskId && t.User.Post == task.User.Post)
+                .ToListAsync();
+
+            // Устанавливаем `IsArchive = true` для найденных задач
+            foreach (var archiveTask in tasksToArchive)
+            {
+                archiveTask.IsArchive = true;
+            }
+
+            // Сохраняем изменения в базе данных
+            await _dBContext.SaveChangesAsync();
+        }
+
+        public async Task SetNewDate(Tasks task, DateTime dateTime)
+        {
+            task.DateTime = dateTime;
+            await _dBContext.SaveChangesAsync();
+        }
+
         public async Task SetNewStatus(Tasks task, string status)
         {
-            task.Status = await GetStatusByName(status);
+            Console.WriteLine(task.Candidate.Surname + " " + status);
+            TasksStatus taskStatus = await GetStatusByName(status);
+            if (task.Status.TypeStatus == 0)
+            {
+                task.Status = taskStatus;
+                if (taskStatus.Name == "Собеседование пройдено")
+                {
+                    await _notificationsService.SendCountryRecruiterNotifications(task);
+                    await _dBContext.SaveChangesAsync();
+                    return;
+                }
+            }
+            else if (task.Status.TypeStatus == 3)
+            {
+                task.Status = taskStatus;
+                task.DateTime = DateTime.Now;
+
+                if (taskStatus.Name == "Время подтверждено")
+                {
+                    Tasks? KadrTask = _dBContext.Tasks
+                         .Include(t => t.User)
+                         .Include(t => t.User.Post)
+                         .Include(t => t.Status)
+                         .Where(t => t.Candidate == task.Candidate
+                         && t.User.Post.Name == "Кадровик"
+                         && t.IsArchive == false)
+                         .FirstOrDefault();
+
+                    await SetNewStatus(KadrTask, "Назначен приём");
+                }
+            }
+            else if(task.Status.TypeStatus == 4)
+            {
+                task.Status = taskStatus;
+            }
+            else
+            {
+                task.IsArchive = true;
+
+                Tasks newTask = new Tasks()
+                {
+                    TasksId = new Guid(),
+                    Candidate = task.Candidate,
+                    DateTime = DateTime.Now,
+                    Status = taskStatus,
+                    User = task.User,
+                };
+                await Create(task);
+
+            }
+
+            if (taskStatus.MessageTemplate != null)
+            {
+
+                await _notificationsService.SendMessage(task);
+            }
+
             await _dBContext.SaveChangesAsync();
 
+         }
 
-            await HandleTaskInsertionAsync(task);
-        }
-
-        public async Task HandleTaskInsertionAsync(Tasks insertedTask)
+        public async Task<Tasks> GetLastActiveTask(Guid candidateId, Guid userId)
         {
-            // Проверка входного параметра
-            if (insertedTask == null)
-                throw new ArgumentNullException(nameof(insertedTask));
 
-            // Добавление записи в таблицу ArchiveTasks
-            var archiveTask = new ArchiveTasks
+            // Находим последнюю
+            var findTask = await _dBContext.Tasks
+                .Include(t => t.Status)
+                .Include(t => t.User)
+                .Include(t => t.User.Post)
+                .Include(t => t.User.Company)
+                .Include(t => t.User.Company.Country)
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.Candidate.Post)
+                .Where(t => t.Candidate.CandidateId == candidateId
+                            && t.User.UserId == userId
+                            && t.IsArchive == false)
+                .FirstOrDefaultAsync();
+
+            if (findTask == null)
             {
-                ArchiveTasksId = Guid.NewGuid(),
-                Task = insertedTask,
-                Status = insertedTask.Status,
-                DateTimeOfCreated = DateTime.Now //Абоба
-            };
-            await _dBContext.ArchiveTasks.AddAsync(archiveTask);
-            await _dBContext.SaveChangesAsync();
-
-            // Получение имени нового статуса задачи
-            var newStatusName = insertedTask.Status?.Name;
-            if (string.IsNullOrWhiteSpace(newStatusName))
-                throw new InvalidOperationException("Имя статуса задачи отсутствует или некорректно.");
-
-            Console.WriteLine($"{newStatusName} Новый статус");
-            Console.WriteLine($"{insertedTask.TasksId} Кому назначаем");
-
-            // Логика обработки статуса "Взят кандидат"
-            if (newStatusName == "Взят кандидат")
-            {
-                // Пометка соответствующих уведомлений как прочитанных
-                await MarkNotificationsAsReadAsync(insertedTask.Candidate.CandidateId);
-
-                // Получение идентификатора статуса "Назначен приём"
-                var meetingStatus = await _dBContext.TasksStatus
-                    .Where(ts => ts.Name == "Назначен приём")
-                    .FirstOrDefaultAsync();
-
-                if (meetingStatus == null)
-                    throw new InvalidOperationException("Статус 'Назначен приём' не найден.");
-
-                Console.WriteLine($"{meetingStatus.TasksStatusId} Статус ID");
-
-                // Установка даты встречи через неделю
-                var meetingDate = DateTime.Now.AddDays(7);
-                Console.WriteLine($"{meetingDate} Дата встречи");
-
-                // Обновление задачи: новый статус и дата
-                insertedTask.Status = meetingStatus;
-                insertedTask.DateTime = meetingDate;
-
-                _dBContext.Tasks.Update(insertedTask);
-                await _dBContext.SaveChangesAsync();
-            }
-        }
-
-
-        private async Task MarkNotificationsAsReadAsync(Guid candidateId)
-        {
-            var notifications = await _dBContext.Notifications
-                .Where(x => x.ArchiveTasks.Task.Candidate.CandidateId == candidateId &&
-                            x.ArchiveTasks.Task.Status.Name == "Собеседование пройдено")
-                .ToListAsync(); // Directly retrieve the notification objects
-
-            foreach (var notification in notifications)
-            {
-                notification.IsReaded = true;
+                throw new InvalidOperationException("Задача с подходящими критериями не найдена.");
             }
 
-            _dBContext.Notifications.UpdateRange(notifications);
-            await _dBContext.SaveChangesAsync();
+            return findTask;
 
-
-            foreach (var notification in notifications)
-            {
-                notification.IsReaded = true;
-            }
-
-            _dBContext.Notifications.UpdateRange(notifications);
-            await _dBContext.SaveChangesAsync();
         }
 
 
     }
 }
-
