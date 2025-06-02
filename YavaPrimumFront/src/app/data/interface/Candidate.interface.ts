@@ -3,6 +3,7 @@ import { User } from "./User.interface";
 
 export interface Candidate 
 {
+  candidateId?: string
   surname: string;
   firstName: string;
   patronymic: string;

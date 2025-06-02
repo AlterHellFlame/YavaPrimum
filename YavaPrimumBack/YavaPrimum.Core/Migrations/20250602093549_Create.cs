@@ -74,11 +74,11 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Patronymic = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -140,7 +140,8 @@ namespace YavaPrimum.Core.Migrations
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsArchive = table.Column<bool>(type: "bit", nullable: false)
+                    IsArchive = table.Column<bool>(type: "bit", nullable: false),
+                    AdditionalData = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -161,6 +162,34 @@ namespace YavaPrimum.Core.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vacancy",
+                columns: table => new
+                {
+                    VacancyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    isClose = table.Column<bool>(type: "bit", nullable: false),
+                    AdditionalData = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vacancy", x => x.VacancyId);
+                    table.ForeignKey(
+                        name: "FK_Vacancy_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vacancy_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,6 +269,16 @@ namespace YavaPrimum.Core.Migrations
                 name: "IX_User_PostId",
                 table: "User",
                 column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacancy_PostId",
+                table: "Vacancy",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacancy_UserId",
+                table: "Vacancy",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -247,6 +286,9 @@ namespace YavaPrimum.Core.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "Vacancy");
 
             migrationBuilder.DropTable(
                 name: "Tasks");

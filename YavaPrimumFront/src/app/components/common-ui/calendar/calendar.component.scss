@@ -6,7 +6,7 @@ $active-day-bg: #aea0a0;
 $today-bg : #9b9b9b;
 $hover: #cfcfcf;
 $task-interview-bg: #f6df6b;
-$task-compleate-bg: #86793b;
+$task-compleate-bg: #af9a31;
 $task-call-bg: #6bf6ca;
 $task-call-compleate-bg: #4ca689;
 
@@ -59,11 +59,6 @@ $task-call-compleate-bg: #4ca689;
     {
         color: $not-month-color;
     }
-    :hover
-    {
-        background-color: $hover;
-        border-radius: 5px;     
-    }
 
     .task
     {
@@ -72,6 +67,12 @@ $task-call-compleate-bg: #4ca689;
         border-radius: 5px;
         background-color: white;
         font-size: 10px;
+    }
+
+    .grid-cell:hover
+    {
+        background-color: $hover;
+        border-radius: 5px;     
     }
 
     .task-interview

@@ -9,7 +9,6 @@ namespace YavaPrimum.Core.Interfaces
         Task<string> Login(string email, string password);
         Task<Guid> Register(UserRequestResponse userRequestResponse);
         bool Verify(string password, string passwordHash);
-        Task<string> SendMessageToEmail(string email, string myMessage, string subject);
         Task<User> SetNewPassByEMail(string email, string newPass);
     }
 }

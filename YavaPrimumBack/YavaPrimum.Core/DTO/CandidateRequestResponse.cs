@@ -2,7 +2,7 @@
 {
     public class CandidateRequestResponse
     {
-
+        public string? CandidateId { get; set; }
         public string Surname { get; set; }
         public string FirstName { get; set; }
         public string Patronymic { get; set; }

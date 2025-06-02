@@ -1,11 +1,11 @@
-<div class="menu d-flex" *ngIf="!loading">
+<div class="menu d-flex">
     <div class="d-flex flex-column">
       <div>
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#AddCandidate" *ngIf="isHr">
-          Добавьте кандидата
+          Добавить кандидата
         </button>
       </div>
-      <div class="taks-list">   
+      <div class="taks-list" *ngIf="!loading">   
         <ng-container *ngIf="tasks.length > 0; else noTasks">
           <app-task *ngFor="let task of tasks" [task]="task" (setActiveTask)="setActiveTask($event)"></app-task>
         </ng-container>
@@ -15,13 +15,14 @@
         </ng-template>
       </div>
     </div>
-    <div class="calendar">
+    <div class="calendar"  *ngIf="!loading">
       <app-calendar (getTasks)="getTasks($event)"></app-calendar>
     </div>
   </div>
-<app-task-interview [task]="activeTask"></app-task-interview>
-<app-add-task></app-add-task>
+<app-task-interview [task]="activeTask"  *ngIf="!loading"></app-task-interview>
+<app-add-task *ngIf="!loading" [tasksForDay]="tasks"></app-add-task>
 <!--<app-change-task></app-change-task>
 <app-change-candidate></app-change-candidate>
 <app-task-delete></app-task-delete>s-->
+  
   

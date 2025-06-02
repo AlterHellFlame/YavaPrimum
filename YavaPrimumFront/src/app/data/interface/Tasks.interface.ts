@@ -10,6 +10,8 @@ export interface Tasks
     status: string,
     typeStatus: number,
     dateTime: DateTime,
+    additionalData: string;
+    isArchive: boolean
 }
 
 export interface TasksRequest
@@ -17,5 +19,6 @@ export interface TasksRequest
     candidate: Candidate,
     dateTime: string,
     post: string,
+    additionalData: string;
 }
 

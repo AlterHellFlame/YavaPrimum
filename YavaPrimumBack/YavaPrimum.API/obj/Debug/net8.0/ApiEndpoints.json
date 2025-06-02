@@ -20,6 +20,48 @@
     ]
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "ChangeDateTimeWithoutCheck",
+    "RelativePath": "change-dateTime-without-check/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "newDateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "ChangeDateTime",
+    "RelativePath": "change-dateTime/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.ChangeDateTimeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.AuthContriller",
     "Method": "CheckCode",
     "RelativePath": "checkCode/{email}",
@@ -51,6 +93,43 @@
     ]
   },
   {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "CloseVacancy",
+    "RelativePath": "close-vacancy/{vacancyId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacancyId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "ConfirmDateTime",
+    "RelativePath": "confirm-dateTime/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.StatusUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "CreateNewTask",
     "RelativePath": "create-new-task",
@@ -75,6 +154,32 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "CreateVacancy",
+    "RelativePath": "create-vacancy",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newVacancy",
+        "Type": "YavaPrimum.Core.DTO.VacancyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.FillController",
+    "Method": "crtAnTask",
+    "RelativePath": "crtAnTask",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.FillController",
@@ -154,26 +259,6 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
-    "Method": "GetAllArchiveTasks",
-    "RelativePath": "get-all-archive-tasks",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.TasksResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "GetAllCandidatesOfUser",
     "RelativePath": "get-all-candidates-of-user",
     "HttpMethod": "GET",
@@ -243,6 +328,26 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.UserRequestResponse, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "GetAllVacancies",
+    "RelativePath": "get-all-vacancies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[YavaPrimum.Core.DTO.VacancyResponce, YavaPrimum.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -352,8 +457,8 @@
         "IsRequired": true
       },
       {
-        "Name": "status",
-        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "Name": "request",
+        "Type": "YavaPrimum.Core.DTO.StatusUpdateRequest",
         "IsRequired": true
       }
     ],
@@ -460,6 +565,27 @@
   },
   {
     "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "SetDateTask",
+    "RelativePath": "set-date-task/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
     "Method": "SetDate",
     "RelativePath": "set-date/{notificationId}",
     "HttpMethod": "PUT",
@@ -468,6 +594,27 @@
     "Parameters": [
       {
         "Name": "notificationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dateTime",
+        "Type": "YavaPrimum.Core.DTO.StringRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.TasksController",
+    "Method": "SetTimeTask",
+    "RelativePath": "set-time-task/{taskId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taskId",
         "Type": "System.Guid",
         "IsRequired": true
       },
@@ -533,6 +680,37 @@
     "ReturnTypes": [
       {
         "Type": "YavaPrimum.Core.DTO.UserRequestResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "YavaPrimum.API.Controllers.UserController",
+    "Method": "UpdateVacancy",
+    "RelativePath": "update-vacancy/{vacancyId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacancyId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateRequest",
+        "Type": "YavaPrimum.Core.DTO.VacancyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "YavaPrimum.Core.DataBase.Models.Vacancy",
         "MediaTypes": [
           "text/plain",
           "application/json",

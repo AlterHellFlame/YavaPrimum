@@ -3,19 +3,55 @@ import * as signalR from '@microsoft/signalr';
 import { Notifications } from '../../data/interface/Notifications.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DateTime } from 'luxon';
+import { GlobalConfig, ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NotifyService {
   baseApiUrl = 'https://localhost:7247/';
   private hubConnection: signalR.HubConnection;
 
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient, private toastr: ToastrService) {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7247/chat')
       .build();
+    this.configureToastr();
+  }
+
+  private configureToastr(): void {
+    const options: Partial<GlobalConfig> = {
+      positionClass: 'toast-top-right',
+      maxOpened: 3,
+      autoDismiss: true,
+      preventDuplicates: true,
+    };
+    this.toastr.toastrConfig = {
+      ...this.toastr.toastrConfig,
+      ...options,
+    };
+  }
+
+  public showError(message: string, title: string = 'Ошибка'): void {
+    this.toastr.error(message, title, {
+      timeOut: 4000,
+      positionClass: 'toast-top-right',
+    });
+  }
+
+  public showSuccess(message: string, title: string = 'Успех'): void {
+    this.toastr.success(message, title, {
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+    });
+  }
+
+  public showInfo(message: string, title: string): void {
+    this.toastr.info(message, title, {
+      timeOut: 2500,
+      positionClass: 'toast-top-right',
+    });
   }
 
   public startConnection(): Promise<void> {
@@ -69,6 +105,19 @@ export class NotifyService {
       return this.http.put(`${this.baseApiUrl}set-date/${notificationId}`, dateTime, { withCredentials: true });
   }
 
+    public setDateTask(taskId: string, date: string): Observable<object> 
+    {
+        const dateTime = { value: date };  // 'value' must match C# property name
+        
+        return this.http.put(
+            `${this.baseApiUrl}set-date-task/${taskId}`, 
+            dateTime, 
+            { 
+                withCredentials: true,
+                headers: { 'Content-Type': 'application/json' }  // Explicit content type
+            }
+        )
+    }
   public setTime(notificationId : string, date: string) : Observable<object>
   {
     console.log(notificationId + " " + date)
@@ -77,5 +126,15 @@ export class NotifyService {
         value: date.toString()
       };
       return this.http.put(`${this.baseApiUrl}set-time/${notificationId}`, dateTime, { withCredentials: true });
+  }
+
+    public setTimeTask(taskId : string, date: string) : Observable<object>
+  {
+    console.log(taskId + " " + date)
+      const dateTime = 
+      {
+        value: date.toString()
+      };
+      return this.http.put(`${this.baseApiUrl}set-time-task/${taskId}`, dateTime, { withCredentials: true });
   }
 }

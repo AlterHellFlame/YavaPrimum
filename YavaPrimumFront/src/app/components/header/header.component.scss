@@ -32,6 +32,11 @@
     {
         margin-left: 100px;
     }
+    @media (max-width: 1200px) {
+    .panel {
+        margin-left: 50px;
+    }
+}
     .photo
     {
         border-radius: 100%;

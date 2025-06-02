@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../data/interface/User.interface';
-import { Notifications } from '../../data/interface/Notifications.interface';
-import { StringUnitLength } from 'luxon';
+import { Vacancy, VacancyRequest } from '../../data/interface/Vacancy.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +70,31 @@ export class UserService {
 
   deleteUser(userId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseApiUrl}delete-user/${userId}`);
+  }
+
+  
+  public getAllVacancies() : Observable<Vacancy[]>
+  {
+      return this.http.get<Vacancy[]>(`${this.baseApiUrl}get-all-vacancies`, { withCredentials: true });
+  }
+
+    
+  public createVacancy(newVacancy : VacancyRequest) : Observable<Vacancy>
+  {
+      return this.http.post<Vacancy>(`${this.baseApiUrl}create-vacancy`, newVacancy, { withCredentials: true });
+  }
+
+  public closeVacancy(vacancyId: string) : Observable<Vacancy>
+  {
+      return this.http.patch<Vacancy>(
+        `${this.baseApiUrl}close-vacancy/${vacancyId}`,
+        {},
+        { withCredentials: true }
+    );
+  }
+  
+  public updateVacancy(vacancyId: string, updatedVacancy : VacancyRequest) : Observable<Vacancy>
+  {
+      return this.http.put<Vacancy>(`${this.baseApiUrl}update-vacancy/${vacancyId}`, updatedVacancy, { withCredentials: true });
   }
 }

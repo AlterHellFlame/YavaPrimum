@@ -1,39 +1,54 @@
-<div class="card task-card bg-white mb-4" *ngIf="task" [ngClass]="{'passed': task.typeStatus == 2 || task.typeStatus == 4}">
-    <div>
+<div class="card task-card bg-white mb-4" *ngIf="task" [ngClass]="{'passed': task.typeStatus == 2 || task.typeStatus == 4}" data-bs-toggle="modal" 
+ data-bs-target="#candidateDetailsModal" 
+style="cursor: pointer;">
+    <div >
       <span class="d-flex justify-content-between">
-        <p class="fs-4" *ngIf="task.typeStatus != 3">{{task.dateTime.toFormat('HH:mm')}}</p>
+        <p class="fs-4" *ngIf="!(task.typeStatus === 3 && task.status !== 'Ожидается подтверждение времени')">
+          {{ task.dateTime.toFormat('HH:mm') }}
+        </p>
         <p></p>
       <p class="text-success">{{task.status}}</p>
       </span>
-    <p>{{task.candidate.post}}</p>
+    <p>{{task.candidate.country}} - {{task.candidate.post}}</p>
+    <p></p>
     <p class="candidate_FIO">{{task.candidate.surname}} {{task.candidate.firstName}} {{task.candidate.patronymic}}</p>
     <span class="d-flex column-gap-3 flex-wrap">
         <span class="d-inline-flex">
-          <i class="bi bi-telephone"></i>
+          <i class="bi bi-telephone me-1"></i>
           <p>{{task.candidate.phone}}</p>
         </span>
         <span class="d-inline-flex">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-envelope me-1"></i>
           <p>{{task.candidate.email}}</p>
         </span>
     </span>
+    <span class="d-inline-flex" *ngIf="task.additionalData && task.additionalData != ''">
+      <i class="bi bi-info-circle me-1"></i>
+      <p>{{task.additionalData}}</p>
+    </span>
       <span class="d-flex justify-content-end gap-1 mt-2">
-        <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
-        data-bs-target="#Interview" (click)="onButtonClick()"*ngIf="task.status == 'Назначено собеседование'">Собеседовать</button>
+        <ng-container *ngIf="isDateValid()">
+          <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
+          data-bs-target="#Interview" (click)="onButtonClick()"*ngIf="task.status == 'Назначено собеседование'">Собеседовать</button>
 
-        <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
-        data-bs-target="#Reception" (click)="onButtonClick()"*ngIf="task.status == 'Назначен приём'">Принять</button>
-  
-        <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
-        data-bs-target="#ConfirmTheDate" (click)="onButtonClick()"*ngIf="task.status == 'Подтверждение даты'">Подтверждение даты</button>
+          <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
+          data-bs-target="#Reception" (click)="onButtonClick()"*ngIf="task.status == 'Назначен приём'">Принять</button>
 
-        <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
-        data-bs-target="#ConfirmTheTime" (click)="onButtonClick()"*ngIf="task.status == 'Подтверждение времени'">Подтверждение времени</button>
+          <button type="button" class="bi bi-clipboard2 btn btn-outline-success"  data-bs-toggle="modal" 
+          data-bs-target="#ConfirmTheTest" (click)="onButtonClick()"*ngIf="task.status == 'Срок тестового задания'">Проверить</button>
+        </ng-container>
 
-        <!-- <button type="button" class="bi bi-pen btn btn-outline-secondary"data-bs-toggle="modal"  -->
-        <!-- data-bs-target="#ChangeCandidate" (click)="onButtonClick()">Изменить</button> -->
+        <button type="button" class="bi bi-alarm btn btn-outline-secondary"  data-bs-toggle="modal" 
+        data-bs-target="#ChangeDateTime" (click)="onButtonClick()" *ngIf="task.typeStatus == 0 && task.user.post == 'HR'">Перенести дату</button>
+
+        <button type="button" class="bi bi-alarm btn btn-outline-secondary"  data-bs-toggle="modal" 
+        data-bs-target="#ChangeKadrDate" (click)="onButtonClick()" *ngIf="task.user.post !== 'HR' && task.status != 'Пришел'&& task.status != 'Не пришел'">Перенести дату</button>
+
+        <button type="button" class="bi bi-alarm-fill btn btn-outline-secondary"  data-bs-toggle="modal" 
+        data-bs-target="#ChangeKadrTime" (click)="onButtonClick()" *ngIf="task.user.post != 'HR' && (task.status == 'Ожидается подтверждение времени' || task.status == 'Назначен приём')">Перенести время</button>
+        <!-- <button type="button" class="bi bi-pen btn btn-outline-secondary"data-bs-toggle="modal" 
+        data-bs-target="#ChangeCandidate" (click)="onButtonClick()">Изменить</button> -->
     </span>
   </div>
-  
   
   

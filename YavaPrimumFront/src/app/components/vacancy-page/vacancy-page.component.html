@@ -1,0 +1,169 @@
+<button *ngIf="!isHr" class="btn btn-primary" (click)="openAddVacancyModal()">Добавить вакансию</button>
+  
+  <div class="d-flex gap-2 align-items-end">
+    <!-- Поле ввода фильтра по должности -->
+    <div>
+      <label for="postFilter" class="form-label fw-bold">Должность</label>
+      <div class="input-group">
+        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" id="postFilter" class="form-control border-start-0" placeholder="Введите должность..." [(ngModel)]="filter.post"/>
+      </div>
+    </div>
+
+    <!-- Выбор статуса -->
+    <div>
+      <label for="statusFilter" class="form-label fw-bold">Статус</label>
+      <select id="statusFilter" class="form-select" [(ngModel)]="filterStatus">
+        <option value="all">Все вакансии</option>
+        <option value="completed">Закрытые</option>
+        <option value="incomplete">Открытые</option>
+      </select>
+    </div>
+
+<div>
+  <div class="form-check form-switch">
+    <input 
+      class="form-check-input" 
+      type="checkbox" 
+      id="myTasksFilter" 
+      [(ngModel)]="showOnlyMyTasks"
+    >
+    <label class="form-check-label" for="myTasksFilter">
+      Только мои вакансии
+    </label>
+  </div>
+</div>
+
+    <!-- Кнопка сброса фильтров -->
+    <div>
+      <button class="btn btn-outline-secondary flex-fill" (click)="resetFilters()">
+        <i class="bi bi-arrow-counterclockwise me-1"></i> Сбросить
+      </button>
+    </div>
+  </div>
+
+
+
+<!-- Карточки вакансий -->
+<div class="vacancy-cards row mt-4">
+  <div class="col-md-6 col-lg-3" *ngFor="let vacancy of filteredVacancies">
+    <div class="card mb-4 border-0 shadow-sm" [ngClass]="{'passed': vacancy.isClose}">
+      <div class="card-body">
+        <!-- Заголовок с основной информацией -->
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h4 class="card-title mb-1 text-primary">{{ vacancy.post }}</h4>
+            <div class="d-flex align-items-center">
+              <span class="badge bg-primary bg-opacity-10 text-primary me-2">
+                <i class="bi bi-people me-1"></i>
+                Требуется: {{ vacancy.count }} чел.
+              </span>
+              <span class="badge" [ngClass]="getStatusBadgeClass(vacancy.isClose)">
+                <i class="bi me-1" [ngClass]="getStatusIconClass(vacancy.isClose)"></i>
+                {{ vacancy.isClose ? 'Закрыта' : 'Открыта' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <div *ngIf="vacancy.additionalData" class="mb-3">
+          <p class="text-muted">{{ vacancy.additionalData }}</p>
+        </div>
+
+        <!-- Информация о создателе -->
+        <div class="creator-info border-top pt-3">
+          <h6 class="text-muted small mb-2">Создатель заявки:</h6>
+          <div class="d-flex align-items-center mb-1">
+            <i class="bi bi-person text-muted me-2"></i>
+            <span>{{ vacancy.user?.surname }} {{ vacancy.user?.firstName }}</span>
+          </div>
+          <div class="d-flex align-items-center mb-1">
+            <i class="bi bi-building text-muted me-2"></i>
+            <span>{{ vacancy.user?.company || 'Компания не указана' }}</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <i class="bi bi-telephone text-muted me-2"></i>
+            <span>{{ vacancy.user?.phone || 'Телефон не указан' }}</span>
+          </div>
+        </div>
+
+        <!-- Кнопки управления -->
+        <div class="mt-3 text-end">
+          <button 
+            *ngIf="canEditVacancy(vacancy) || isAdmin"
+            class="btn btn-outline-secondary btn-sm me-2"
+            (click)="openEditVacancyModal(vacancy)">
+            <i class="bi bi-pencil me-1"></i> Редактировать
+          </button>
+          <button 
+            *ngIf="!vacancy.isClose && !isHr"
+            class="btn btn-outline-secondary btn-sm"
+            (click)="closeVacancy(vacancy.vacancyId)">
+            <i class="bi bi-lock me-1"></i> Закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно добавления вакансии -->
+<ng-template #addVacancyModal >
+  <div class="modal-header">
+    <h5 class="modal-title">Новая вакансия</h5>
+    <button type="button" class="btn-close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="vacancyForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="post" class="form-label">Должность*</label>
+        <select class="form-control" id="post" formControlName="post">
+          <option *ngFor="let post of posts" [value]="post">{{ post }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="count" class="form-label">Количество человек*</label>
+        <input type="number" class="form-control" id="count" formControlName="count" min="1" required>
+      </div>
+      <div class="mb-3">
+        <label for="additionalData" class="form-label">Дополнительная информация</label>
+        <textarea class="form-control" id="additionalData" rows="3" formControlName="additionalData"></textarea>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-secondary me-2" (click)="modalService.dismissAll()">Отмена</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!vacancyForm.valid">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Модальное окно редактирования вакансии -->
+<ng-template #editVacancyModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Редактирование вакансии</h5>
+    <button type="button" class="btn-close" (click)="editModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editVacancyForm" (ngSubmit)="onEditSubmit()">
+      <div class="mb-3">
+        <label for="editPost" class="form-label">Должность*</label>
+        <select class="form-control" id="editPost" formControlName="post">
+          <option *ngFor="let post of posts" [value]="post">{{ post }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="editCount" class="form-label">Количество человек*</label>
+        <input type="number" class="form-control" id="editCount" formControlName="count" min="1" required>
+      </div>
+      <div class="mb-3">
+        <label for="editAdditionalData" class="form-label">Дополнительная информация</label>
+        <textarea class="form-control" id="editAdditionalData" rows="3" formControlName="additionalData"></textarea>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-secondary me-2" (click)="editModal.dismiss()">Отмена</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!editVacancyForm.valid">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

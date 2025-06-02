@@ -2,6 +2,7 @@
 {
     public record InterviewCreateRequest(
         CandidateRequestResponse Candidate,
-        string InterviewDate
+        string InterviewDate,
+        string? AdditionalData
     );
 }

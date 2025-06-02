@@ -1,99 +1,194 @@
-<div class="modal fade" id="Interview" data-bs-backdrop="static"
-tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
+<div class="modal fade" id="Interview" data-bs-backdrop="static" tabindex="-1" 
+     aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Вы берете кандидата {{task.candidate.surname}} на работу?</h5>
-                <button type="button" class="btn-close" (click)="CloseNextInterview()" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <h5 class="modal-title">Решение по кандидату {{task.candidate.surname}}</h5>
+                <button type="button" class="btn-close" (click)="closeModal('Interview')" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <div *ngIf="!showElement" class="d-flex justify-content-end gap-1">
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Собеседование пройдено')">Да</button>
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" (click)="NewStatus('Собеседование не пройдено')">Нет</button>
-                    <button type="button" class="btn btn-secondary" (click)="OpenNextInterview()">Повторное собеседование</button>
+                <div class="mb-3">
+                    <label class="form-label">Решение</label>
+                    <select class="form-select" [(ngModel)]="selectedDecision" (change)="onDecisionChange()">
+                        <option value="">Выберите решение</option>
+                        <option value="Собеседование пройдено">Пройдено</option>
+                        <option value="Собеседование не пройдено">Не пройдено</option>
+                    </select>
                 </div>
-                <div *ngIf="showElement">
-                    <label for="dateTime">Выберите новую дату и время для собеседования</label>
-                    <input
-                    type="datetime-local"
-                    class="form-control"
-                    #dateTimeInput
-                    [value]="dateTime"
-                    />
+
+                <div *ngIf="selectedDecision === 'Собеседование не пройдено'" class="mb-3">
+                    <label class="form-label">Причина отказа</label>
+                    <textarea class="form-control" [(ngModel)]="additionalData" placeholder="Укажите причину"></textarea>
+                </div>
+
+                <div *ngIf="selectedDecision === 'Собеседование пройдено'">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="sendTestTask" [(ngModel)]="sendTestTask">
+                        <label class="form-check-label" for="sendTestTask">Отправить тестовое задание</label>
+                    </div>
+
+                    <div *ngIf="sendTestTask" class="mb-3 border p-3 rounded">
+                        <div class="mb-3">
+                            <small class="text-muted">Введите текст задания:</small>
+                            <textarea class="form-control mt-2" [(ngModel)]="additionalData"  [formControl]="timeControl" placeholder="Текст задания"></textarea>
+                            <div *ngIf="timeControl.invalid && (timeControl.dirty || timeControl.touched)" class="text-danger mt-2">
+                            <small *ngIf="timeControl.errors?.['timeConflict']">
+                              Это время уже занято (разница менее 20 минут)
+                            </small>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Дата следующего обсуждения</label>
+                            <input type="datetime-local" class="form-control" [(ngModel)]="newDate" [min]="minDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="selectedDecision === 'Собеседование перенесено'" class="mb-3">
+                    <label class="form-label">Новая дата собеседования</label>
+                    <input type="datetime-local" class="form-control" [(ngModel)]="newDate">
                 </div>
             </div>
-            <div class="modal-footer" *ngIf="showElement">
-                <button type="submit" class="btn btn-success mt-1" data-bs-dismiss="modal" 
-                (click)="NextInterview()">Повторное собеседование</button>
-              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal('Interview')">Отмена</button>
+                <button type="button" class="btn btn-primary" (click)="submitDecision()">Подтвердить</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="Reception" data-bs-backdrop="static"
-tabindex="-1" aria-hidden="true" *ngIf="task">
+<div class="modal fade" id="Reception" data-bs-backdrop="static" tabindex="-1" 
+     aria-hidden="true" *ngIf="task">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Кандидат {{task.candidate.surname}} прошел приём?</h5>
-                <button type="button" class="btn-close" (click)="CloseNextInterview()" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <button type="button" class="btn-close" (click)="closeModal('Reception')" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <div *ngIf="!showElement" class="d-flex justify-content-end gap-1">
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Пришел')">Да</button>
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" (click)="NewStatus('Не пришел')">Нет</button>
-                    <button type="button" class="btn btn-secondary" (click)="OpenNextInterview()">Повторное собеседование</button>
+                <div class="d-flex justify-content-end gap-1">
+                    <button type="submit" class="btn btn-success" (click)="submitDecision('Пришел')">Да</button>
+                    <button type="submit" class="btn btn-danger" (click)="submitDecision('Не пришел')">Нет</button>
                 </div>
             </div>
-            <div class="modal-footer" *ngIf="showElement">
-                <button type="submit" class="btn btn-success mt-1" data-bs-dismiss="modal" 
-                (click)="NextInterview()">Повторное собеседование</button>
-              </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="ConfirmTheDate" data-bs-backdrop="static"
-tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
+<div class="modal fade" id="ConfirmTheTest" data-bs-backdrop="static" tabindex="-1" 
+     aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Потвердить дату?</h5>
-                <button type="button" class="btn-close" (click)="CloseNextInterview()" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <h5 class="modal-title">Пройден тест?</h5>
+                <button type="button" class="btn-close" (click)="closeModal('ConfirmTheTest')" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <div *ngIf="!showElement" class="d-flex justify-content-end gap-1">
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Дата подтверждена')">Да</button>
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Дата отказана')">Нет</button>
+                <div class="d-flex justify-content-end gap-1">
+                    <button type="submit" class="btn btn-success" (click)="submitDecision('Выполнено тестовое задание')">Да</button>
+                    <button type="submit" class="btn btn-success" (click)="submitDecision('Не выполнено тестовое задание')">Нет</button>
                 </div>
             </div>
-            <div class="modal-footer" *ngIf="showElement">
-                <button type="submit" class="btn btn-success mt-1" data-bs-dismiss="modal" 
-                (click)="NextInterview()">Повторное собеседование</button>
-              </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ChangeDateTime" data-bs-backdrop="static" tabindex="-1" 
+     aria-labelledby="ChangeDateTimeLabel" aria-hidden="true" *ngIf="task">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ChangeDateTimeLabel">
+                    Перенос {{ getEventTypeText() + ' для кандидата ' + task.candidate.surname}}
+                </h5>
+                <button type="button" class="btn-close" (click)="closeModal('ChangeDateTime')" 
+                        aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="newDateTime" class="form-label">Новая дата и время</label>
+                    <input type="datetime-local" class="form-control" id="newDateTime"
+                           [(ngModel)]="newDateTime" [min]="minDateTime" [formControl]="timeControl">
+                </div>
+                <div *ngIf="timeControl.invalid && (timeControl.dirty || timeControl.touched)" class="text-danger mt-2">
+              <small *ngIf="timeControl.errors?.['timeConflict']">
+                Это время уже занято (разница менее 20 минут)
+              </small>
+            </div>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="button" class="btn btn-secondary" 
+                            (click)="closeModal('ChangeDateTime')">
+                        Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" 
+                            (click)="confirmReschedule()" [disabled]="!newDateTime">
+                        Подтвердить перенос
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
-<div class="modal fade" id="ConfirmTheTime" data-bs-backdrop="static"
-tabindex="-1" aria-labelledby="TaskInfo" aria-hidden="true" *ngIf="task">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Потвердить время?</h5>
-                <button type="button" class="btn-close" (click)="CloseNextInterview()" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <div *ngIf="!showElement" class="d-flex justify-content-end gap-1">
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Время подтверждено')">Да</button>
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="NewStatus('Время отказано')">Нет</button>
-                </div>
-            </div>
-            <div class="modal-footer" *ngIf="showElement">
-                <button type="submit" class="btn btn-success mt-1" data-bs-dismiss="modal" 
-                (click)="NextInterview()">Повторное собеседование</button>
-              </div>
-        </div>
+<!-- Date Change Modal -->
+<div id="ChangeKadrDate" class="modal fade" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true" *ngIf="task">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dateModalLabel">Изменение даты</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal('ChangeKadrDate')"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onDateSubmit()">
+          <div class="mb-3">
+            <label for="dateInput" class="form-label">Выберите новую дату</label>
+            <input 
+              type="date" 
+              class="form-control" 
+              id="dateInput" 
+              [(ngModel)]="selectedDate" 
+              name="selectedDate" 
+              [min]="minDate" 
+              required />
+          </div>
+          <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Time Change Modal -->
+<div id="ChangeKadrTime" class="modal fade" tabindex="-1" aria-labelledby="timeModalLabel" aria-hidden="true" *ngIf="task">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="timeModalLabel">Изменение времени для {{task.candidate.surname}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal('ChangeKadrTime')"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onTimeSubmit()">
+          <div class="mb-3">
+            <label for="timeInput" class="form-label">Выберите новое время</label>
+            <input 
+              type="time" 
+              class="form-control" 
+              id="timeInput" 
+              [formControl]="timeControl"
+              [(ngModel)]="selectedTime" 
+              name="selectedTime" 
+              required />
+            <div *ngIf="timeControl.invalid && (timeControl.dirty || timeControl.touched)" class="text-danger mt-2">
+              <small *ngIf="timeControl.errors?.['timeConflict']">
+                Это время уже занято (разница менее 20 минут)
+              </small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

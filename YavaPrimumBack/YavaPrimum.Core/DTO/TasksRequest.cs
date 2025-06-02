@@ -5,7 +5,8 @@
         CandidateRequestResponse Candidate,
         string Status,
         string Post,
-        DateTime? DateTime
+        DateTime? DateTime,
+        string? AdditionalData
     );
 
 }

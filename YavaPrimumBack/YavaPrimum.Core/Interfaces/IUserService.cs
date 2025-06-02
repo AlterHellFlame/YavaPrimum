@@ -1,5 +1,8 @@
-﻿using YavaPrimum.Core.DataBase.Models;
+﻿using System.Net.Mail;
+using System.Net;
+using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
+using YavaPrimum.Core.Services;
 
 namespace YavaPrimum.Core.Interfaces
 {
@@ -13,5 +16,6 @@ namespace YavaPrimum.Core.Interfaces
         Task<List<User>> GetAll();
         Task<UserRequestResponse> GetByIdToFront(Guid id);
         Task<User> GetAnotherUserOfCandidate(Tasks task);
+
     }
 }

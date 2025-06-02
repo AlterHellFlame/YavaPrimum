@@ -1,0 +1,28 @@
+.card {
+  border: none;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    font-weight: 500;
+  }
+}
+
+canvas {
+  max-height: 300px;
+  min-height: 250px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  
+  i {
+    margin-right: 0.5rem;
+  }
+}

@@ -1,8 +1,15 @@
 wwwroot\default.jpg
+wwwroot\default.png
 wwwroot\profile_photo\ava1.png
+wwwroot\profile_photo\ava10.png
+wwwroot\profile_photo\ava11.png
 wwwroot\profile_photo\ava2.png
 wwwroot\profile_photo\ava3.png
 wwwroot\profile_photo\ava4.png
 wwwroot\profile_photo\ava5.png
 wwwroot\profile_photo\ava6.png
+wwwroot\profile_photo\ava7.png
+wwwroot\profile_photo\ava8.png
+wwwroot\profile_photo\ava9.png
 wwwroot\profile_photo\default.jpg
+wwwroot\profile_photo\default.png

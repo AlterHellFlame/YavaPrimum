@@ -1,10 +1,14 @@
 ﻿using Azure.Core;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System.Xml.Linq;
+using System.Globalization;
 
 namespace YavaPrimum.Core.Services
 {
@@ -13,49 +17,22 @@ namespace YavaPrimum.Core.Services
         private readonly YavaPrimumDBContext _dBContext;
         private readonly INotificationsService _notificationsService;
         private readonly ICandidateService _candidateService;
+        private readonly IUserService _userService;
 
-        public TaskService(YavaPrimumDBContext dBContext,
-            INotificationsService notificationsService,
-            ICandidateService candidateService)
+        public TaskService(YavaPrimumDBContext dBContext, 
+            INotificationsService notificationsService, 
+            ICandidateService candidateService, IUserService userService)
         {
             _dBContext = dBContext;
             _notificationsService = notificationsService;
             _candidateService = candidateService;
+            _userService = userService;
         }
 
         public async Task<Guid> Create(Tasks task)
         {
             await _dBContext.Tasks.AddAsync(task);
             await _dBContext.SaveChangesAsync();
-
-
-            /*if (task.Status.Name == "Взят кандидат")
-            {
-                // Пометка соответствующих уведомлений как прочитанных
-                //await _notificationsService.ReadNotificationOfCandidate(task.Candidate.CandidateId);
-
-                // Получение идентификатора статуса "Назначен приём"
-                var meetingStatus = await _dBContext.TasksStatus
-                    .Where(ts => ts.Name == "Назначен приём")
-                    .FirstOrDefaultAsync();
-
-                if (meetingStatus == null)
-                    throw new InvalidOperationException("Статус 'Назначен приём' не найден.");
-
-                Console.WriteLine($"{meetingStatus.TasksStatusId} Статус ID");
-
-                // Установка даты встречи через неделю
-                var meetingDate = DateTime.Now.AddDays(7);
-                Console.WriteLine($"{meetingDate} Дата встречи");
-
-                // Обновление задачи: новый статус и дата
-                task.Status = meetingStatus;
-                task.DateTime = meetingDate;
-
-                _dBContext.Tasks.Update(task);
-                await _dBContext.SaveChangesAsync();
-            }*/
-
             return task.TasksId;
         }
 
@@ -167,7 +144,7 @@ namespace YavaPrimum.Core.Services
 
         public async Task<TasksStatus> GetStatusByName(string name)
         {
-            return _dBContext.TasksStatus.Where(t => t.Name == name).FirstOrDefault();
+            return _dBContext.TasksStatus.Where(t => t.Name == name).First();
         }
 
 
@@ -205,68 +182,172 @@ namespace YavaPrimum.Core.Services
             await _dBContext.SaveChangesAsync();
         }
 
-        public async Task SetNewStatus(Tasks task, string status)
+        public async Task SetNewStatus(Tasks task, StatusUpdateRequest updateRequest = null, string status = null)
         {
-            Console.WriteLine(task.Candidate.Surname + " " + status);
-            TasksStatus taskStatus = await GetStatusByName(status);
-            if (task.Status.TypeStatus == 0)
-            {
-                task.Status = taskStatus;
-                if (taskStatus.Name == "Собеседование пройдено")
-                {
-                    await _notificationsService.SendCountryRecruiterNotifications(task);
-                    await _dBContext.SaveChangesAsync();
-                    return;
-                }
-            }
-            else if (task.Status.TypeStatus == 3)
-            {
-                task.Status = taskStatus;
-                task.DateTime = DateTime.Now;
+            if(updateRequest != null) status = updateRequest.Status;
 
-                if (taskStatus.Name == "Время подтверждено")
-                {
-                    Tasks? KadrTask = _dBContext.Tasks
-                         .Include(t => t.User)
-                         .Include(t => t.User.Post)
-                         .Include(t => t.Status)
-                         .Where(t => t.Candidate == task.Candidate
-                         && t.User.Post.Name == "Кадровик"
-                         && t.IsArchive == false)
-                         .FirstOrDefault();
+            Console.WriteLine($"{task.Candidate.Surname} - {status}");
 
-                    await SetNewStatus(KadrTask, "Назначен приём");
-                }
-            }
-            else if(task.Status.TypeStatus == 4)
+            var taskStatus = await GetStatusByName(status);
+            if (task.Status == taskStatus) return;
+
+            
+            switch (task.Status.TypeStatus)
             {
-                task.Status = taskStatus;
-            }
-            else
-            {
-                task.IsArchive = true;
 
-                Tasks newTask = new Tasks()
-                {
-                    TasksId = new Guid(),
-                    Candidate = task.Candidate,
-                    DateTime = DateTime.Now,
-                    Status = taskStatus,
-                    User = task.User,
-                };
-                await Create(task);
+                case -1: // Подтверждения
+                    await HandleStatusMinusOne(task, taskStatus);
+                    break;
+                case 0: // Текущие задачи
+                    await HandleStatusZero(task, taskStatus, updateRequest);//Собес назначен, Срок тестового назначен, Приём назначен
+                    break;
 
+                case 2: // Подтверждения
+                    await HandleStatusTwo(task, taskStatus);
+                    break;
+
+                case 3: // Подтверждения
+                    await HandleStatusThree(task, taskStatus);
+                    break;
+
+                default:
+                    await HandleOtherStatuses(task, taskStatus);
+                    break;
             }
 
-            if (taskStatus.MessageTemplate != null)
+            if (taskStatus.MessageTemplate != null && taskStatus.Name != "Собеседование пройдено" && taskStatus.Name != "Выполнено тестовое задание")
             {
-
+                if (updateRequest.AdditionalData != null) task.AdditionalData = updateRequest.AdditionalData;
                 await _notificationsService.SendMessage(task);
             }
 
             await _dBContext.SaveChangesAsync();
+        }
 
-         }
+        private async Task HandleStatusZero(Tasks task, TasksStatus status, StatusUpdateRequest updateRequest)
+        {
+            task.Status = status;
+            if (status.Name == "Собеседование пройдено"  || status.Name ==  "Выполнено тестовое задание")
+            {
+
+                if (updateRequest.IsTestTask)//Если нужно тестовое задание
+                {
+                    var testTask = new Tasks
+                    {
+                        TasksId = Guid.NewGuid(),
+                        Candidate = task.Candidate,
+                        DateTime = Convert.ToDateTime(updateRequest.NewDateTime),
+                        Status = await GetStatusByName("Срок тестового задания"),
+                        User = task.User,
+                        AdditionalData = updateRequest.AdditionalData
+                    };
+
+                    task.IsArchive = true;
+
+                    string res = await _notificationsService.SendMessageToEmail(task.Candidate.Email, _notificationsService.GetTextMessageForTestTask(task), "Тестовое задание Primum");
+
+                    await Create(testTask);
+
+                }
+                else
+                {
+                    if (updateRequest.AdditionalData != null) task.AdditionalData = updateRequest.AdditionalData;
+                    await _notificationsService.SendCountryRecruiterNotifications(task);
+                }
+            }
+        }
+
+        private async Task HandleStatusTwo(Tasks task, TasksStatus status)
+        {
+            task.IsArchive = true;
+
+            Tasks newTask = new Tasks()
+            {
+                TasksId = new Guid(),
+                Candidate = task.Candidate,
+                DateTime = DateTime.Now,
+                Status = status,
+                User = task.User,
+                AdditionalData = task.AdditionalData
+            };
+            await Create(task);
+        }
+
+        private async Task HandleStatusMinusOne(Tasks task, TasksStatus status)
+        {
+            task.Status = status;
+
+            if (status.Name == "Время подтверждено")
+            {
+                var kadrTask = await _dBContext.Tasks
+                    .Include(t => t.User)
+                    .Include(t => t.User.Post)
+                    .Include(t => t.Status)
+                    .FirstOrDefaultAsync(t => t.Candidate == task.Candidate
+                                           && t.User.Post.Name == "Кадровик"
+                                           && !t.IsArchive);
+
+                if (kadrTask != null)
+                {
+                    StatusUpdateRequest statusUpdateRequest = new StatusUpdateRequest
+                    {
+                        Status = "Назначен приём"
+                    };
+                    await SetNewStatus(kadrTask, statusUpdateRequest);
+                }
+            }
+            else if (status.Name == "Дата подтверждена")
+            {
+                var kadrTask = await _dBContext.Tasks
+                    .Include(t => t.User)
+                    .Include(t => t.User.Post)
+                    .Include(t => t.Status)
+                    .FirstOrDefaultAsync(t => t.Candidate == task.Candidate
+                                           && t.User.Post.Name == "Кадровик"
+                                           && !t.IsArchive);
+            }
+        }
+        private async Task HandleStatusThree(Tasks task, TasksStatus status)
+        {
+            task.Status = status;
+
+            if (status.Name == "Время подтверждено")
+            {
+                var kadrTask = await _dBContext.Tasks
+                    .Include(t => t.User)
+                    .Include(t => t.User.Post)
+                    .Include(t => t.Status)
+                    .FirstOrDefaultAsync(t => t.Candidate == task.Candidate
+                                           && t.User.Post.Name == "Кадровик"
+                                           && !t.IsArchive);
+
+                if (kadrTask != null)
+                {
+                    StatusUpdateRequest statusUpdateRequest = new StatusUpdateRequest
+                    {
+                        Status = "Назначен приём"
+                    };
+                    await SetNewStatus(kadrTask, statusUpdateRequest);
+                }
+            }
+        }
+
+        private async Task HandleOtherStatuses(Tasks task, TasksStatus status)
+        {
+            task.IsArchive = true;
+
+            var newTask = new Tasks
+            {
+                TasksId = Guid.NewGuid(),
+                Candidate = task.Candidate,
+                DateTime = DateTime.Now,
+                Status = status,
+                User = task.User,
+                AdditionalData = task.AdditionalData
+            };
+
+            await Create(newTask);
+        }
 
         public async Task<Tasks> GetLastActiveTask(Guid candidateId, Guid userId)
         {
@@ -292,6 +373,61 @@ namespace YavaPrimum.Core.Services
             }
 
             return findTask;
+
+        }
+
+        public async Task ChangeTime(Guid taskId, ChangeDateTimeRequest changeRequest)
+        {
+            
+            Tasks task = await GetById(taskId);
+            //task.IsArchive = true;
+
+            Tasks newtask = new Tasks()
+            {
+                TasksId = Guid.NewGuid(),
+                Candidate = task.Candidate,
+                Status = await GetStatusByName(changeRequest.IsChangeDate ? "Запрос на смену даты" : "Запрос на смену времени"),
+                DateTime = DateTime.Now,
+                User = task.User,
+                AdditionalData = changeRequest.AdditionalData
+            };
+
+            Tasks oldTask = await GetLastActiveTask(task.Candidate.CandidateId, task.User.UserId);
+
+            Tasks kadrTask = await _dBContext.Tasks
+                .Include(t => t.Status)
+                .Include(t => t.User)
+                .ThenInclude(u => u.Post)
+                .Include(t => t.User)
+                .ThenInclude(u => u.Company)
+                .ThenInclude(c => c.Country)
+                .Include(t => t.Candidate)
+                .ThenInclude(c => c.Country)
+                .Include(t => t.Candidate)
+                .ThenInclude(c => c.Post)
+                .Where(t => !t.IsArchive && t.User.Post.Name == "Кадровик" && t.Candidate.CandidateId == task.Candidate.CandidateId)
+                .FirstAsync();
+
+
+            kadrTask.Status = await GetStatusByName(changeRequest.IsChangeDate ? "Ожидается подтверждение даты" : "Ожидается подтверждение времени");
+
+            await _notificationsService.ReadAllNotificationOfCandidate(task.Candidate.CandidateId);
+
+            await Create(newtask);
+                        oldTask.IsArchive = true;
+            await _notificationsService.SendMessageToChangeDataOrTime(newtask, changeRequest.IsChangeDate);
+
+            _dBContext.SaveChanges();
+
+        }
+
+        public async Task ChangeTimeWithoutCheck(Guid taskId, DateTime dateTime)
+        {
+
+            Tasks task = await GetById(taskId);
+
+            task.DateTime = dateTime;
+            await _dBContext.SaveChangesAsync();
 
         }
 

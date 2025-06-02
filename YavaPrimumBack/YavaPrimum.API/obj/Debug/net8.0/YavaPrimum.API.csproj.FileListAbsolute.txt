@@ -357,3 +357,4 @@ D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\obj\Debug\net8.0\YavaPr
 D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\obj\Debug\net8.0\YavaPrimum.API.genruntimeconfig.cache
 D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\obj\Debug\net8.0\ref\YavaPrimum.API.dll
 D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\bin\Debug\net8.0\YavaPrimum.API.staticwebassets.runtime.json
+D:\Диплом\YavaPrimum\YavaPrimumBack\YavaPrimum.API\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll

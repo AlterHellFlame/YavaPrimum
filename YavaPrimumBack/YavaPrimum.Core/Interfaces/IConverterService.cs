@@ -14,5 +14,7 @@ namespace YavaPrimum.Core.Interfaces
         Task<TasksResponse> ConvertToFront(Tasks task);
         Task<UserRequestResponse> ConvertToFront(User user);
         Task<List<UserRequestResponse>> ConvertToFront(List<User> users);
+        Task<VacancyResponce> ConvertToFront(Vacancy vacancy);
+        Task<List<VacancyResponce>> ConvertToFront(List<Vacancy> vacancies);
     }
 }

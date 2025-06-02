@@ -5,8 +5,20 @@
       "PackagePath": "staticwebassets\\default.jpg"
     },
     {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\default.png",
+      "PackagePath": "staticwebassets\\default.png"
+    },
+    {
       "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava1.png",
       "PackagePath": "staticwebassets\\profile_photo\\ava1.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava10.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava10.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava11.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava11.png"
     },
     {
       "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava2.png",
@@ -29,8 +41,24 @@
       "PackagePath": "staticwebassets\\profile_photo\\ava6.png"
     },
     {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava7.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava7.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava8.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava8.png"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\ava9.png",
+      "PackagePath": "staticwebassets\\profile_photo\\ava9.png"
+    },
+    {
       "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.jpg",
       "PackagePath": "staticwebassets\\profile_photo\\default.jpg"
+    },
+    {
+      "Id": "D:\\Диплом\\YavaPrimum\\YavaPrimumBack\\YavaPrimum.API\\wwwroot\\profile_photo\\default.png",
+      "PackagePath": "staticwebassets\\profile_photo\\default.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.YavaPrimum.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

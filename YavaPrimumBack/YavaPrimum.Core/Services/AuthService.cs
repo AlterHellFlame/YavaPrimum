@@ -6,6 +6,7 @@ using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
 using System.Net.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace YavaPrimum.Core.Services
 {
@@ -17,22 +18,18 @@ namespace YavaPrimum.Core.Services
         private readonly ICompanyService _companyService;
         private readonly IConfiguration _config;
         private readonly IUserService _userService;
+        private readonly INotificationsService _notificationsService;
         private readonly CodeVerificationService _codeVerificationService;
 
-        public AuthService(YavaPrimumDBContext dbContext,
-            IConfiguration config,
-            IJwtProvider jwtProvider,
-            IPostService postService,
-            ICompanyService companyService,
-            IUserService userService,
-            CodeVerificationService codeVerificationService)
+        public AuthService(YavaPrimumDBContext dbContext, IJwtProvider jwtProvider, IPostService postService, ICompanyService companyService, IConfiguration config, IUserService userService, INotificationsService notificationsService, CodeVerificationService codeVerificationService)
         {
-            _config = config;
             _dbContext = dbContext;
             _jwtProvider = jwtProvider;
             _postService = postService;
             _companyService = companyService;
+            _config = config;
             _userService = userService;
+            _notificationsService = notificationsService;
             _codeVerificationService = codeVerificationService;
         }
 
@@ -55,10 +52,36 @@ namespace YavaPrimum.Core.Services
 
         }
 
+        private string GenerateLoginCode()
+        {
+            int passwordLenth = 8;
+            var random = new Random();
+            var result = string.Join("",
+             Enumerable.Range(0, passwordLenth)
+             .Select(i =>
+              random.Next(0, 10) % 2 == 0 ?
+               (char)('a' + random.Next(26)) + "" :
+               random.Next(1, 10) + "")
+             );
+            return result;
+        }
+
         public async Task<Guid> Register(UserRequestResponse userRequestResponce)
         {
-            string password = "Aboba";
-            string passwordHash = GeneratePasswordHas(password);//TODO Сделать рандомный пароль
+            // Проверяем, существует ли уже пользователь с такой почтой
+            bool userExists = await _dbContext.User
+                .AnyAsync(u => u.Email == userRequestResponce.Email);
+
+            if (userExists)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Пользователь с такой почтой уже зарегистрирован");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                return Guid.Empty;
+            }
+
+            string password = GenerateLoginCode();
+            string passwordHash = GeneratePasswordHas(password); //TODO Сделать рандомный пароль
 
             User user = new User
             {
@@ -81,7 +104,8 @@ namespace YavaPrimum.Core.Services
 
             string message = $"Вы были зарегестрированы на сайте YavaPrimum. \nВаш пароль - {password}. " +
                 $"В целях безопасности просим вас не сообщать пароль никому и поменять его при первой возможности";
-            await SendMessageToEmail(userRequestResponce.Email, message, "Регистрация");
+
+            await _notificationsService.SendMessageToEmail(userRequestResponce.Email, message, "Регистрация в YavaPrimum");
 
             return user.UserId;
         }
@@ -100,41 +124,6 @@ namespace YavaPrimum.Core.Services
             return token;
         }
 
-        public async Task<string> SendMessageToEmail(string email, string myMessage, string subject)
-        {
-            if (!await _userService.IsUserExistByEMail(email)) return null;
-
-            try
-            {
-                MailAddress mailFrom = new MailAddress("yavaprimum@mail.ru", "YavaPrimum");
-                MailAddress mailTo = new MailAddress(email);
-                MailMessage message = new MailMessage(mailFrom, mailTo);
-                message.Body = myMessage;
-                //message.Body = $"Ваш код доступа: {await _codeVerificationService.GenerateCode(email)}. Не сообщайте его никому ";
-                message.Subject = subject;
-
-                SmtpClient smtpClient = new SmtpClient()
-                {
-                    Host = "smtp.mail.ru",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(mailFrom.Address, "vuy7pBNKJC1LEESaksGN")
-                };
-                smtpClient.Send(message);
-                Console.WriteLine(message);
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine("Ошибка отправки сообщения на почту");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Ошибка почты " + e);
-            }
-
-            return email;
-        }
+       
     }
 }

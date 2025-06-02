@@ -8,6 +8,7 @@ import { NotificationsComponent } from './components/notifications-page/notifica
 import { AdminComponent } from './components/admin-page/admin/admin.component';
 import { ChartsPageComponent } from './components/admin-page/charts-page/charts-page.component';
 import { CandidatePageComponent } from './components/candidate-page/candidate-page.component';
+import { VacancyPageComponent } from './components/vacancy-page/vacancy-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'log-in', pathMatch: 'full' },
@@ -21,7 +22,8 @@ export const routes: Routes = [
         { path: 'notifications', component: NotificationsComponent },
         { path: 'admin', component: AdminComponent},
         { path: 'charts', component: ChartsPageComponent},
-        { path: 'candidates', component: CandidatePageComponent}
+        { path: 'candidates', component: CandidatePageComponent},
+        { path: 'vacancies', component: VacancyPageComponent },
       ]
     },
     { path: '**', component: NotFoundComponent },

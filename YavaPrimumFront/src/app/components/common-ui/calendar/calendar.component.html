@@ -35,7 +35,7 @@
           'task-call': task.typeStatus == 3, 
           'task-call-compleate': task.typeStatus == 4}">
 
-            <span *ngIf="task.typeStatus != 3">
+            <span *ngIf="!(task.typeStatus === 3 && task.status !== 'Ожидается подтверждение времени')">
               {{task.dateTime.toFormat("HH:mm")}}
             </span>
             {{task.candidate.surname}}

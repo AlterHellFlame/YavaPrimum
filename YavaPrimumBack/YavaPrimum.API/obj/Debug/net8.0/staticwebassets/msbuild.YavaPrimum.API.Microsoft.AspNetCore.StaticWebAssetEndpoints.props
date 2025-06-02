@@ -12,41 +12,77 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"6944"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 16:06:54 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava1.drnn071bdr.png">
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/default.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\default.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1216"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:11:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/default.tf7g0fnx5a.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\default.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tf7g0fnx5a"},{"Name":"integrity","Value":"sha256-VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8="},{"Name":"label","Value":"_content/YavaPrimum.API/default.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1216"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:11:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava1.9jiwqikb7k.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava1.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"drnn071bdr"},{"Name":"integrity","Value":"sha256-99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava1.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"12859"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002299v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:12 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"9jiwqikb7k"},{"Name":"integrity","Value":"sha256-1QeyQXUiHA5tu9WdJxYdo1jHGdlqeOrgbCj79vTWfKY="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava1.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5168"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00221QeyQXUiHA5tu9WdJxYdo1jHGdlqeOrgbCj79vTWfKY=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:17 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava1.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava1.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-99v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"12859"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u002299v/g4ybO1HnLl3Keq6yCWM9CSYSWdDAqxXS91r1JDo=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:12 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-1QeyQXUiHA5tu9WdJxYdo1jHGdlqeOrgbCj79vTWfKY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5168"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00221QeyQXUiHA5tu9WdJxYdo1jHGdlqeOrgbCj79vTWfKY=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:17 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava2.f8je2svqlv.png">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava2.png'))</AssetFile>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava10.khw6evav7u.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava10.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"f8je2svqlv"},{"Name":"integrity","Value":"sha256-3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava2.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6372"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00223/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:43 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"khw6evav7u"},{"Name":"integrity","Value":"sha256-CAxLqwgDt4ioyp64TzbMtgvXT90AapTWAtabuk6ZPQA="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava10.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"82148"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022CAxLqwgDt4ioyp64TzbMtgvXT90AapTWAtabuk6ZPQA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:47 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava10.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava10.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-CAxLqwgDt4ioyp64TzbMtgvXT90AapTWAtabuk6ZPQA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"82148"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022CAxLqwgDt4ioyp64TzbMtgvXT90AapTWAtabuk6ZPQA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:47 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava11.4q9d4uy5pt.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava11.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4q9d4uy5pt"},{"Name":"integrity","Value":"sha256-hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava11.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1841327"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 07 Sep 2024 11:09:26 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava11.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava11.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1841327"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 07 Sep 2024 11:09:26 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava2.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava2.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-3/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"6372"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00223/r9E8etJbMshdT3oNrDPpfgofu3cebRJ77jwsL1ETU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:43 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-2E2iR4iAbcAJkliE0IFFcMJEMp8rSXS6qo7f\u002BnvIspo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5379"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00222E2iR4iAbcAJkliE0IFFcMJEMp8rSXS6qo7f\u002BnvIspo=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:27 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava3.ahv2x7353r.png">
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava2.wyjv393k9z.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava2.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wyjv393k9z"},{"Name":"integrity","Value":"sha256-2E2iR4iAbcAJkliE0IFFcMJEMp8rSXS6qo7f\u002BnvIspo="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava2.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5379"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00222E2iR4iAbcAJkliE0IFFcMJEMp8rSXS6qo7f\u002BnvIspo=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:27 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava3.cehgkliz7i.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava3.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ahv2x7353r"},{"Name":"integrity","Value":"sha256-Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava3.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4899"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:52 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"cehgkliz7i"},{"Name":"integrity","Value":"sha256-7Ftzk9ahs4Xq7djyr4qEdgGnAzVaHL10ft0xx8mQJPE="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava3.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5221"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00227Ftzk9ahs4Xq7djyr4qEdgGnAzVaHL10ft0xx8mQJPE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:38 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava3.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava3.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"4899"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Ikdil/guuEXIzAB774F8EGGeh9q5NII0Q3RRoK6tHc0=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:04:52 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-7Ftzk9ahs4Xq7djyr4qEdgGnAzVaHL10ft0xx8mQJPE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5221"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00227Ftzk9ahs4Xq7djyr4qEdgGnAzVaHL10ft0xx8mQJPE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:38 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava4.3lng1tyg9p.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava4.png'))</AssetFile>
@@ -84,17 +120,65 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"14696"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022NewD3f9PlhUQtA0XrHxmQxjn8EbRAC8KcpDJSzTrKtY=\u0022"},{"Name":"Last-Modified","Value":"Wed, 12 Mar 2025 16:05:50 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/default.4q9d4uy5pt.jpg">
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava7.a6yqkdgxdh.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava7.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"a6yqkdgxdh"},{"Name":"integrity","Value":"sha256-glemizpAfH97iwMFq1HuqPtNc/a0I86MJAAvl2\u002BUpME="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava7.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4851"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022glemizpAfH97iwMFq1HuqPtNc/a0I86MJAAvl2\u002BUpME=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava7.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava7.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-glemizpAfH97iwMFq1HuqPtNc/a0I86MJAAvl2\u002BUpME="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"4851"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022glemizpAfH97iwMFq1HuqPtNc/a0I86MJAAvl2\u002BUpME=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:08:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava8.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava8.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-DEhiQUtd3R0qHFWvlGPdLu5gDBv7cqAhKs7nvF\u002BK/6U="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"6058"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022DEhiQUtd3R0qHFWvlGPdLu5gDBv7cqAhKs7nvF\u002BK/6U=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:11 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava8.wv988fo1gy.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava8.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wv988fo1gy"},{"Name":"integrity","Value":"sha256-DEhiQUtd3R0qHFWvlGPdLu5gDBv7cqAhKs7nvF\u002BK/6U="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava8.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6058"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022DEhiQUtd3R0qHFWvlGPdLu5gDBv7cqAhKs7nvF\u002BK/6U=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:11 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava9.4pf5sip5h5.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava9.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4pf5sip5h5"},{"Name":"integrity","Value":"sha256-SC26aoEmJyrSHcZKKJ5B7QSvVs9dFw38MZ6bruo3IOU="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/ava9.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"176158"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022SC26aoEmJyrSHcZKKJ5B7QSvVs9dFw38MZ6bruo3IOU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/ava9.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\ava9.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-SC26aoEmJyrSHcZKKJ5B7QSvVs9dFw38MZ6bruo3IOU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"176158"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022SC26aoEmJyrSHcZKKJ5B7QSvVs9dFw38MZ6bruo3IOU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:09:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/default.36nhc3nimj.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\default.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4q9d4uy5pt"},{"Name":"integrity","Value":"sha256-hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/default.jpg"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1841327"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 07 Sep 2024 11:09:26 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"36nhc3nimj"},{"Name":"integrity","Value":"sha256-dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/default.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6944"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 16:06:54 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/default.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\default.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1841327"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022hHHM8QLPLSTfWSj6249s3W65BlKCplx2nFFc9L/kCBw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 07 Sep 2024 11:09:26 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"6944"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022dQgDTOqwdBPFiypFzLu\u002BPEcdDXBK6bsCcStfAGgenSk=\u0022"},{"Name":"Last-Modified","Value":"Sun, 02 Mar 2025 16:06:54 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/default.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\default.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1216"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:11:40 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/YavaPrimum.API/profile_photo/default.tf7g0fnx5a.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\profile_photo\default.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tf7g0fnx5a"},{"Name":"integrity","Value":"sha256-VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8="},{"Name":"label","Value":"_content/YavaPrimum.API/profile_photo/default.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1216"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022VyonhoufrIrokJicZ0QO3TylFOrl95EzX2N7wWk7P/8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 13 May 2025 14:11:40 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

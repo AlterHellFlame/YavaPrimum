@@ -6,6 +6,7 @@
             <p *ngIf="isAdmin" (click)="navigateTo('account/charts')" class="nav-link">Статистика</p>
             <p *ngIf="!isAdmin" (click)="navigateTo('account/hr')" class="nav-link">Главная</p>
             <p *ngIf="!isAdmin" (click)="navigateTo('account/candidates')" class="nav-link">Кандидаты</p>
+            <p (click)="navigateTo('account/vacancies')" class="nav-link">Вакансии</p>
         </span>
     </span>
     <span class="d-inline-flex toUserData">

@@ -21,6 +21,7 @@ namespace YavaPrimum.Core.DataBase
         public DbSet<Country> Country { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Notifications> Notifications { get; set; }
+        public DbSet<Vacancy> Vacancy { get; set; }
         //public DbSet<ArchiveTasks> ArchiveTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,6 +42,15 @@ namespace YavaPrimum.Core.DataBase
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction); // Указываем NO ACTION при удалении
 
+            modelBuilder.Entity<Vacancy>()
+                .HasOne(c => c.Post)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict); // Изменяем на Restrict для избежания каскадного удаления
+
+            modelBuilder.Entity<Vacancy>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict); // Изменяем на Restrict для избежания каскадного удаления
 
             /*modelBuilder.Entity<Notifications>()
                 .HasOne(t => t.ArchiveTasks)

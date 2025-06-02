@@ -46,12 +46,16 @@ namespace YavaPrimum.API.Notify
 
         public string GetUserId(HubConnectionContext connection)
         {
-            var cookies = connection.GetHttpContext().Request.Cookies;
-            if (cookies.TryGetValue("token-cookies", out var token))
+            try
             {
-                var userId = _jwtProvider.GetUserIdFromToken(token).Result.ToString();
-                return userId;
+                var cookies = connection.GetHttpContext().Request.Cookies;
+                if (cookies.TryGetValue("token-cookies", out var token))
+                {
+                    var userId = _jwtProvider.GetUserIdFromToken(token).Result.ToString();
+                    return userId;
+                }
             }
+            catch (Exception e) { }
             return null;
         }
     }

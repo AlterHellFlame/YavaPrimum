@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
+using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
 using YavaPrimum.Core.Services;
 
@@ -12,97 +14,160 @@ namespace YavaPrimum.API.Controllers
     public class FillController : ControllerBase
     {
         private readonly YavaPrimumDBContext _dBContext;
+        private ICandidateService _candidateService;
+        private ICountryService _countryService;
+        private IPostService _postService;
+        private IUserService _userService;
+        private IJwtProvider _jwtProvider;
+        private ITasksService _tasksService;
         private INotificationsService _notificationsService;
         private IConverterService _converterService;
 
         public FillController(
-            YavaPrimumDBContext dBContext,
+            ICandidateService candidateService,
+            ICountryService countryService,
+            IPostService postService,
+            IUserService userService,
+            IJwtProvider jwtProvider,
+            ITasksService tasksService,
             INotificationsService notificationsService,
-            IConverterService converterService)
+            IConverterService converterService,
+            YavaPrimumDBContext dBContext
+            )
         {
-
+            _candidateService = candidateService;
+            _countryService = countryService;
+            _postService = postService;
+            _userService = userService;
+            _jwtProvider = jwtProvider;
+            _tasksService = tasksService;
             _notificationsService = notificationsService;
-            _converterService = converterService; 
+            _converterService = converterService;
             _dBContext = dBContext;
         }
-  
+
+
+        private Country FindCountry(string countryName, List<Country> countries)
+        {
+            return countries.FirstOrDefault(c => c.Name == countryName) ?? throw new InvalidOperationException($"Страна '{countryName}' не найдена в базе данных.");
+        }
 
         [HttpPost("/crtBase")]
         public async Task<ActionResult> crtBase()
         {
-            var belarus = new Country
-            {
-                CountryId = Guid.NewGuid(),
-                Name = "Беларусь",
-                PhoneMask = "+375 (XX) XXX-XX-XX"
-            };
 
-            var kazakhstan = new Country
+            var countries = new List<Country>
             {
-                CountryId = Guid.NewGuid(),
-                Name = "Казахстан",
-                PhoneMask = "+7 (XXX) XXX-XX-XX"
-            };
-
-            var russia = new Country
-            {
-                CountryId = Guid.NewGuid(),
-                Name = "Россия",
-                PhoneMask = "+7 (XXX) XXX-XX-XX"
-            };
-
-            var uae = new Country
-            {
-                CountryId = Guid.NewGuid(),
-                Name = "ОАЭ",
-                PhoneMask = "+971 (X) XXX-XXXX"
-            };
-
-            var china = new Country
-            {
-                CountryId = Guid.NewGuid(),
-                Name = "Китай",
-                PhoneMask = "+86 (XXX) XXXX-XXXX"
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Беларусь",
+                    PhoneMask = "+375 (XX) XXX-XX-XX"
+                },
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Казахстан",
+                    PhoneMask = "+7 (XXX) XXX-XX-XX"
+                },
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Россия",
+                    PhoneMask = "+7 (XXX) XXX-XX-XX"
+                },
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Узбекистан",
+                    PhoneMask = "+998 (XX) XXX-XX-XX"
+                },
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Монголия",
+                    PhoneMask = "+976 (XX) XXXX-XXX"
+                },
+                new Country
+                {
+                    CountryId = Guid.NewGuid(),
+                    Name = "Польша",
+                    PhoneMask = "+48 (XXX) XXX-XXX"
+                }
             };
 
             // 2. Создаем компании
             var companies = new List<Company>
-    {
-        // Беларусь
-        new Company { CompanyId = Guid.NewGuid(), Name = "Примвей", Country = belarus },
-        new Company { CompanyId = Guid.NewGuid(), Name = "БелАгроПро", Country = belarus },
-        
-        // Казахстан
-        new Company { CompanyId = Guid.NewGuid(), Name = "КазМинТех", Country = kazakhstan },
-        new Company { CompanyId = Guid.NewGuid(), Name = "КазХайТек", Country = kazakhstan },
-        
-        // Россия
-        new Company { CompanyId = Guid.NewGuid(), Name = "АвтоТранс", Country = russia },
-        new Company { CompanyId = Guid.NewGuid(), Name = "Первый элемент", Country = russia },
-        
-        // ОАЭ
-        new Company { CompanyId = Guid.NewGuid(), Name = "EmirTech", Country = uae },
-        new Company { CompanyId = Guid.NewGuid(), Name = "Desert Solutions", Country = uae },
-        
-        // Китай
-        new Company { CompanyId = Guid.NewGuid(), Name = "China Innovations", Country = china },
-        new Company { CompanyId = Guid.NewGuid(), Name = "Beijing TechWorks", Country = china }
-    };
+            {
+            // Россия
+            new Company { CompanyId = Guid.NewGuid(), Name = "АО Вестинтертранс", Country = FindCountry("Россия", countries) },
+            new Company { CompanyId = Guid.NewGuid(), Name = "АО Рус-Авто", Country = FindCountry("Россия", countries) },
+            new Company { CompanyId = Guid.NewGuid(), Name = "ООО Первый элемент", Country = FindCountry("Россия", countries) },
+
+            // Беларусь
+            new Company { CompanyId = Guid.NewGuid(), Name = "ООО Примвэй", Country = FindCountry("Беларусь", countries) },
+
+            // Узбекистан
+            new Company { CompanyId = Guid.NewGuid(), Name = "ООО IAT Cargo Corp", Country = FindCountry("Узбекистан", countries) },
+
+            // Казахстан
+            new Company { CompanyId = Guid.NewGuid(), Name = "ТОО Примавто", Country = FindCountry("Казахстан", countries) },
+            new Company { CompanyId = Guid.NewGuid(), Name = "ТОО ИнтерАвтоТранс", Country = FindCountry("Казахстан", countries) },
+
+            // Монголия
+            new Company { CompanyId = Guid.NewGuid(), Name = "КОО Браво Авто", Country = FindCountry("Монголия", countries) },
+
+            // Польша
+            new Company { CompanyId = Guid.NewGuid(), Name = "Starprim sp. z o.o.", Country = FindCountry("Польша", countries) }
+            };
 
             // 3. Создаем должности
             var posts = new List<Post>
-    {
-        new Post { PostId = Guid.NewGuid(), Name = "Водитель" },
-        new Post { PostId = Guid.NewGuid(), Name = "Программист 1С" },
-        new Post { PostId = Guid.NewGuid(), Name = "!Админ" },
-        new Post { PostId = Guid.NewGuid(), Name = "HR" },
-        new Post { PostId = Guid.NewGuid(), Name = "Кадровик" },
-        new Post { PostId = Guid.NewGuid(), Name = "Логист" }
-    };
+            {
+                new Post { PostId = Guid.NewGuid(), Name = "!Админ" },
+                new Post { PostId = Guid.NewGuid(), Name = "HR" },
+                new Post { PostId = Guid.NewGuid(), Name = "Кадровик" },
+
+                // Дополнительные должности из логистики
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель-дальнобойщик" },
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель-экспедитор" },
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель категории C" },
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель категории E" },
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель автобуса" },
+                new Post { PostId = Guid.NewGuid(), Name = "Водитель спецтехники" },
+                new Post { PostId = Guid.NewGuid(), Name = "Оператор складского транспорта" },
+                new Post { PostId = Guid.NewGuid(), Name = "Координатор логистики" },
+                new Post { PostId = Guid.NewGuid(), Name = "Механик по грузовым авто" },
+                new Post { PostId = Guid.NewGuid(), Name = "Диспетчер транспортной компании" }
+            };
+
 
             // 4. Создаем статусы задач
-            var tasksStatuses = new List<TasksStatus> { new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Назначен приём", TypeStatus = 0, MessageTemplate = null }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Не пришел", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] не пришел к кадровику" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Время подтверждено", TypeStatus = 3, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] были подтвеждена" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Пришел", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] успешно принят на работу" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Дата подтверждена", TypeStatus = 4, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] была подтвеждена" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Назначено собеседование", TypeStatus = 0, MessageTemplate = null }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Время отказано", TypeStatus = 3, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] не были подтвеждена. Пожалуйста выберите новое время" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Взят кандидат", TypeStatus = 3, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] был взят в обработку кадровиком [User.Surname] [User.FirstName] и может быть принят(а) [Date]" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Подтверждение даты", TypeStatus = 3, MessageTemplate = null }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Собеседование пройдено", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] прошел(шла) собеседование на должность [Candidate.Post] и ожидает выбора кадровика" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Дата отказана", TypeStatus = 4, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] не была подтвеждена. Пожалуйста выберите новую дату" }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Подтверждение времени", TypeStatus = 3, MessageTemplate = null }, new TasksStatus { TasksStatusId = Guid.NewGuid(), Name = "Собеседование не пройдено", TypeStatus = 2, MessageTemplate = null } };
-
+            var tasksStatuses = new List<TasksStatus>
+{
+    new TasksStatus { TasksStatusId = Guid.Parse("5FC1E2EF-6F18-46D7-9046-45896819967A"), Name = "Ожидается подтверждение даты", TypeStatus = 3, MessageTemplate = "Новая дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] ожидает подтверждения" },
+    new TasksStatus { TasksStatusId = Guid.Parse("EF5BF5E5-0B1C-4D85-B54C-63C625091E0E"), Name = "Взят кандидат", TypeStatus = 3, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] был взят в обработку кадровиком [User.Surname] [User.FirstName] и может быть принят(а) [Date]" },
+    new TasksStatus { TasksStatusId = Guid.Parse("6C9C58CE-2E4A-43F7-850D-720F1DAB0C36"), Name = "Ожидается подтверждение времени", TypeStatus = 3, MessageTemplate = "Время [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] ожидает подтверждения" },
+    new TasksStatus { TasksStatusId = Guid.Parse("B69AAEDD-39CE-4BEF-861D-7AB27A04ABE2"), Name = "Собеседование не пройдено", TypeStatus = 2, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("5ADF907C-2AEC-4D63-9414-80D2336A6707"), Name = "Собеседование пройдено", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] прошел(шла) собеседование на должность [Candidate.Post] и ожидает выбора кадровика" },
+    new TasksStatus { TasksStatusId = Guid.Parse("E5FC2163-FFEB-4931-B631-8801F1B8F0AF"), Name = "Не пришел", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] не пришел к кадровику" },
+    new TasksStatus { TasksStatusId = Guid.Parse("24EAC6D7-4C0D-4254-A157-67771A79E53B"), Name = "Пришел", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] успешно принят на работу" },
+    new TasksStatus { TasksStatusId = Guid.Parse("0D3C45D8-8CEF-4D9E-AEF9-2E2AB6DE9D2E"), Name = "Выполнено тестовое задание", TypeStatus = 2, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] прошел(шла) собеседование на должность [Candidate.Post] и ожидает выбора кадровика" },
+    new TasksStatus { TasksStatusId = Guid.Parse("5B30069B-1BB4-4C12-A7D7-E62263981CBF"), Name = "Не выполнено тестовое задание", TypeStatus = 2, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("BB48E8BA-6D5B-4821-A0CA-F49D21AADC1F"), Name = "Назначено собеседование", TypeStatus = 0, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("DD100C62-83B9-47C3-AF1D-3F3D935FB4FA"), Name = "Назначен приём", TypeStatus = 0, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("87B85A86-2B26-4931-973D-201EBF938574"), Name = "Срок тестового задания", TypeStatus = 0, MessageTemplate = "Кандидат [Candidate.Surname] должен выполнить тестовое задание до [Date]" },
+    new TasksStatus { TasksStatusId = Guid.Parse("CBBE4BB0-8A9D-4830-BDA0-9713E5D7FE11"), Name = "Подтверждение даты", TypeStatus = -1, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("6A6F5BD2-FB98-4E66-BE74-B0DABD372BD4"), Name = "Запрос на смену времени", TypeStatus = -1, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене времени" },
+    new TasksStatus { TasksStatusId = Guid.Parse("E9DED4B6-D1BC-4460-BA8E-769C48C69E6F"), Name = "Запрос на смену даты", TypeStatus = -1, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене даты" },
+    new TasksStatus { TasksStatusId = Guid.Parse("FEF06092-F6BB-4896-BA3E-F85E61309138"), Name = "Подтверждение времени", TypeStatus = -1, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("EC75AFA1-0E3A-43BE-ABD7-83862AF3AF86"), Name = "Дата подтверждена", TypeStatus = -2, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] была подтвеждена" },
+    new TasksStatus { TasksStatusId = Guid.Parse("B312D748-1CC3-42A0-8FFA-C304497CB29C"), Name = "Время отказано", TypeStatus = -2, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] не были подтвеждена. Пожалуйста выберите новое время" },
+    new TasksStatus { TasksStatusId = Guid.Parse("6DB2A556-6190-4022-AB3B-66315E6C4A35"), Name = "Дата отказана", TypeStatus = -2, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] не была подтвеждена. Пожалуйста выберите новую дату" },
+    new TasksStatus { TasksStatusId = Guid.Parse("6B657AD4-0BB3-42C1-9C7A-57E318C3F21A"), Name = "Время подтверждено", TypeStatus = -2, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] были подтвеждена" },
+    new TasksStatus { TasksStatusId = Guid.Parse("7D8E09B4-335A-4EEF-943B-9D68506CBFA0"), Name = "Перенесено собеседование", TypeStatus = -2, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("315A68D8-C2DA-4F5C-9233-2643729608DF"), Name = "Дата была подтверждена", TypeStatus = 3, MessageTemplate = null }
+};
             // 5. Создаем пользователей
             var users = new List<User>();
             var adminPost = posts.First(p => p.Name == "!Админ");
@@ -110,11 +175,28 @@ namespace YavaPrimum.API.Controllers
             var кадровикPost = posts.First(p => p.Name == "Кадровик");
 
             // Данные для генерации случайных пользователей
-            var surnames = new[] { "Иванов", "Петров", "Сидоров", "Кузнецов", "Новиков", "Смирнов" };
-            var firstNames = new[] { "Алексей", "Мария", "Дмитрий", "Екатерина", "Игорь", "Ольга" };
-            var patronymics = new[] { "Алексеевич", "Ивановна", "Сергеевич", "Петровна", "Владимирович", "Николаевна" };
-            var imagePaths = new[] { "profile_photo/ava1.png", "profile_photo/ava2.png", "profile_photo/ava3.png",
-                            "profile_photo/ava4.png", "profile_photo/ava5.png", "profile_photo/ava6.png", "default.jpg" };
+            var surnames = new[] {
+                "Витченко", "Хлыстов", "Сидоров", "Цылев", "Бланш", "Будейко", "Белов", "Новиков",
+                "Масюченя", "Шивалец", "Бусенко", "Орлов", "Миронов", "Гаврилов", "Жуков", "Тихонов",
+                "Фомин", "Зимин", "Кондратьев", "Давыдов", "Ершов", "Калинин"
+            };
+                        var firstNames = new[] {
+                "Алексей", "Платон", "Дмитрий", "Пётр", "Игорь", "Марк", "Сергей", "Владислав",
+                "Николай", "Артём", "Михаил", "Роман", "Василий", "Тимофей", "Егор", "Леонид"
+            };
+                        var patronymics = new[] {
+                "Алексеевич", "Иванов", "Сергеевич", "Петрович", "Владимирович", "Николаевич",
+                "Максимович", "Андреевич", "Фёдорович", "Геннадьевич", "Тимофеевич", "Артёмович",
+                "Станиславович", "Леонидович"
+            };
+
+            var imagePaths = new[] {
+            "profile_photo/ava1.png", "profile_photo/ava2.png", "profile_photo/ava3.png",
+            "profile_photo/ava4.png", "profile_photo/ava5.png", "profile_photo/ava6.png",
+            "profile_photo/ava7.png", "profile_photo/ava8.png", "profile_photo/ava9.png",
+            "profile_photo/ava10.png", "profile_photo/ava11.png", "default.png", "default.png", "default.png", "default.png"
+};
+
             var random = new Random();
             const string defaultPasswordHash = "$2a$11$rxIpj2vtErDmhuUc8isouODt3yOtce5bKfKQ.3la.JCMPdCL/j8zG";
 
@@ -125,7 +207,7 @@ namespace YavaPrimum.API.Controllers
                 Surname = "Кривой",
                 FirstName = "Сергей",
                 Patronymic = "Алексеевич",
-                ImgUrl = "profile_photo/default.jpg",
+                ImgUrl = "profile_photo/default.png",
                 Phone = "+375291234567",
                 Email = "krivoi@primum.ru",
                 PasswordHash = defaultPasswordHash,
@@ -133,10 +215,28 @@ namespace YavaPrimum.API.Controllers
                 Post = adminPost
             });
 
-            // HR и кадровики для каждой компании
             foreach (var company in companies)
             {
-                // HR
+                // Определяем количество кадровиков (минимум 1, максимум 2)
+                int kadrovikCount = random.Next(1, 3);
+
+                for (int i = 0; i < kadrovikCount; i++)
+                {
+                    users.Add(new User
+                    {
+                        UserId = Guid.NewGuid(),
+                        Surname = surnames[random.Next(surnames.Length)],
+                        FirstName = firstNames[random.Next(firstNames.Length)],
+                        Patronymic = patronymics[random.Next(patronymics.Length)],
+                        ImgUrl = imagePaths[random.Next(imagePaths.Length)],
+                        Phone = $"+37529{random.Next(1000000, 9999999)}",
+                        Email = $"{company.Name.ToLower()}Kadr{random.Next(1000)}@primum.com",
+                        PasswordHash = defaultPasswordHash,
+                        Company = company,
+                        Post = кадровикPost
+                    });
+                }
+
                 users.Add(new User
                 {
                     UserId = Guid.NewGuid(),
@@ -145,30 +245,17 @@ namespace YavaPrimum.API.Controllers
                     Patronymic = patronymics[random.Next(patronymics.Length)],
                     ImgUrl = imagePaths[random.Next(imagePaths.Length)],
                     Phone = $"+37544{random.Next(1000000, 9999999)}",
-                    Email = $"{company.Name.ToLower()}-hr-{random.Next(1000)}@example.com",
+                    Email = $"{company.Name.ToLower()}Hr{random.Next(1000)}@primum.com",
                     PasswordHash = defaultPasswordHash,
                     Company = company,
                     Post = hrPost
                 });
 
-                // Кадровик
-                users.Add(new User
-                {
-                    UserId = Guid.NewGuid(),
-                    Surname = surnames[random.Next(surnames.Length)],
-                    FirstName = firstNames[random.Next(firstNames.Length)],
-                    Patronymic = patronymics[random.Next(patronymics.Length)],
-                    ImgUrl = imagePaths[random.Next(imagePaths.Length)],
-                    Phone = $"+37529{random.Next(1000000, 9999999)}",
-                    Email = $"{company.Name.ToLower()}-kadrovik-{random.Next(1000)}@example.com",
-                    PasswordHash = defaultPasswordHash,
-                    Company = company,
-                    Post = кадровикPost
-                });
             }
 
+
             // 6. Добавляем ВСЕ данные в контекст
-            _dBContext.Country.AddRange(belarus, kazakhstan, russia, uae, china);
+            _dBContext.Country.AddRange(countries);
             _dBContext.Company.AddRange(companies);
             _dBContext.Post.AddRange(posts);
             _dBContext.TasksStatus.AddRange(tasksStatuses);
@@ -180,307 +267,254 @@ namespace YavaPrimum.API.Controllers
             return Ok();
         }
 
-
-        [HttpPost("/crtCandidate")]
-        public async Task<ActionResult> crtCandidate()
-        {
-            var belarus = _dBContext.Country.FirstOrDefault(c => c.Name == "Беларусь");
-            if (belarus == null)
-                throw new InvalidOperationException("Страна 'Беларусь' не найдена в базе данных.");
-
-            // Получаем должность "Водитель"
-            var driverPost = _dBContext.Post.FirstOrDefault(p => p.Name == "Водитель");
-            if (driverPost == null)
-                throw new InvalidOperationException("Должность 'Водитель' не найдена в базе данных.");
-
-            var candidates = new List<Candidate>
-            {
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Иванов",
-                    FirstName = "Алексей",
-                    Patronymic = "Петрович",
-                    Phone = "+375291234567",
-                    Email = "ivanov.alexei@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Петрова",
-                    FirstName = "Мария",
-                    Patronymic = "Владимировна",
-                    Phone = "+375293334455",
-                    Email = "petrova.maria@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Сидоров",
-                    FirstName = "Дмитрий",
-                    Patronymic = "Игоревич",
-                    Phone = "+375292223344",
-                    Email = "sidorov.dmitry@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Новикова",
-                    FirstName = "Екатерина",
-                    Patronymic = "Сергеевна",
-                    Phone = "+375294556778",
-                    Email = "novikova.ekaterina@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Кузнецов",
-                    FirstName = "Игорь",
-                    Patronymic = "Александрович",
-                    Phone = "+375296789012",
-                    Email = "kuznetsov.igor@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Смирнова",
-                    FirstName = "Ольга",
-                    Patronymic = "Николаевна",
-                    Phone = "+375297654321",
-                    Email = "smirnova.olga@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Зайцев",
-                    FirstName = "Виктор",
-                    Patronymic = "Федорович",
-                    Phone = "+375293213141",
-                    Email = "zaitsev.viktor@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Борисова",
-                    FirstName = "Алина",
-                    Patronymic = "Михайловна",
-                    Phone = "+375292314151",
-                    Email = "borisova.alina@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Трофимов",
-                    FirstName = "Артур",
-                    Patronymic = "Валентинович",
-                    Phone = "+375293216171",
-                    Email = "trofimov.artur@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Кравцова",
-                    FirstName = "Анна",
-                    Patronymic = "Георгиевна",
-                    Phone = "+375294414515",
-                    Email = "kravtsova.anna@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Волков",
-                    FirstName = "Александр",
-                    Patronymic = "Фёдорович",
-                    Phone = "+375291111111",
-                    Email = "volkov.alexandr@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Максимова",
-                    FirstName = "Алина",
-                    Patronymic = "Игоревна",
-                    Phone = "+375292222222",
-                    Email = "maksimova.alina@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Гончаров",
-                    FirstName = "Владислав",
-                    Patronymic = "Анатольевич",
-                    Phone = "+375293333333",
-                    Email = "goncharov.vladislav@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Попова",
-                    FirstName = "Анна",
-                    Patronymic = "Евгеньевна",
-                    Phone = "+375294444444",
-                    Email = "popova.anna@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Медведев",
-                    FirstName = "Павел",
-                    Patronymic = "Дмитриевич",
-                    Phone = "+375295555555",
-                    Email = "medvedev.pavel@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Орлова",
-                    FirstName = "Елизавета",
-                    Patronymic = "Александровна",
-                    Phone = "+375296666666",
-                    Email = "orlova.elizaveta@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Романов",
-                    FirstName = "Михаил",
-                    Patronymic = "Васильевич",
-                    Phone = "+375297777777",
-                    Email = "romanov.mikhail@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Климова",
-                    FirstName = "Дарья",
-                    Patronymic = "Ильинична",
-                    Phone = "+375298888888",
-                    Email = "klimova.darya@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Соколова",
-                    FirstName = "Вера",
-                    Patronymic = "Николаевна",
-                    Phone = "+375299999999",
-                    Email = "sokolova.vera@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                },
-                new Candidate
-                {
-                    CandidateId = Guid.NewGuid(),
-                    Surname = "Белоусов",
-                    FirstName = "Константин",
-                    Patronymic = "Петрович",
-                    Phone = "+375290101010",
-                    Email = "belousov.konstantin@mail.by",
-                    Country = belarus,
-                    Post = driverPost
-                }
-
-            };
-
-            // Добавляем кандидатов в контекст
-            _dBContext.Candidate.AddRange(candidates);
-
-            // Сохраняем изменения
-            await _dBContext.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        [HttpPost("/crtTask")]
-        public async Task<ActionResult> crtTask()
+        [HttpPost("/crtAnTask")]
+        public async Task<ActionResult> crtAnTask()
         {
             // Получение статуса "Назначено собеседование"
             var interviewStatus = _dBContext.TasksStatus.FirstOrDefault(ts => ts.Name == "Назначено собеседование");
             if (interviewStatus == null)
                 throw new InvalidOperationException("Статус 'Назначено собеседование' не найден.");
 
-            // Получение всех HR пользователей из Беларуси
-            var hrUsers = _dBContext.User
-                .Where(u => u.Post.Name == "HR" && u.Company.Country.Name == "Беларусь")
-                .ToList();
+            // Получение всех компаний по странам
+            var companiesByCountry = _dBContext.Company
+                .GroupBy(c => c.Country.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
 
-            if (!hrUsers.Any())
-                throw new InvalidOperationException("Не найдены HR пользователи из Беларуси.");
+            // Получение всех HR пользователей по странам
+            var hrUsersByCountry = _dBContext.User
+                .Where(u => u.Post.Name == "HR")
+                .GroupBy(u => u.Company.Country.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
 
-            // Получение всех кандидатов из Беларуси
-            var belarusCandidates = _dBContext.Candidate
-                .Where(c => c.Country.Name == "Беларусь")
-                .ToList();
+            var candidatesByCountry = _dBContext.Candidate
+                .GroupBy(c => c.Country.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
 
-            if (!belarusCandidates.Any())
-                throw new InvalidOperationException("Не найдены кандидаты из Беларуси.");
-
-            // Генерация задач
             var tasks = new List<Tasks>();
             var random = new Random();
 
-            foreach (var candidate in belarusCandidates)
+            foreach (var (country, candidates) in candidatesByCountry)
             {
-                // Выбор случайного HR
-                var randomHr = hrUsers[random.Next(hrUsers.Count)];
+                if (!hrUsersByCountry.ContainsKey(country) || hrUsersByCountry[country].Count == 0)
+                    throw new InvalidOperationException($"Не найдены HR пользователи в стране '{country}'.");
 
-                // Создание задачи для кандидата
-                tasks.Add(new Tasks
+                if (!companiesByCountry.ContainsKey(country) || companiesByCountry[country].Count == 0)
+                    throw new InvalidOperationException($"Не найдены компании в стране '{country}'.");
+
+                foreach (var candidate in candidates)
                 {
-                    TasksId = Guid.NewGuid(),
-                    Status = interviewStatus,
-                    DateTime = DateTime.Now.AddDays(random.Next(-10, -1)), // Случайная дата в течение месяца
-                    User = randomHr,
-                    Candidate = candidate,
-                    IsArchive = false
+                    // Выбор случайного HR из той же страны
+                    var randomHr = hrUsersByCountry[country][random.Next(hrUsersByCountry[country].Count)];
+
+                    // Создание задачи для кандидата
+                    tasks.Add(new Tasks
+                    {
+                        TasksId = Guid.NewGuid(),
+                        Status = interviewStatus,
+                        DateTime = DateTime.Now.AddDays(random.Next(-100, 0)), // Случайная дата за последние 30 дней
+                        User = randomHr,
+                        Candidate = candidate,
+                        IsArchive = false
+                    });
+                }
+            }
+
+                // Добавление задач в контекст базы данных
+                _dBContext.Tasks.AddRange(tasks);
+
+            // Сохранение изменений
+            await _dBContext.SaveChangesAsync();
+
+
+            foreach (var task in tasks)
+            {
+
+                StatusUpdateRequest statusUpdateRequest = new StatusUpdateRequest()
+                {
+                    Status = random.Next(100) < 80
+                    ? "Собеседование не пройдено"
+                    : "Собеседование пройдено",
+
+                };
+
+
+                await _tasksService.SetNewStatus(task, statusUpdateRequest);
+            }
+
+            var completedInterviews = _dBContext.Tasks
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.Candidate.Post)
+                .Where(t => t.Status.Name == "Собеседование пройдено")
+                .ToList();
+
+            foreach (var task in completedInterviews)
+            {
+                var candidate = _dBContext.Candidate.FirstOrDefault(c => c.CandidateId == task.Candidate.CandidateId);
+
+                if (candidate != null)
+                {
+                    var hrUser = _dBContext.User
+                        .FirstOrDefault(u => u.Post.Name == "Кадровик" && u.Company.Country == candidate.Country);
+
+
+                    Tasks newTask = new Tasks
+                    {
+                        TasksId = Guid.NewGuid(),
+                        Status = await _tasksService.GetStatusByName("Взят кандидат"),
+                        Candidate = task.Candidate,
+                        User = hrUser,
+                        DateTime = Convert.ToDateTime(task.DateTime.AddDays(random.Next(0, 10))),
+                        AdditionalData = task.AdditionalData
+                    };
+                    await _tasksService.Create(newTask);
+
+
+                    await _notificationsService.ReadNotificationOfCandidate(task.Candidate.CandidateId);
+                   // await _notificationsService.SendMessage(newTask);
+
+                    await _dBContext.SaveChangesAsync();
+
+
+
+
+                }
+            }
+
+            var completedKadr = _dBContext.Tasks
+                .Include(t => t.Candidate)
+                .Include(t => t.Candidate.Country)
+                .Include(t => t.Candidate.Post)
+                .Where(t => t.Status.Name == "Взят кандидат")
+                .ToList();
+
+            foreach (var task in completedKadr)
+            {
+
+                task.Status = await _tasksService.GetStatusByName(random.Next(100) < 20
+                  ? "Собеседование не пройдено"
+                  : "Собеседование пройдено");
+
+
+                    await _notificationsService.ReadNotificationOfCandidate(task.Candidate.CandidateId);
+                    await _notificationsService.SendMessage(task);
+
+                    await _dBContext.SaveChangesAsync();
+
+            }
+
+            return Ok();
+
+        }
+
+
+        [HttpPost("/crtCandidate")]
+        public async Task<ActionResult> crtCandidate()
+        {
+            //await _dBContext.Database.ExecuteSqlRawAsync("DELETE FROM [Tasks]");
+            //await _dBContext.Database.ExecuteSqlRawAsync("DELETE FROM [Candidate]");
+            int count = 200;
+            Random _random = new Random();
+
+            var countries = _dBContext.Country.ToList();
+            var posts = _dBContext.Post.ToList();
+
+            if (!countries.Any() || !posts.Any())
+                throw new InvalidOperationException("В базе данных отсутствуют страны или должности.");
+
+            var maleSurnames = new[] { "Аракчеев", "Левицкий", "Добронравов", "Ромашов", "Крутов", "Шахматов", "Ветроградский", "Черемных", "Звягинцев", "Сафронов", "Мелехов", "Гнездилов" };
+            var femaleSurnames = new[] { "Брусницкая", "Орехова", "Зорина", "Лебедева", "Погодина", "Глинская", "Федорова", "Рахманова", "Цветаева", "Чайковская", "Крылова", "Булатова" };
+
+            var maleFirstNames = new[] { "Арсений", "Виталий", "Тимур", "Лаврентий", "Григорий", "Елисей", "Святослав", "Ростислав", "Анатолий", "Всеволод", "Артемий", "Захар" };
+            var femaleFirstNames = new[] { "Агата", "Милана", "Есения", "Таисия", "Мирослава", "Лада", "Елена", "Анастасия", "Вера", "Полина", "Лилия", "Алёна" };
+
+            var malePatronymics = new[] { "Петрович", "Игоревич", "Александрович", "Федорович", "Михайлович", "Васильевич", "Анатольевич", "Станиславович", "Григорьевич", "Дмитриевич", "Николаевич", "Тимофеевич" };
+            var femalePatronymics = new[] { "Петровна", "Игоревна", "Александровна", "Федоровна", "Михайловна", "Васильевна", "Анатольевна", "Станиславовна", "Григорьевна", "Дмитриевна", "Николаевна", "Тимофеевна" };
+
+            var candidates = new List<Candidate>();
+
+            for (int i = 0; i < count; i++)
+            {
+                bool isMale = _random.Next(2) == 0;
+
+                candidates.Add(new Candidate
+                {
+                    CandidateId = Guid.NewGuid(),
+                    Surname = isMale ? maleSurnames[_random.Next(maleSurnames.Length)] : femaleSurnames[_random.Next(femaleSurnames.Length)],
+                    FirstName = isMale ? maleFirstNames[_random.Next(maleFirstNames.Length)] : femaleFirstNames[_random.Next(femaleFirstNames.Length)],
+                    Patronymic = isMale ? malePatronymics[_random.Next(malePatronymics.Length)] : femalePatronymics[_random.Next(femalePatronymics.Length)],
+                    Phone = $"+37529{_random.Next(1000000, 9999999)}",
+                    Email = $"{(isMale ? maleFirstNames : femaleFirstNames)[_random.Next((isMale ? maleFirstNames : femaleFirstNames).Length)].ToLower()}.{(isMale ? maleSurnames : femaleSurnames)[_random.Next((isMale ? maleSurnames : femaleSurnames).Length)].ToLower()}@mail.com",
+                    Country = countries[_random.Next(countries.Count)],
+                    Post = posts[_random.Next(posts.Count)]
                 });
             }
 
-            // Добавление задач в контекст базы данных
-            _dBContext.Tasks.AddRange(tasks);
+            _dBContext.Candidate.AddRange(candidates);
+            _dBContext.SaveChanges();
 
-            // Сохранение изменений в базе данных
-            await _dBContext.SaveChangesAsync();
 
-            return Ok();
+            
+
+
+
+                return Ok("Хабиб");
         }
 
+        [HttpPost("/crtTask")]
+            public async Task<ActionResult> crtTask()
+            {
+                // Получение статуса "Назначено собеседование"
+                var interviewStatus = _dBContext.TasksStatus.FirstOrDefault(ts => ts.Name == "Назначено собеседование");
+                if (interviewStatus == null)
+                    throw new InvalidOperationException("Статус 'Назначено собеседование' не найден.");
+
+                // Получение всех HR пользователей из Беларуси
+                var hrUsers = _dBContext.User
+                    .Where(u => u.Post.Name == "HR" && u.Company.Country.Name == "Беларусь")
+                    .ToList();
+
+                if (!hrUsers.Any())
+                    throw new InvalidOperationException("Не найдены HR пользователи из Беларуси.");
+
+                // Получение всех кандидатов из Беларуси
+                var belarusCandidates = _dBContext.Candidate
+                    .Where(c => c.Country.Name == "Беларусь")
+                    .ToList();
+
+                if (!belarusCandidates.Any())
+                    throw new InvalidOperationException("Не найдены кандидаты из Беларуси.");
+
+                // Генерация задач
+                var tasks = new List<Tasks>();
+                var random = new Random();
+
+                foreach (var candidate in belarusCandidates)
+                {
+                    // Выбор случайного HR
+                    var randomHr = hrUsers[random.Next(hrUsers.Count)];
+
+                    // Создание задачи для кандидата
+                    tasks.Add(new Tasks
+                    {
+                        TasksId = Guid.NewGuid(),
+                        Status = interviewStatus,
+                        DateTime = DateTime.Now.AddDays(random.Next(-10, -1)), // Случайная дата в течение месяца
+                        User = randomHr,
+                        Candidate = candidate,
+                        IsArchive = false
+                    });
+                }
+
+                // Добавление задач в контекст базы данных
+                _dBContext.Tasks.AddRange(tasks);
+
+                // Сохранение изменений в базе данных
+                await _dBContext.SaveChangesAsync();
+
+                return Ok();
+            }
+        
         [HttpPost("/deleteAll")]
         public async Task<ActionResult> deleteAll()
         {
@@ -500,6 +534,8 @@ namespace YavaPrimum.API.Controllers
         [HttpPost("/deleteTasks")]
         public async Task<ActionResult> deleteTasks()
         {
+
+            await _dBContext.Database.ExecuteSqlRawAsync("DELETE FROM [Notifications]");
             // Удаление всех данных из таблицы Tasks
             await _dBContext.Database.ExecuteSqlRawAsync("DELETE FROM [Tasks]");
 

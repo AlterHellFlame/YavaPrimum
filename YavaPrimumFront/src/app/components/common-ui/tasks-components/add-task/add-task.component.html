@@ -1,132 +1,217 @@
 <ng-container *ngIf="posts.length > 0 && countries.length > 0">
-  <div
-    class="modal fade"
-    data-bs-backdrop="static"
-    id="AddCandidate"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" data-bs-backdrop="static" id="AddCandidate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="modal-header">
             <h5 class="modal-title">Добавить кандидата</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Закрыть"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
           </div>
+          
           <div class="modal-body">
-            <!-- Общая структура формы -->
+            <!-- Фамилия -->
             <div class="form-group">
-              <label for="surname" class="mt-1">Введите фамилию</label>
+              <label for="surname" class="mt-1">Фамилия*</label>
               <input
                 placeholder="Иванов"
                 type="text"
                 class="form-control"
+                [ngClass]="{'is-invalid': form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)}"
                 id="surname"
                 formControlName="surname"
+                maxlength="25"
               />
+              <div *ngIf="form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)" 
+                   class="invalid-feedback">
+                <span *ngIf="form.get('surname')?.errors?.['required']">
+                  Пожалуйста, введите фамилию
+                </span>
+                <span *ngIf="form.get('surname')?.errors?.['maxlength']">
+                  Фамилия не должна превышать 25 символов
+                </span>
+              </div>
             </div>
+            
+            <!-- Имя -->
             <div class="form-group">
-              <label for="firstName" class="mt-1">Введите имя</label>
+              <label for="firstName" class="mt-1">Имя*</label>
               <input
                 placeholder="Иван"
                 type="text"
                 class="form-control"
+                [ngClass]="{'is-invalid': form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)}"
                 id="firstName"
                 formControlName="firstName"
+                maxlength="25"
               />
+              <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)" 
+                   class="invalid-feedback">
+                <span *ngIf="form.get('firstName')?.errors?.['required']">
+                  Пожалуйста, введите имя
+                </span>
+                <span *ngIf="form.get('firstName')?.errors?.['maxlength']">
+                  Имя не должно превышать 25 символов
+                </span>
+              </div>
             </div>
+            
+            <!-- Отчество -->
             <div class="form-group">
-              <label for="patronymic" class="mt-1">Введите отчество</label>
+              <label for="patronymic" class="mt-1">Отчество</label>
               <input
                 placeholder="Иванович"
                 type="text"
                 class="form-control"
                 id="patronymic"
                 formControlName="patronymic"
+                maxlength="25"
               />
+              <div *ngIf="form.get('patronymic')?.invalid && (form.get('patronymic')?.dirty || form.get('patronymic')?.touched)"
+                   class="invalid-feedback">
+                <span *ngIf="form.get('patronymic')?.errors?.['maxlength']">
+                  Отчество не должно превышать 25 символов
+                </span>
+              </div>
             </div>
+            
+            <!-- Должность и страна -->
             <div class="d-flex justify-content-between">
-              <div class="form-group col-md-5">
-                <label for="post" class="mt-1">Введите должность</label>
-                <select class="form-control" id="post" formControlName="post">
+              <div class="form-group col-md-6">
+                <label for="post" class="mt-1">Должность*</label>
+                <select 
+                  class="form-control"
+                  [ngClass]="{'is-invalid': form.get('post')?.invalid && (form.get('post')?.dirty || form.get('post')?.touched)}"
+                  id="post" 
+                  formControlName="post">
                   <option *ngFor="let post of posts" [value]="post">
                     {{ post }}
                   </option>
                 </select>
+                <div *ngIf="form.get('post')?.invalid && (form.get('post')?.dirty || form.get('post')?.touched)" 
+                     class="invalid-feedback">
+                  Пожалуйста, выберите должность
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="country" class="mt-1">Введите страну проживания</label>
+              
+              <div class="form-group col-md-5">
+                <label for="country" class="mt-1">Страна проживания*</label>
                 <select
                   class="form-control"
+                  [ngClass]="{'is-invalid': form.get('country')?.invalid && (form.get('country')?.dirty || form.get('country')?.touched)}"
                   id="country"
-                  formControlName="country"
-                >
+                  formControlName="country">
                   <option *ngFor="let country of countries" [value]="country">
                     {{ country }}
                   </option>
                 </select>
+                <div *ngIf="form.get('country')?.invalid && (form.get('country')?.dirty || form.get('country')?.touched)" 
+                     class="invalid-feedback">
+                  Пожалуйста, выберите страну
+                </div>
               </div>
             </div>
+            
+            <!-- Телефон -->
             <div class="form-group">
-              <!-- <input
-              mask="+375 (00) 000-00-00"
-              placeholder="+375 (XX) XXX-XX-XX"
-              type="text"
-              class="form-control"
-              id="phone"
-              formControlName="phone"
-              [showMaskTyped]="true"
-              [validation]="true"
-            /> -->
-            <div class="form-group">
-              <label for="phone" class="mt-1">Телефон</label>
+              <label for="phone" class="mt-1">Телефон*</label>
               <input
                 type="text"
                 class="form-control"
+                [ngClass]="{'is-invalid': form.get('phone')?.invalid && (form.get('phone')?.dirty || form.get('phone')?.touched)}"
                 id="phone"
-                placeholder="+375 (XX) XXX-XX-XX"
+                placeholder="+375 (##) ###-##-##"
                 formControlName="phone"
                 input-mask="+375 (99) 999-99-99"
+                maxlength="20"
               />
+              <div *ngIf="form.get('phone')?.invalid && (form.get('phone')?.dirty || form.get('phone')?.touched)" 
+                   class="invalid-feedback">
+                <span *ngIf="form.get('phone')?.errors?.['required']">
+                  Пожалуйста, введите номер телефона
+                </span>
+                <span *ngIf="form.get('phone')?.errors?.['maxlength']">
+                  Телефон не должен превышать 13 символов
+                </span>
+              </div>
             </div>
             
-            </div>
+            <!-- Email -->
             <div class="form-group">
-              <label for="email" class="mt-1">Email</label>
+              <label for="email" class="mt-1">Email*</label>
               <input
                 placeholder="email@mail.ru"
                 type="email"
                 class="form-control"
+                [ngClass]="{'is-invalid': form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)}"
                 id="email"
                 formControlName="email"
+                maxlength="254"
               />
+              <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" 
+                   class="invalid-feedback">
+                <span *ngIf="form.get('email')?.errors?.['email']">
+                  Пожалуйста, введите корректный email
+                </span>
+                <span *ngIf="form.get('email')?.errors?.['maxlength']">
+                  Email не должен превышать 254 символов
+                </span>
+                                <span *ngIf="form.get('phone')?.errors?.['required']">
+                  Пожалуйста, введите почту
+                </span>
+              </div>
             </div>
+            
+            <!-- Дата собеседования -->
             <div class="form-group">
-              <label for="dateTime" class="mt-1">Дата и время собеседования</label>
+              <label for="dateTime" class="mt-1">Дата и время собеседования*</label>
               <input
                 type="datetime-local"
                 class="form-control"
+                [ngClass]="{'is-invalid': form.get('interviewDate')?.invalid && (form.get('interviewDate')?.dirty || form.get('interviewDate')?.touched)}"
                 id="dateTime"
                 formControlName="interviewDate"
                 [min]="minDateTime"
               />
+              <div *ngIf="form.get('interviewDate')?.invalid && (form.get('interviewDate')?.dirty || form.get('interviewDate')?.touched)"
+                   class="invalid-feedback">
+                <span *ngIf="form.get('interviewDate')?.errors?.['required']">
+                  Пожалуйста, укажите дату и время собеседования
+                </span>
+                <span *ngIf="form.get('interviewDate')?.errors?.['timeConflict']">
+                  Это время уже занято (разница менее 20 минут)
+                </span>
+              </div>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="form-group">
+              <label for="additionalData" class="mt-1">Дополнительная информация</label>
+              <textarea
+                class="form-control"
+                id="additionalData"
+                placeholder="Любая дополнительная информация о кандидате"
+                formControlName="additionalData"
+                rows="3"
+                maxlength="500"
+                [ngClass]="{'is-invalid': form.get('additionalData')?.invalid && (form.get('additionalData')?.dirty || form.get('additionalData')?.touched)}"
+              ></textarea>
+              <div *ngIf="form.get('additionalData')?.invalid && (form.get('additionalData')?.dirty || form.get('additionalData')?.touched)"
+                   class="invalid-feedback">
+                <span *ngIf="form.get('additionalData')?.errors?.['minlength']">
+                  Минимальная длина - 3 символа
+                </span>
+                <span *ngIf="form.get('additionalData')?.errors?.['maxlength']">
+                  Максимальная длина - 500 символов
+                </span>
+              </div>
             </div>
           </div>
+          
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Закрыть
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid" [attr.data-bs-dismiss]="form.valid ? 'modal' : null">
               Добавить кандидата
             </button>
           </div>

@@ -168,6 +168,4 @@ export class UserDataComponent implements OnInit {
     document.cookie = `token-cookies=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
     this.router.navigate(['/']);
   }
-
-  
 }

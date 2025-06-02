@@ -10,6 +10,8 @@ namespace YavaPrimum.Core.DTO
         public UserRequestResponse User { get; set; }
         public DateTime? DateTime { get; set; }
         public CandidateRequestResponse Candidate { get; set; }
+        public bool IsArchive { get; set; }
+        public string? AdditionalData { get; set; }
     }
 
 }

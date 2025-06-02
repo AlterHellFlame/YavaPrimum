@@ -3,6 +3,7 @@ import { DateTime, Info, Interval } from 'luxon';
 import { Tasks } from '../../../data/interface/Tasks.interface';
 import { TaskService } from '../../../services/task/task.service';
 import { CommonModule } from '@angular/common';
+import { NotifyService } from '../../../services/notify/notify.service';
 
 @Component({
   selector: 'app-calendar',
@@ -23,13 +24,17 @@ export class CalendarComponent implements OnInit {
   activeDay: DateTime = this.today;
   dayTaskLength: number = 0;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private notify: NotifyService) {}
 
   ngOnInit(): void {
     console.log("Запрос");
     this.allTasks = this.taskService.getAllTasksOfUser();
     this.computeDaysOfMonth();
     this.setActiveDay(this.today);
+
+     this.notify.addReceiveListener((message) => {
+        this.allTasks = this.taskService.getAllTasksOfUser();
+    });
   }
 
   computeDaysOfMonth(): void {

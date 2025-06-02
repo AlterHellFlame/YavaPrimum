@@ -30,7 +30,9 @@ namespace YavaPrimum.Core.Services
                 u => u.Email == email);
 
             if (user == null)
+            {
                 throw new ArgumentNullException("Пользователя с такой почтой не существует");
+            }
 
             return user;
         }
@@ -119,7 +121,6 @@ namespace YavaPrimum.Core.Services
 
             return user;
         }
-
 
     }
 }

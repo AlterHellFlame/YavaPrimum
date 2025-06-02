@@ -12,38 +12,26 @@ namespace YavaPrimum.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private ICandidateService _candidateService;
         private ICountryService _countryService;
         private IPostService _postService;
         private ICompanyService _companyService;
         private IUserService _userService;
         private IJwtProvider _jwtProvider;
-        private ITasksService _tasksService;
-        private INotificationsService _notificationsService;
         private IConverterService _converterService;
+        private IVacancyService _vacancyService;
 
-        public UserController(
-            ICandidateService candidateService,
-            ICountryService countryService,
-            IPostService postService,
-            IUserService userService,
-            IJwtProvider jwtProvider,
-            ITasksService tasksService,
-            INotificationsService notificationsService,
-            ICompanyService companyService,
-            IConverterService converterService)
+        public UserController(ICountryService countryService, IPostService postService, 
+            ICompanyService companyService, IUserService userService, 
+            IJwtProvider jwtProvider, IConverterService converterService, IVacancyService vacancyService)
         {
-            _candidateService = candidateService;
             _countryService = countryService;
             _postService = postService;
+            _companyService = companyService;
             _userService = userService;
             _jwtProvider = jwtProvider;
-            _tasksService = tasksService;
-            _notificationsService = notificationsService;
-            _companyService = companyService;
             _converterService = converterService;
+            _vacancyService = vacancyService;
         }
-
 
         [HttpPost("/update-user-data")]
         public async Task<ActionResult<UserRequestResponse>> UpdateUserData([FromBody] UserRequestResponse request)
@@ -93,6 +81,44 @@ namespace YavaPrimum.API.Controllers
             return await _converterService.ConvertToFront(await _userService.GetAll());
         }
 
+        [HttpGet("/get-all-vacancies")]
+        public async Task<ActionResult<List<VacancyResponce>>> GetAllVacancies()
+        {
+            Console.WriteLine("get-all-vacancies");
+            return await _converterService.ConvertToFront(await _vacancyService.GetAll());
+        }
+
+        [HttpPost("/create-vacancy")]
+        public async Task<ActionResult> CreateVacancy([FromBody] VacancyRequest newVacancy)
+        {
+            if (HttpContext.Request.Cookies.Count == 0)
+            {
+                Console.WriteLine("Куков нет");
+                return StatusCode(166, "Куков нет"); // Возвращает код ошибки 166 с сообщением
+            }
+            string token = HttpContext.Request.Cookies[JwtProvider.CookiesName];
+
+            User user = await _userService.GetById(await _jwtProvider.GetUserIdFromToken(token));
+
+            await _vacancyService.Create(newVacancy, user);
+            return Ok();
+        }
+
+        [HttpPut("/update-vacancy/{vacancyId:guid}")]
+        public async Task<ActionResult<Vacancy>> UpdateVacancy(Guid vacancyId, [FromBody] VacancyRequest updateRequest)
+        {
+
+            await _vacancyService.Update(vacancyId, updateRequest);
+            return Ok();
+        }
+
+        [HttpPatch("/close-vacancy/{vacancyId:guid}")]
+        public async Task<ActionResult> CloseVacancy(Guid vacancyId)
+        {
+
+            await _vacancyService.Close(vacancyId);
+            return Ok();
+        }
 
         [HttpGet("/get-posts-countries")]
         public async Task<ActionResult<List<PostCountryResponse>>> GetPostsCountries()

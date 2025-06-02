@@ -7,14 +7,14 @@ import { DateTime } from 'luxon';
 import { TaskComponent } from '../../common-ui/tasks-components/task/task.component';
 import { TaskInterviewComponent } from '../../common-ui/tasks-components/task/task-interview/task-interview.component';
 import { AddTaskComponent } from '../../common-ui/tasks-components/add-task/add-task.component';
-import { ChangeTaskComponent } from '../../common-ui/tasks-components/change-task/change-task.component';
+import { NotifyService } from '../../../services/notify/notify.service';
 
 
 @Component({
   selector: 'app-hr',
   standalone: true,
   imports: [CalendarComponent, CommonModule, TaskComponent, 
-    TaskInterviewComponent, AddTaskComponent, ChangeTaskComponent],
+    TaskInterviewComponent, AddTaskComponent],
   templateUrl: './hr.component.html',
   styleUrl: './hr.component.scss',
 })
@@ -23,11 +23,23 @@ export class HrComponent implements OnInit {
 
   tasks: Tasks[] = [];
   loading: boolean = true;
+  isLoadCalendar: boolean = true;
   activeTask: Tasks = this.tasks[0]; 
-  constructor(private taskService: TaskService){}
+  constructor(private taskService: TaskService, private notify: NotifyService){}
 
   ngOnInit(): void {
-    this.taskService.loadAllTasks().subscribe({
+    this.loadTasks();  
+
+    this.notify.addReceiveListener((message) => {
+      this.loadTasks();   
+    });
+    console.log("Этот пользователь HR? " + this.isHr)
+  }
+
+  public loadTasks(): void
+  {
+      this.loading = true;
+      this.taskService.loadAllTasks().subscribe({
       next: data => {
         let allTasks = data.map(task => ({
           ...task,
@@ -39,7 +51,6 @@ export class HrComponent implements OnInit {
         this.loading = false;
       }
     });
-    console.log("Этот пользователь HR? " + this.isHr)
   }
 
   public getTasks(day: any) : void

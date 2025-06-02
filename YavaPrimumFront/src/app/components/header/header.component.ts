@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit{
     email: "",
     post: "",
     phone: "",
-    imgUrl: "default.jpg",
+    imgUrl: "default.png",
   };;
 
   constructor(public userService: UserService, private router: Router, private notify: NotifyService){}
@@ -48,8 +48,8 @@ export class HeaderComponent implements OnInit{
         this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;
       });
 
+
     this.notify.addReceiveListener((message) => {
-      window.location.reload();
       this.notify.getNotifications().subscribe(notifications =>
         {
           this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;

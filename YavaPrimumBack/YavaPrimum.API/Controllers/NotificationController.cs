@@ -48,7 +48,7 @@ namespace YavaPrimum.API.Controllers
         public async Task<ActionResult> ReadNotification(Guid notificationId)
         {
 
-            Console.WriteLine("Сообщение прочитано");
+            //Console.WriteLine("Сообщение прочитано");
 
             Notifications notification = await _notificationsService.GetById(notificationId);
             await _notificationsService.ReadNotification(notificationId);

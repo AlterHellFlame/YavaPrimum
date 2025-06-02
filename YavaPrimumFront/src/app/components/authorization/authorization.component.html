@@ -35,13 +35,16 @@
         <form #newPassForm="ngForm" (ngSubmit)="newPass(newPassForm)">
           <div class="modal-body">
             <label for="emailToPass">Введите вашу почту</label>
-            <input type="email" class="form-control" id="emailToPass" name="emailToPass" ngModel />
-            <small id="emailToPassError" class="text-danger"></small>
+            <input type="email" class="form-control" id="emailToPass" name="emailToPass" ngModel #emailCtrl="ngModel" />
+            <small *ngIf="emailCtrl.errors?.['notExist']" class="text-danger">Эта почта не зарегистрирована</small>
+
+
             <ng-container *ngIf="status >= 1">
               <label for="codeToPass">Введите код</label>
-              <input type="text" class="form-control" id="codeToPass" name="codeToPass" ngModel />
+              <input type="text" class="form-control" id="codeToPass" name="codeToPass" ngModel #codeCtrl="ngModel" />
+              <small *ngIf="codeCtrl.errors?.['invalidCode']" class="text-danger">Неверный код</small>
             </ng-container>
-            <small id="codeToPassError" class="text-danger"></small>
+
             <ng-container *ngIf="status >= 2">
               <label for="passToPass">Введите новый пароль</label>
               <input type="password" class="form-control" id="passToPass" name="passToPass" ngModel />

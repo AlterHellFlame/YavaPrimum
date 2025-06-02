@@ -66,40 +66,39 @@ export class AuthorizationComponent {
 
   emailToPass: string = "";
   newPass(form: NgForm) {
-    if (this.status === 0) {
-      this.emailToPass = form.value.emailToPass;
-      this.authService.sendToEmail(form.value.emailToPass).subscribe(
-        res => {
-          if (res) {
-            form.controls['emailToPass'].disable();
-            this.status++;
-          } else {
-            form.controls['emailToPass'].setErrors({ 'notExist': true });
-          }
+  if (this.status === 0) {
+    this.emailToPass = form.value.emailToPass;
+    this.authService.sendToEmail(form.value.emailToPass).subscribe(
+      res => {
+        if (res) {
+          form.controls['emailToPass'].disable();
+          this.status++;
+        } else {
+          form.controls['emailToPass'].setErrors({ notExist: true }); // Добавляем ошибку
         }
-      );
-    } else if (this.status === 1) {
-      console.log(this.emailToPass )
-      this.authService.checkCode(this.emailToPass, form.value.codeToPass).subscribe(
-        res => {
-          alert("Код введен неверно");
-          if (res) {
-            form.controls['codeToPass'].disable();
-
-            this.status++;
-          } else {
-            form.controls['codeToPass'].setErrors({ 'invalidCode': true });
-          }
+      }
+    );
+  } else if (this.status === 1) {
+    this.authService.checkCode(this.emailToPass, form.value.codeToPass).subscribe(
+      res => {
+        console.log("Почта " + res);
+        if (res) {
+          form.controls['codeToPass'].disable();
+          this.status++;
+        } else {
+          form.controls['codeToPass'].setErrors({ invalidCode: true }); // Добавляем ошибку
         }
-      );
-    } else if (this.status === 2) {
-      this.authService.newPass(this.emailToPass , form.value.passToPass).subscribe(
-        res => {
-          this.Close(form);
-        }
-      );
-    }
+      }
+    );
+  } else if (this.status === 2) {
+    this.authService.newPass(this.emailToPass, form.value.passToPass).subscribe(
+      res => {
+        this.Close(form);
+      }
+    );
   }
+}
+
 
   Close(form: NgForm) {
     this.status = 0;

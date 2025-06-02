@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -16,25 +18,35 @@ namespace YavaPrimum.API.Controllers
         private ITasksService _tasksService;
         private readonly IUserService _usersService;
         private readonly IAuthService _authService;
+        private INotificationsService _notificationsService;
         private readonly YavaPrimumDBContext _dBContext;
         private readonly CodeVerificationService _codeVerificationService;
 
-        public AuthContriller(IJwtProvider jwtProvider, ITasksService tasksService, IAuthService authService,
-            IUserService usersService, YavaPrimumDBContext dBContext, CodeVerificationService codeVerificationService)
+        public AuthContriller(IJwtProvider jwtProvider, ITasksService tasksService, IUserService usersService, IAuthService authService, INotificationsService notificationsService, YavaPrimumDBContext dBContext, CodeVerificationService codeVerificationService)
         {
             _jwtProvider = jwtProvider;
-            _authService = authService;
             _tasksService = tasksService;
             _usersService = usersService;
+            _authService = authService;
+            _notificationsService = notificationsService;
             _dBContext = dBContext;
             _codeVerificationService = codeVerificationService;
         }
 
-
         [HttpPost("/register")]
         public async Task<ActionResult<Guid>> Register([FromBody] UserRequestResponse request)
         {
-            return Ok(await _authService.Register(request));
+
+            Guid userId = await _authService.Register(request);
+            if(userId == Guid.Empty)
+            {
+                return Conflict(new
+                {
+                    StatusCode = 409,
+                    Message = "Пользователь с такой почтой уже зарегистрирован"
+                });
+            }
+            return Ok(userId);
         }
 
         [HttpPost("/login")]
@@ -49,7 +61,7 @@ namespace YavaPrimum.API.Controllers
             {
                 Secure = true, // Используйте true, если у вас HTTPS
                 SameSite = SameSiteMode.Lax, // Или Strict в зависимости от ваших требований
-                Expires = DateTime.UtcNow.AddHours(12)
+                Expires = DateTime.UtcNow.AddHours(24)
             });
 
             User user = await _usersService.GetByEMail(request.Email);
@@ -66,7 +78,16 @@ namespace YavaPrimum.API.Controllers
                 return BadRequest("Некорректные данные");
             }
 
-            string ret = await _authService.SendMessageToEmail(email.Value, await _codeVerificationService.GenerateCode(email.Value), "Смена пароля");
+            string ret = null;
+            try
+            {
+                await _usersService.GetByEMail(email.Value);
+                ret = await _notificationsService.SendMessageToEmail(email.Value, await _codeVerificationService.GenerateCode(email.Value), "Смена пароля");
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is ArgumentNullException)
+            {
+                return false;
+            }
             if (ret != null)
             {
                 return true;

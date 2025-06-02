@@ -48,7 +48,9 @@ namespace YavaPrimum.Core.Services
                     Phone = task.Candidate.Phone,
                     Post = task.Candidate.Post.Name,
                     Country = task.Candidate.Country.Name
-                }
+                },
+                AdditionalData = task.AdditionalData,
+                IsArchive = task.IsArchive              
             };
 
             return tasksResponse;
@@ -77,6 +79,48 @@ namespace YavaPrimum.Core.Services
             List<Task<UserRequestResponse>> usersRequestResponse = users.Select(user => ConvertToFront(user)).ToList();
             return (await Task.WhenAll(usersRequestResponse)).ToList();
         }
+
+        public async Task<VacancyResponce> ConvertToFront(Vacancy vacancy)
+        {
+            if (vacancy == null)
+                return null;
+
+            // Преобразование User в UserRequestResponse (если User не null)
+            var userResponse = vacancy.User != null
+                ? new UserRequestResponse
+                {
+                    UserId = vacancy.User.UserId,
+                    Surname = vacancy.User.Surname,
+                    FirstName = vacancy.User.FirstName,
+                    Patronymic = vacancy.User.Patronymic,
+                    ImgUrl = vacancy.User.ImgUrl,
+                    Phone = vacancy.User.Phone,
+                    Email = vacancy.User.Email,
+                    Company = vacancy.User.Company?.Name, // Предполагается, что Company имеет свойство Name
+                    Post = vacancy.User.Post?.Name // Предполагается, что Post имеет свойство Name
+                }
+                : null;
+
+            return new VacancyResponce
+            {
+                VacancyId = vacancy.VacancyId,
+                User = userResponse,
+                Post = vacancy.Post?.Name, // Если Post не null, берём Name
+                Count = vacancy.Count,
+                isClose = vacancy.isClose,
+                AdditionalData = vacancy.AdditionalData
+            };
+        }
+
+        public async Task<List<VacancyResponce>> ConvertToFront(List<Vacancy> vacancies)
+        {
+            if (vacancies == null)
+                return new List<VacancyResponce>();
+
+            var tasks = vacancies.Select(v => ConvertToFront(v)).ToList();
+            return (await Task.WhenAll(tasks)).ToList();
+        }
+
 
     }
 }

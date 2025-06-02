@@ -1,16 +1,16 @@
+// admin.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
-import { User } from '../../../data/interface/User.interface';
+import { defaultUser, User } from '../../../data/interface/User.interface';
 import { UserService } from '../../../services/user/user.service';
 import { TaskService } from '../../../services/task/task.service';
 import { Tasks } from '../../../data/interface/Tasks.interface';
 import { OptionalDataService } from '../../../services/optional-data/optional-data.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { catchError, of } from 'rxjs';
-import { trigger, transition, style, animate } from '@angular/animations';
-
+import { NotifyService } from '../../../services/notify/notify.service';
 Chart.register(...registerables);
 
 interface UserFilters {
@@ -24,6 +24,7 @@ interface UserFilters {
   [key: string]: string;
 }
 
+
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -36,8 +37,11 @@ export class AdminComponent implements OnInit {
   filteredUsers: User[] = [];
   currentUser: User | null = null;
   isEditMode = false;
-  //isLoad = true;
   isChartVisible = false;
+
+  // Для модального окна
+  modalTitle = '';
+  isFormSubmitted = false;
 
   filters: UserFilters = {
     surname: '',
@@ -69,10 +73,97 @@ export class AdminComponent implements OnInit {
   constructor(
     private userService: UserService,
     private taskService: TaskService,
-    private optional: OptionalDataService
+    private optional: OptionalDataService,
+    private notify: NotifyService
   ) {}
 
   ngOnInit(): void {
+    this.loadInitialData();
+  }
+
+  tableHeaders = [
+    { key: 'surname', title: 'Фамилия' },
+    { key: 'firstName', title: 'Имя' },
+    { key: 'patronymic', title: 'Отчество' },
+    { key: 'company', title: 'Компания' },
+    { key: 'email', title: 'Email' },
+    { key: 'post', title: 'Должность' },
+    { key: 'phone', title: 'Телефон' }
+  ];
+  sortColumn: string = 'surname';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  // ... остальной код компонента без изменений ...
+
+  // Метод для сортировки таблицы
+  sortTable(column: string): void {
+    if (this.sortColumn === column) {
+      // Если уже сортируем по этому столбцу, меняем направление
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Если новый столбец, устанавливаем его и направление по умолчанию
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    
+    this.applySorting();
+  }
+
+  // Метод применения сортировки
+  private applySorting(): void {
+    this.filteredUsers.sort((a, b) => {
+      const valueA = a[this.sortColumn as keyof User];
+      const valueB = b[this.sortColumn as keyof User];
+      
+      // Для строк
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.sortDirection === 'asc' 
+          ? valueA.localeCompare(valueB) 
+          : valueB.localeCompare(valueA);
+      }
+      
+      // Для чисел и других типов
+      if (valueA > valueB) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      }
+      if (valueA < valueB) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+  // Обновляем метод applyFilters, чтобы он также применял сортировку
+  applyFilters(): void {
+    this.filteredUsers = this.users.filter(user => 
+      Object.keys(this.filters).every(key =>
+        !this.filters[key] || String(user[key as keyof User]).toLowerCase().includes(this.filters[key].toLowerCase())
+      )
+    );
+    
+    this.applySorting();
+  }
+
+  // Обновляем метод loadUsers, чтобы при загрузке данных тоже применялась сортировка
+  private loadUsers(): void {
+    this.userService.getAllUsersData().pipe(
+      catchError(err => {
+        console.error('Ошибка загрузки пользователей:', err);
+        return of([]);
+      })
+    ).subscribe(users => {
+      this.users = users;
+      this.filteredUsers = [...users];
+      this.applySorting(); // Применяем сортировку после загрузки
+      
+      if (users.length > 0 && !this.currentUser) {
+        this.currentUser = users[0];
+        this.getAllTasksOfUser(users[0]);
+      }
+    });
+  }
+
+  private loadInitialData(): void {
     this.optional.getPostsAndCountry().pipe(
       catchError(err => {
         console.error('Ошибка загрузки компаний:', err);
@@ -86,19 +177,6 @@ export class AdminComponent implements OnInit {
     this.loadAllTasks();
   }
 
-  private loadUsers(): void {
-    this.userService.getAllUsersData().pipe(
-      catchError(err => {
-        console.error('Ошибка загрузки пользователей:', err);
-        return of([]);
-      })
-    ).subscribe(users => {
-      this.users = users;
-      this.currentUser = this.users[0];
-      this.filteredUsers = [...users];
-    });
-  }
-
   private loadAllTasks(): void {
     this.taskService.getAllTasks().pipe(
       catchError(err => {
@@ -110,12 +188,61 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  openEditModal(user: User): void {
-    console.log("openEditModal")
-    this.isEditMode = true;
-    this.currentUser = { ...user };
-    //this.isLoad = true;
+  // Методы для модального окна
+  openAddModal(): void {
+    this.isEditMode = false;
+    this.modalTitle = 'Добавить пользователя';
+    this.currentUser = defaultUser;
+    this.isFormSubmitted = false;
   }
+
+  openEditModal(user: User): void {
+    this.isEditMode = true;
+    this.modalTitle = 'Редактировать пользователя';
+    this.currentUser = { ...user };
+    this.isFormSubmitted = false;
+  }
+
+  closeModal(): void {
+    this.currentUser = defaultUser;
+    this.isFormSubmitted = false;
+  }
+
+ onSubmit(form: NgForm): void {
+    this.isFormSubmitted = true;
+    
+    if (form.invalid) return;
+
+    const operation = this.isEditMode 
+        ? this.userService.updateUser(this.currentUser!)
+        : this.userService.addUser(this.currentUser!);
+
+    operation.subscribe({
+        next: () => {
+            this.loadUsers();
+            this.closeModal();
+            // Можно добавить уведомление об успехе
+            this.notify.showSuccess(
+                this.isEditMode 
+                    ? 'Пользователь успешно обновлен' 
+                    : 'Пользователь успешно зарегистрирован'
+            );
+        },
+        error: (err) => {
+            console.error('Ошибка сохранения пользователя:', err);
+            
+            if (err.status === 409) {
+                // Конфликт - пользователь уже существует
+                this.notify.showError(err.response.data?.Message);
+            } else {
+                // Другие ошибки
+                this.notify.showError(
+                    'Произошла ошибка при сохранении пользователя'
+                );
+            }
+        }
+    });
+}
 
   deleteUser(user: User): void {
     if (confirm(`Вы уверены, что хотите удалить пользователя ${user.surname}?`)) {
@@ -126,40 +253,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  openModal(): void {
-    this.isEditMode = false;
-    this.currentUser = this.users[0];
-    //this.isLoad = true;
-  }
 
-  closeModal(): void {
-    this.isEditMode = false;
-    this.currentUser = null;
-  }
-
-  onSubmit(form: NgForm): void {
-    if (!this.currentUser || form.invalid) return;
-
-    const operation = this.isEditMode 
-      ? this.userService.updateUser(this.currentUser)
-      : this.userService.addUser(this.currentUser);
-
-    operation.subscribe({
-      next: () => {
-        this.loadUsers();
-        this.closeModal();
-      },
-      error: (err) => console.error('Ошибка сохранения пользователя:', err)
-    });
-  }
-
-  applyFilters(): void {
-    this.filteredUsers = this.users.filter(user => 
-      Object.keys(this.filters).every(key =>
-        !this.filters[key] || String(user[key as keyof User]).toLowerCase().includes(this.filters[key].toLowerCase())
-      )
-    );
-  }
 
   getFilterPlaceholder(key: string): string {
     const placeholders: Record<string, string> = {
@@ -175,11 +269,8 @@ export class AdminComponent implements OnInit {
   }
 
   getAllTasksOfUser(user: User): void {
-    if (!user?.userId) {
-      console.error('Некорректный объект пользователя');
-      return;
-    }
-
+    if (!user?.userId) return;
+    
     this.currentUser = user;
     this.selectedUserTasks = this.allTasks.filter(task =>
       task.user?.userId === user.userId
@@ -263,9 +354,7 @@ export class AdminComponent implements OnInit {
     return this.activeMonth.toLocaleString('ru-RU', { month: 'long' });
   }
 
-
-  public toggleChartDisplay(): void
-  {
+  toggleChartDisplay(): void {
     this.isChartVisible = !this.isChartVisible;
   }
 }

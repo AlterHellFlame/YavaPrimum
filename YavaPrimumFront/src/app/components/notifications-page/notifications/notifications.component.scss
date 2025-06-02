@@ -1,21 +1,37 @@
-.container
-{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  .form-check {
-    left: 350px;
-    width: 250px;
-  }
-
-.card
-{
-  width: 50%;
-  min-width: 500px;
-
+.card {
+  width: 100%;
+  max-width: 100%;
+  
   &.readed {
     background-color: #f8f9fa;
   }
 }
+
+.form-check {
+  left: 350px;
+  width: 250px;
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Центрируем по горизонтали */
+  width: 100%;
+
+}
+
+
+.cards {
+  width: 50%;
+  max-width: 1200px; /* Опционально: ограничиваем максимальную ширину */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем содержимое внутри cards */
+
+}
+
+.filter-container {
+  position: fixed; /* Фильтры можно вынести за пределы потока */
+  right: 5%; /* И расположить справа */
+  top: 50px;
 }

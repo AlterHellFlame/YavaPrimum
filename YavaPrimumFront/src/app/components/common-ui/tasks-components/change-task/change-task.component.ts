@@ -79,7 +79,6 @@ export class ChangeTaskComponent implements OnInit {
 
       /*this.candidateService.changeCandidateAndInterview(formValue, this.taskResponseId).subscribe(() => {
         console.log('Candidate updated successfully');
-        window.location.reload();
       });*/
     } else {
       console.error('Form is invalid');
