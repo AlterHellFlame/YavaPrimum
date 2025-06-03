@@ -17,6 +17,11 @@ import { BaseChartDirective } from 'ng2-charts';
   styleUrl: './user-data.component.scss',
 })
 export class UserDataComponent implements OnInit {
+  totalInterviewPassed = 0;
+  totalTestDeadline = 0;
+  totalInterviewScheduled = 0;
+  totalTestCompleted = 0;
+
   allTasks: Tasks[] = [];
   isAdmin: boolean = (localStorage.getItem('isAdmin') === 'true'? true : false);
   taskChartData: ChartData<'line', number[], string> = {
@@ -49,7 +54,7 @@ export class UserDataComponent implements OnInit {
         this.taskService.setAllTasks(allTasks);
         this.renderTaskNowChart()
 
-
+        this.calculateTaskStatistics()
 
         this.userService.getUserData().subscribe(user => {
           this.formData = user;
@@ -60,6 +65,13 @@ export class UserDataComponent implements OnInit {
 
   }
 
+
+    private calculateTaskStatistics(): void {
+    this.totalInterviewPassed = this.allTasks.filter(t => t.status === 'Собеседование пройдено' || t.status === 'Тестовое задание выполнено').length;
+    this.totalTestDeadline = this.allTasks.filter(t => t.status === 'Срок тестового задания').length;
+    this.totalInterviewScheduled = this.allTasks.filter(t => t.status === 'Собеседование назначено').length;
+    this.totalTestCompleted = this.allTasks.filter(t => t.status === 'Тестовое задание выполнено').length;
+  }
   renderTaskNowChart(): void {
     this.allTasks = this.taskService.getAllTasksOfUser();
 

@@ -90,58 +90,6 @@ namespace YavaPrimum.Core.Services
             await _dBContext.SaveChangesAsync();
         }
 
-        public async Task Update(Guid taskId, InterviewCreateRequest newTask)
-        {
-            /*Tasks task = await GetById(taskId);
-            await _candidateService.Update(task.Candidate, newTask.Candidate);
-
-            task.DateTime = DateTime.Parse(newTask.InterviewDate);
-            task.TaskType = await _taskType.GetByName("Интервью");
-
-            // Начинаем транзакцию
-            using (var transaction = _dBContext.Database.BeginTransaction())
-            {
-                try
-                {
-                    _dBContext.Tasks.Update(task);
-                    await _dBContext.SaveChangesAsync();
-
-                    // Подтверждаем транзакцию
-                    transaction.Commit();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    foreach (var entry in ex.Entries)
-                    {
-                        await entry.ReloadAsync();
-                    }
-                    // Откатываем транзакцию в случае ошибки
-                    transaction.Rollback();
-                }
-            }*/
-
-        }
-
-
-        public async Task RepeatInterview(Guid taskId, string dateTime)
-        {
-           /*Tasks task = await GetById(taskId);
-            task.Status = true;
-
-            Tasks repeatTask = new Tasks()
-            {
-                TasksId = Guid.NewGuid(),
-                Candidate = task.Candidate,
-                TaskType = task.TaskType,
-                DateTime = DateTime.Parse(dateTime),
-                Status = false,
-                User = task.User
-            };
-
-            await _dBContext.Tasks.AddAsync(repeatTask);
-            await _dBContext.SaveChangesAsync();*/
-        }
-
         public async Task<TasksStatus> GetStatusByName(string name)
         {
             return _dBContext.TasksStatus.Where(t => t.Name == name).First();

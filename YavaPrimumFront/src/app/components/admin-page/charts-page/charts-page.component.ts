@@ -10,17 +10,8 @@ import { User } from '../../../data/interface/User.interface';
 import { TaskService } from '../../../services/task/task.service';
 import { DateTime } from 'luxon';
 
-// Типы и константы
-type RecruitmentStatus = 
-  | 'Собеседование пройдено'
-  | 'Собеседование не пройдено'
-  | 'Приём пройден'
-  | 'Приём не пройден'
-  | 'Собеседование назначено'
-  | 'Прием назначен'
-  | 'Отказ кандидата';
-
-type ChartPeriod = 'day' | 'month' | 'year' | 'week' | '3months' | 'custom';
+// Types and constants
+type ChartPeriod = 'week' | 'month' | 'quarter' | 'year' | 'custom';
 
 interface StatusGroup {
   label: string;
@@ -32,11 +23,12 @@ const CHART_CONFIG = {
   colors: {
     hr: '#4A89DC',
     recruiter: '#D770AD',
-    interviewSuccess: '#63B598',
-    interviewFail: '#E9573F',
-    hireSuccess: '#3BAFDA',
-    hireFail: '#F6BB42',
-    events: '#3BAFDA'
+    success: '#63B598',
+    failure: '#E9573F',
+    pending: '#F6BB42',
+    events: '#3BAFDA',
+    hires: '#37BC9B',
+    rejections: '#DA4453'
   },
   excel: {
     header: {
@@ -50,33 +42,38 @@ const CHART_CONFIG = {
   }
 };
 
-const STATUS_GROUPS: StatusGroup[] = [
-  { 
-    label: 'Успешное собеседование', 
-    filter: t => t.status === 'Собеседование пройдено' && t.typeStatus === 2,
-    color: CHART_CONFIG.colors.interviewSuccess
-  },
-  { 
-    label: 'Неудачное собеседование', 
-    filter: t => t.status === 'Собеседование не пройдено',
-    color: CHART_CONFIG.colors.interviewFail
-  },
-  { 
-    label: 'Успешный приём', 
-    filter: t => t.status === 'Приём пройден' && t.typeStatus === 2,
-    color: CHART_CONFIG.colors.hireSuccess
-  },
-  { 
-    label: 'Неудачный приём', 
-    filter: t => t.status === 'Приём не пройден',
-    color: CHART_CONFIG.colors.hireFail
-  }
+const HR_STATUSES = [
+  'Подтверждение даты',
+  'Подтверждение времени',
+  'Дата подтверждена',
+  'Время подтверждено',
+  'Дата была подтверждена',
+  'Время отказано',
+  'Дата отказана',
+  'Запрос на смену времени',
+  'Запрос на смену даты',
+  'Назначено собеседование',
+  'Выполнено тестовое задание',
+  'Не выполнено тестовое задание'
 ];
 
-const EVENT_STATUSES = ['Собеседование назначено', 'Прием назначен'];
+const RECRUITER_STATUSES = [
+  'Ожидается подтверждение даты',
+  'Ожидается подтверждение времени',
+  'Назначен приём',
+  'Срок тестового задания',
+];
+
+const RESULT_STATUSES = [
+  'Собеседование пройдено',
+  'Собеседование не пройдено',
+  'Не пришел',
+  'Пришел',
+  'Выполнено тестовое задание',
+];
 
 @Component({
-  selector: 'app-reports',
+  selector: 'app-hr-analytics',
   standalone: true,
   imports: [CommonModule, BaseChartDirective, ReactiveFormsModule],
   templateUrl: './charts-page.component.html',
@@ -86,27 +83,32 @@ export class ChartsPageComponent implements OnInit {
   // Form Controls
   startDateControl = new FormControl<string>('');
   endDateControl = new FormControl<string>('');
-  activePeriod: ChartPeriod = 'week';
+  activePeriod: ChartPeriod = 'month';
   
   // UI Config
   periods = [
     { label: 'Неделя', value: 'week' as ChartPeriod },
     { label: 'Месяц', value: 'month' as ChartPeriod },
-    { label: '3 месяца', value: '3months' as ChartPeriod },
+    { label: 'Квартал', value: 'quarter' as ChartPeriod },
     { label: 'Год', value: 'year' as ChartPeriod },
     { label: 'Вручную', value: 'custom' as ChartPeriod }
   ];
 
   // Stats
-  totalHired = 0;
+  totalHires = 0;
   totalRejections = 0;
-  totalEvents = 0;
+  totalPending = 0;
+  totalCompletedTasks = 0;
   totalActiveTasks = 0;
+  hrEfficiency = 0;
+  recruiterEfficiency = 0;
 
   // Charts
-  hrPerformanceChart: ChartData<'bar'> = { labels: [], datasets: [] };
-  recruitmentChart: ChartData<'line'> = { labels: [], datasets: [] };
-  eventsChart: ChartData<'bar'> = { labels: [], datasets: [] };
+  hiresChart: ChartData<'line'> = { labels: [], datasets: [] };
+  rejectionsChart: ChartData<'line'> = { labels: [], datasets: [] };
+  hrWorkloadChart: ChartData<'bar'> = { labels: [], datasets: [] };
+  recruiterWorkloadChart: ChartData<'bar'> = { labels: [], datasets: [] };
+  eventsPlanChart: ChartData<'bar'> = { labels: [], datasets: [] };
 
   chartOptions: ChartOptions = {
     responsive: true,
@@ -115,9 +117,7 @@ export class ChartsPageComponent implements OnInit {
       y: { 
         title: { display: true, text: 'Количество' }, 
         beginAtZero: true,
-        ticks: {
-          precision: 0 // Обеспечиваем целые числа на оси Y
-        }
+        ticks: { precision: 0 }
       }
     },
     plugins: {
@@ -131,7 +131,7 @@ export class ChartsPageComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.setPeriod('week');
+    this.setPeriod('month');
     this.loadTasks();
     
     this.startDateControl.valueChanges.subscribe(() => this.onDateChange());
@@ -141,7 +141,7 @@ export class ChartsPageComponent implements OnInit {
   setPeriod(period: ChartPeriod): void {
     this.activePeriod = period;
     let startDate: DateTime;
-    let endDate = DateTime.now();
+    const endDate = DateTime.now();
 
     switch (period) {
       case 'week':
@@ -150,17 +150,16 @@ export class ChartsPageComponent implements OnInit {
       case 'month':
         startDate = endDate.minus({ months: 1 });
         break;
-      case '3months':
+      case 'quarter':
         startDate = endDate.minus({ months: 3 });
         break;
       case 'year':
         startDate = endDate.minus({ years: 1 });
         break;
       case 'custom':
-        // Для ручного ввода не устанавливаем даты
         return;
       default:
-        startDate = endDate.minus({ days: 1 });
+        startDate = endDate.minus({ months: 1 });
     }
 
     this.startDateControl.setValue(startDate.toFormat('yyyy-MM-dd'));
@@ -170,14 +169,19 @@ export class ChartsPageComponent implements OnInit {
 
   async exportToExcel(): Promise<void> {
     const workbook = new ExcelJS.Workbook();
-    workbook.creator = 'HR System';
+    workbook.creator = 'HR Analytics System';
     workbook.created = new Date();
 
     this.addSummarySheet(workbook);
+    this.addHiresAnalysisSheet(workbook);
+    this.addRejectionsAnalysisSheet(workbook);
+    this.addHrPerformanceSheet(workbook);
+    this.addRecruiterPerformanceSheet(workbook);
+    this.addEventsPlanSheet(workbook);
     this.addPeriodInfoSheet(workbook);
 
     const buffer = await workbook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), `HR_Отчеты_${DateTime.now().toFormat('yyyy-MM-dd')}.xlsx`);
+    saveAs(new Blob([buffer]), `HR_Analytics_${DateTime.now().toFormat('yyyy-MM-dd')}.xlsx`);
   }
 
   private loadTasks(): void {
@@ -188,7 +192,6 @@ export class ChartsPageComponent implements OnInit {
     
     this.taskService.getAllTasks().subscribe({
       next: tasks => {
-        // Фильтруем задачи по выбранному периоду
         this.allTasks = tasks.filter(task => {
           const taskDate = this.getTaskDate(task);
           return taskDate >= start && taskDate <= end;
@@ -202,75 +205,151 @@ export class ChartsPageComponent implements OnInit {
   }
 
   private generateCharts(): void {
-    this.generateHrPerformanceChart();
-    this.generateCombinedRecruitmentChart();
-    this.generateEventsChart();
+    this.generateHiresChart();
+    this.generateRejectionsChart();
+    this.generateHrWorkloadChart();
+    this.generateRecruiterWorkloadChart();
+    this.generateEventsPlanChart();
   }
 
-  private generateCombinedRecruitmentChart(): void {
-    const groupBy = this.activePeriod === 'year' ? 'month' : 'day';
-    const allDates = new Set<string>();
-    const datasets = [];
+  private generateHiresChart(): void {
+    const hiresData = this.groupByPeriod(
+      this.allTasks.filter(t => t.status === 'Взят кандидат' || t.status === 'Собеседование пройдено'),
+      this.getGroupBy(),
+      this.getTaskDate
+    );
 
-    for (const group of STATUS_GROUPS) {
-      const tasks = this.allTasks.filter(group.filter);
-      const data = this.groupByPeriod(tasks, groupBy, this.getTaskDate);
-      
-      data.labels.forEach(label => allDates.add(label));
-      datasets.push(this.createChartDataset(group.label, data.values, group.color));
-    }
-
-    this.recruitmentChart = {
-      labels: Array.from(allDates).sort(this.sortDates),
-      datasets
-    };
-  }
-
-  private generateHrPerformanceChart(): void {
-    const hrTasks = this.allTasks.filter(t => this.isHR(t.user));
-    const recruiterTasks = this.allTasks.filter(t => this.isRecruiter(t.user));
-
-    this.hrPerformanceChart = {
-      labels: ['Выполненные задачи', 'Задачи в работе'],
+    this.hiresChart = {
+      labels: hiresData.labels,
       datasets: [
-        this.createChartDataset('HR', [
-          hrTasks.filter(t => t.typeStatus === 2).length,
-          hrTasks.filter(t => t.typeStatus !== 2).length
-        ], CHART_CONFIG.colors.hr),
-        this.createChartDataset('Рекрутеры', [
-          recruiterTasks.filter(t => t.typeStatus === 2).length,
-          recruiterTasks.filter(t => t.typeStatus !== 2).length
-        ], CHART_CONFIG.colors.recruiter)
+        this.createChartDataset('Принятые сотрудники', hiresData.values, CHART_CONFIG.colors.hires)
       ]
     };
   }
 
-  private generateEventsChart(): void {
-    const eventTasks = this.allTasks.filter(t => EVENT_STATUSES.includes(t.status));
-    const grouped = this.groupByStatus(eventTasks);
+  private generateRejectionsChart(): void {
+    const rejectionsData = this.groupByPeriod(
+      this.allTasks.filter(t => 
+        t.status === 'Собеседование не пройдено' || 
+        t.status === 'Не пришел' ||
+        t.status === 'Не выполнено тестовое задание'
+      ),
+      this.getGroupBy(),
+      this.getTaskDate
+    );
 
-    this.eventsChart = {
-      labels: Object.keys(grouped),
+    this.rejectionsChart = {
+      labels: rejectionsData.labels,
       datasets: [
-        this.createChartDataset('Мероприятия', Object.values(grouped), CHART_CONFIG.colors.events)
+        this.createChartDataset('Отказы', rejectionsData.values, CHART_CONFIG.colors.rejections)
       ]
     };
   }
+
+  private generateHrWorkloadChart(): void {
+    const hrTasks = this.allTasks.filter(t => this.isHRTask(t));
+    const statusGroups = this.groupHrTasksByStatus(hrTasks);
+
+    this.hrWorkloadChart = {
+      labels: Object.keys(statusGroups),
+      datasets: [
+        this.createChartDataset('Задачи HR', Object.values(statusGroups), CHART_CONFIG.colors.hr)
+      ]
+    };
+  }
+
+  
+  private generateRecruiterWorkloadChart(): void {
+    const recruiterTasks = this.allTasks.filter(t => this.isRecruiterTask(t));
+    const statusGroups = this.groupRecruiterTasksByStatus(recruiterTasks);
+
+    this.recruiterWorkloadChart = {
+      labels: Object.keys(statusGroups),
+      datasets: [
+        this.createChartDataset('Задачи рекрутеров', Object.values(statusGroups), CHART_CONFIG.colors.recruiter)
+      ]
+    };
+  }
+private generateEventsPlanChart(): void {
+  // Фильтруем задачи по статусам мероприятий
+  const interviewTasks = this.allTasks.filter(t => t.status === 'Назначено собеседование');
+  const receptionTasks = this.allTasks.filter(t => t.status === 'Назначен приём');
+  const testTasks = this.allTasks.filter(t => t.status === 'Срок тестового задания');
+
+  // Сначала получаем все возможные периоды
+  const allEvents = [...interviewTasks, ...receptionTasks, ...testTasks];
+  const allPeriodsData = this.groupByPeriod(allEvents, this.getGroupBy(), this.getTaskDate);
+  const allLabels = allPeriodsData.labels;
+
+  // Функция для заполнения данных с учетом всех периодов
+  const getValuesForAllPeriods = (tasks: Tasks[]) => {
+    const groupedData = this.groupByPeriod(tasks, this.getGroupBy(), this.getTaskDate);
+    const valuesMap = new Map<string, number>();
+    
+    groupedData.labels.forEach((label, index) => {
+      valuesMap.set(label, groupedData.values[index]);
+    });
+
+    // Заполняем значения для всех периодов (если нет данных - 0)
+    return allLabels.map(label => valuesMap.get(label) || 0);
+  };
+
+  // Создаем наборы данных для каждого типа мероприятий
+  const datasets = [
+    this.createChartDataset('Собеседования', getValuesForAllPeriods(interviewTasks), CHART_CONFIG.colors.hr),
+    this.createChartDataset('Приёмы', getValuesForAllPeriods(receptionTasks), CHART_CONFIG.colors.recruiter),
+    this.createChartDataset('Тестовые задания', getValuesForAllPeriods(testTasks), CHART_CONFIG.colors.rejections)
+  ];
+
+  this.eventsPlanChart = {
+    labels: allLabels,
+    datasets: datasets
+  };
+}
+
 
   private calculateSummary(): void {
-    this.totalHired = this.allTasks.filter(t => 
-      t.status === 'Собеседование пройдено' && t.typeStatus === 2
+    // Hires
+    this.totalHires = this.allTasks.filter(t => 
+     t.status === 'Пришел'
     ).length;
 
+    // Rejections
     this.totalRejections = this.allTasks.filter(t => 
-      ['Собеседование не пройдено', 'Отказ кандидата'].includes(t.status)
+      t.status === 'Собеседование не пройдено' || 
+      t.status === 'Не пришел' ||
+      t.status === 'Не выполнено тестовое задание'
     ).length;
 
-    this.totalEvents = this.allTasks.filter(t => 
-      EVENT_STATUSES.includes(t.status)
+    // Pending
+    this.totalPending = this.allTasks.filter(t => 
+      t.status.includes('Ожидается') || 
+      t.status.includes('Подтверждение') ||
+      t.status === 'Перенесено собеседование'
     ).length;
 
-    this.totalActiveTasks = this.allTasks.filter(t => t.typeStatus !== 2).length;
+    // Tasks
+    const hrTasks = this.allTasks.filter(t => this.isHRTask(t));
+    const recruiterTasks = this.allTasks.filter(t => this.isRecruiterTask(t));
+
+    this.totalCompletedTasks = [
+      ...hrTasks.filter(t => t.typeStatus === 2),
+      ...recruiterTasks.filter(t => t.typeStatus === 2)
+    ].length;
+
+    this.totalActiveTasks = [
+      ...hrTasks.filter(t => t.typeStatus !== 2),
+      ...recruiterTasks.filter(t => t.typeStatus !== 2)
+    ].length;
+
+    // Efficiency
+    const totalHrTasks = hrTasks.length;
+    const completedHrTasks = hrTasks.filter(t => t.typeStatus === 2).length;
+    this.hrEfficiency = totalHrTasks > 0 ? Math.round((completedHrTasks / totalHrTasks) * 100) : 0;
+
+    const totalRecruiterTasks = recruiterTasks.length;
+    const completedRecruiterTasks = recruiterTasks.filter(t => t.typeStatus === 2).length;
+    this.recruiterEfficiency = totalRecruiterTasks > 0 ? Math.round((completedRecruiterTasks / totalRecruiterTasks) * 100) : 0;
   }
 
   private getTaskDate(task: Tasks): DateTime {
@@ -279,22 +358,55 @@ export class ChartsPageComponent implements OnInit {
       : task.dateTime;
   }
 
+  private getGroupBy(): 'day' | 'week' | 'month' {
+    switch (this.activePeriod) {
+      case 'week': return 'day';
+      case 'month': return 'week';
+      case 'quarter': return 'month';
+      case 'year': return 'month';
+      default: return 'day';
+    }
+  }
+
   private groupByPeriod<T>(
     items: T[],
-    period: 'day' | 'month',
+    period: 'day' | 'week' | 'month',
     getDate: (item: T) => DateTime
   ): { labels: string[]; values: number[] } {
-    const format = period === 'month' ? 'LLL yyyy' : 'dd.MM.yyyy';
+    let format: string;
+    switch (period) {
+      case 'day': 
+        format = 'dd.MM.yyyy';
+        break;
+      case 'week':
+        format = 'ww (LLL) yyyy';
+        break;
+      case 'month':
+        format = 'LLL yyyy';
+        break;
+      default:
+        format = 'dd.MM.yyyy';
+    }
+
     const grouped = new Map<string, number>();
 
     items.forEach(item => {
       const date = getDate(item);
-      const key = date.toFormat(format);
+      let key: string;
+      
+      if (period === 'week') {
+        const weekNumber = date.weekNumber;
+        const month = date.toFormat('LLL');
+        key = `${weekNumber} (${month}) ${date.year}`;
+      } else {
+        key = date.toFormat(format);
+      }
+      
       grouped.set(key, (grouped.get(key) || 0) + 1);
     });
 
     const sorted = Array.from(grouped.entries()).sort(([a], [b]) => {
-      return DateTime.fromFormat(a, format).toMillis() - DateTime.fromFormat(b, format).toMillis();
+      return this.sortDates(a, b, period);
     });
 
     return {
@@ -303,25 +415,44 @@ export class ChartsPageComponent implements OnInit {
     };
   }
 
-  private groupByStatus(tasks: Tasks[]): Record<string, number> {
-    return tasks.reduce((acc, task) => {
-      const eventType = this.translateStatus(task.status);
-      acc[eventType] = (acc[eventType] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+  private groupHrTasksByStatus(tasks: Tasks[]): Record<string, number> {
+    const groups: Record<string, number> = {
+      'Назначенные собеседования': 0,
+      'Завершенные успешно': 0,
+      'Завершенные провально': 0
+    };
+
+    tasks.forEach(task => {
+      if (task.status === 'Назначено собеседование') {
+        groups['Назначенные собеседования']++;
+      }  else if (task.status.includes('Собеседование не пройдено') || task.status === 'Не выполнено тестовое задание'){
+        groups['Завершенные провально']++;
+      } else if (task.status.includes('Собеседование пройдено') || task.status === 'Выполнено тестовое задание'){
+        groups['Завершенные успешно']++;
+      }
+    });
+
+    return groups;
   }
 
-  private translateStatus(status: string): string {
-    const translations: Record<string, string> = {
-      'Собеседование назначено': 'Техническое собеседование',
-      'Прием назначен': 'Первичный прием',
-      'Собеседование пройдено': 'Успешное собеседование',
-      'Собеседование не пройдено': 'Неудачное собеседование',
-      'Приём пройден': 'Успешный приём',
-      'Приём не пройден': 'Неудачный приём',
-      'Отказ кандидата': 'Отказ кандидата'
+  private groupRecruiterTasksByStatus(tasks: Tasks[]): Record<string, number> {
+    const groups: Record<string, number> = {
+      'Назначенные приёмы': 0,
+      'Завершенные успешно': 0,
+      'Завершенные провально': 0
     };
-    return translations[status] || status;
+
+    tasks.forEach(task => {
+      if (task.status === 'Назначен приём') {
+        groups['Назначенные приёмы']++;
+      }  else if (task.status.includes('Не пришел')){
+        groups['Завершенные провально']++;
+      } else if (task.status.includes('Пришел')){
+        groups['Завершенные успешно']++;
+      }
+    });
+
+    return groups;
   }
 
   private createChartDataset(label: string, data: number[], color: string) {
@@ -335,21 +466,30 @@ export class ChartsPageComponent implements OnInit {
     };
   }
 
-  private sortDates(a: string, b: string): number {
-    // Для формата "месяц год" (LLL yyyy)
-    if (a.match(/[а-яА-Я]+ \d{4}/) && b.match(/[а-яА-Я]+ \d{4}/)) {
+  private sortDates(a: string, b: string, period: 'day' | 'week' | 'month' = 'day'): number {
+    if (period === 'week') {
+      const parseWeek = (s: string) => {
+        const match = s.match(/(\d+) \((.+)\) (\d+)/);
+        if (!match) return 0;
+        const [_, week, month, year] = match;
+        return DateTime.fromFormat(`${week} ${month} ${year}`, 'W LLL yyyy').toMillis();
+      };
+      return parseWeek(a) - parseWeek(b);
+    } else if (period === 'month') {
       return DateTime.fromFormat(a, 'LLL yyyy').toMillis() - DateTime.fromFormat(b, 'LLL yyyy').toMillis();
     }
-    // Для формата "день.месяц.год" (dd.MM.yyyy)
     return DateTime.fromFormat(a, 'dd.MM.yyyy').toMillis() - DateTime.fromFormat(b, 'dd.MM.yyyy').toMillis();
   }
 
-  private isHR(user: User): boolean {
-    return user.post.toLowerCase().includes('hr');
+  private isHRTask(task: Tasks): boolean {
+    return HR_STATUSES.includes(task.status) || 
+           (task.user && task.user.post.toLowerCase().includes('hr'));
   }
 
-  private isRecruiter(user: User): boolean {
-    return user.post.toLowerCase().includes('рекрутер');
+  private isRecruiterTask(task: Tasks): boolean {
+    return RECRUITER_STATUSES.includes(task.status) || 
+           RESULT_STATUSES.includes(task.status) ||
+           (task.user && task.user.post.toLowerCase().includes('рекрутер'));
   }
 
   private onDateChange(): void {
@@ -364,18 +504,102 @@ export class ChartsPageComponent implements OnInit {
     }
   }
 
+  // Excel Export Helpers
   private addSummarySheet(workbook: ExcelJS.Workbook): void {
     const sheet = workbook.addWorksheet('Сводка');
+    
+    // Header
+    sheet.addRow(['Ключевые показатели HR аналитики']).font = { bold: true, size: 14 };
+    sheet.addRow([]);
+    
+    // Period info
+    sheet.addRow(['Период:', `${this.startDateControl.value} - ${this.endDateControl.value}`]);
+    sheet.addRow([]);
+    
+    // Stats
     sheet.addRow(['Метрика', 'Значение']);
-    sheet.addRow(['Всего принято', this.totalHired]);
+    sheet.addRow(['Всего принято на работу', this.totalHires]);
     sheet.addRow(['Всего отказов', this.totalRejections]);
-    sheet.addRow(['Запланировано мероприятий', this.totalEvents]);
-    sheet.addRow(['Активных задач', this.totalActiveTasks]);
+    sheet.addRow(['Ожидающие подтверждения', this.totalPending]);
+    sheet.addRow(['Завершенные задачи', this.totalCompletedTasks]);
+    sheet.addRow(['Активные задачи', this.totalActiveTasks]);
+    sheet.addRow(['Эффективность HR (%)', this.hrEfficiency]);
+    sheet.addRow(['Эффективность рекрутеров (%)', this.recruiterEfficiency]);
+    
+    // Formatting
+    sheet.getColumn(1).width = 30;
+    sheet.getColumn(2).width = 20;
+  }
+
+  private addHiresAnalysisSheet(workbook: ExcelJS.Workbook): void {
+    const sheet = workbook.addWorksheet('Анализ принятых');
+    sheet.addRow(['Анализ принятых сотрудников по периодам']).font = { bold: true, size: 14 };
+    sheet.addRow(['Период', 'Количество']);
+    
+    this.hiresChart.labels!.forEach((label, i) => {
+      sheet.addRow([label, this.hiresChart.datasets[0].data[i]]);
+    });
+    
+    sheet.getColumn(1).width = 20;
+    sheet.getColumn(2).width = 15;
+  }
+
+  private addRejectionsAnalysisSheet(workbook: ExcelJS.Workbook): void {
+    const sheet = workbook.addWorksheet('Анализ отказов');
+    sheet.addRow(['Анализ отказов по периодам']).font = { bold: true, size: 14 };
+    sheet.addRow(['Период', 'Количество']);
+    
+    this.rejectionsChart.labels!.forEach((label, i) => {
+      sheet.addRow([label, this.rejectionsChart.datasets[0].data[i]]);
+    });
+    
+    sheet.getColumn(1).width = 20;
+    sheet.getColumn(2).width = 15;
+  }
+
+  private addHrPerformanceSheet(workbook: ExcelJS.Workbook): void {
+    const sheet = workbook.addWorksheet('Работа HR');
+    sheet.addRow(['Анализ работы HR отдела']).font = { bold: true, size: 14 };
+    sheet.addRow(['Тип задачи', 'Количество']);
+    
+    Object.keys(this.hrWorkloadChart.labels!).forEach((label, i) => {
+      sheet.addRow([label, this.hrWorkloadChart.datasets[0].data[i]]);
+    });
+    
+    sheet.getColumn(1).width = 25;
+    sheet.getColumn(2).width = 15;
+  }
+
+  private addRecruiterPerformanceSheet(workbook: ExcelJS.Workbook): void {
+    const sheet = workbook.addWorksheet('Работа рекрутеров');
+    sheet.addRow(['Анализ работы рекрутеров']).font = { bold: true, size: 14 };
+    sheet.addRow(['Тип задачи', 'Количество']);
+    
+    Object.keys(this.recruiterWorkloadChart.labels!).forEach((label, i) => {
+      sheet.addRow([label, this.recruiterWorkloadChart.datasets[0].data[i]]);
+    });
+    
+    sheet.getColumn(1).width = 25;
+    sheet.getColumn(2).width = 15;
+  }
+
+  private addEventsPlanSheet(workbook: ExcelJS.Workbook): void {
+    const sheet = workbook.addWorksheet('План мероприятий');
+    sheet.addRow(['План мероприятий по периодам']).font = { bold: true, size: 14 };
+    sheet.addRow(['Период', 'Количество']);
+    
+    this.eventsPlanChart.labels!.forEach((label, i) => {
+      sheet.addRow([label, this.eventsPlanChart.datasets[0].data[i]]);
+    });
+    
+    sheet.getColumn(1).width = 20;
+    sheet.getColumn(2).width = 15;
   }
 
   private addPeriodInfoSheet(workbook: ExcelJS.Workbook): void {
-    const sheet = workbook.addWorksheet('Период отчета');
+    const sheet = workbook.addWorksheet('Информация о периоде');
     sheet.addRow(['Начало периода', this.startDateControl.value]);
     sheet.addRow(['Конец периода', this.endDateControl.value]);
+    sheet.addRow(['Тип периода', this.periods.find(p => p.value === this.activePeriod)?.label]);
   }
 }

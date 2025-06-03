@@ -1,7 +1,7 @@
 <div class="container mt-4">
-  <h2 class="mb-4">HR Отчетность</h2>
+  <h2 class="mb-4">HR Аналитика</h2>
   
-  <!-- Период выборки -->
+  <!-- Period selection -->
   <div class="row mb-4">
     <div class="col-md-12">
       <div class="btn-group me-2">
@@ -24,16 +24,20 @@
       <button class="btn btn-primary ms-3" (click)="applyDateFilter()">
         Применить
       </button>
+      
+      <button class="btn btn-success ms-2" (click)="exportToExcel()">
+        <i class="bi bi-file-earmark-excel me-2"></i>Экспорт
+      </button>
     </div>
   </div>
 
-  <!-- Статистика -->
+  <!-- Key metrics -->
   <div class="row mb-4">
     <div class="col-md-3">
       <div class="card bg-success text-white">
         <div class="card-body">
           <h5>Принято</h5>
-          <p class="display-6">{{ totalHired }}</p>
+          <p class="display-6">{{ totalHires }}</p>
         </div>
       </div>
     </div>
@@ -47,57 +51,45 @@
       </div>
     </div>
     
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="card bg-info text-white">
         <div class="card-body">
-          <h5>Мероприятий</h5>
-          <p class="display-6">{{ totalEvents }}</p>
+          <h5>Ожидание</h5>
+          <p class="display-6">{{ totalPending }}</p>
         </div>
       </div>
     </div>
     
-    <div class="col-md-3">
-      <div class="card bg-warning text-dark">
+    <div class="col-md-2">
+      <div class="card bg-primary text-white">
         <div class="card-body">
-          <h5>Активных задач</h5>
-          <p class="display-6">{{ totalActiveTasks }}</p>
+          <h5>HR эффективность</h5>
+          <p class="display-6">{{ hrEfficiency }}%</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-2">
+      <div class="card bg-secondary text-white">
+        <div class="card-body">
+          <h5>Рекрутеры</h5>
+          <p class="display-6">{{ recruiterEfficiency }}%</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Кнопка экспорта -->
-  <button class="btn btn-primary mb-4" (click)="exportToExcel()">
-    <i class="bi bi-file-earmark-excel me-2"></i>Экспорт в Excel
-  </button>
-
-  <!-- Графики -->
- <div class="row g-4">
-    <!-- Эффективность HR -->
+  <!-- Charts -->
+  <div class="row g-4">
+    <!-- Hires chart -->
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-header bg-light">
-          <h5 class="card-title mb-0">Эффективность HR и рекрутеров</h5>
+          <h5 class="card-title mb-0">Динамика принятых сотрудников</h5>
         </div>
         <div class="card-body">
           <canvas baseChart 
-                  [data]="hrPerformanceChart" 
-                  [options]="chartOptions"
-                  type="bar">
-          </canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Статистика приема -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light">
-          <h5 class="card-title mb-0">Статистика приема сотрудников</h5>
-        </div>
-        <div class="card-body">
-          <canvas baseChart 
-                  [data]="recruitmentChart" 
+                  [data]="hiresChart" 
                   [options]="chartOptions"
                   type="line">
           </canvas>
@@ -105,15 +97,31 @@
       </div>
     </div>
 
-    <!-- План мероприятий -->
+    <!-- Rejections chart -->
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-header bg-light">
-          <h5 class="card-title mb-0">План мероприятий</h5>
+          <h5 class="card-title mb-0">Динамика отказов</h5>
         </div>
         <div class="card-body">
           <canvas baseChart 
-                  [data]="eventsChart" 
+                  [data]="rejectionsChart" 
+                  [options]="chartOptions"
+                  type="line">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- HR workload -->
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="card-title mb-0">Работа HR отдела</h5>
+        </div>
+        <div class="card-body">
+          <canvas baseChart 
+                  [data]="hrWorkloadChart" 
                   [options]="chartOptions"
                   type="bar">
           </canvas>
@@ -121,15 +129,31 @@
       </div>
     </div>
 
-     <!-- План мероприятий -->
+    <!-- Recruiter workload -->
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-header bg-light">
-          <h5 class="card-title mb-0">План бобы</h5>
+          <h5 class="card-title mb-0">Работа рекрутеров</h5>
         </div>
         <div class="card-body">
           <canvas baseChart 
-                  [data]="eventsChart" 
+                  [data]="recruiterWorkloadChart" 
+                  [options]="chartOptions"
+                  type="bar">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events plan -->
+    <div class="col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="card-title mb-0">План мероприятий</h5>
+        </div>
+        <div class="card-body">
+          <canvas baseChart 
+                  [data]="eventsPlanChart" 
                   [options]="chartOptions"
                   type="bar">
           </canvas>

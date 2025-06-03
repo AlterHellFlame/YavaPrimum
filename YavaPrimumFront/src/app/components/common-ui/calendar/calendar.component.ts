@@ -15,7 +15,7 @@ import { NotifyService } from '../../../services/notify/notify.service';
 export class CalendarComponent implements OnInit {
   @Output() getTasks = new EventEmitter<any>();
 
-  today: DateTime = DateTime.local();
+  today: DateTime = DateTime.local().minus({ days: 1 });
   firstDayOfActiveMonth: DateTime = this.today.startOf('month');
   weekDays: string[] = Info.weekdays('short');
   daysOfMonth: DateTime[] = [];
@@ -74,4 +74,11 @@ export class CalendarComponent implements OnInit {
     this.firstDayOfActiveMonth = this.today.startOf('month');
     this.computeDaysOfMonth();
   }
+
+public isDateNow(date: DateTime): boolean {
+    const today = DateTime.now().startOf('day'); // Получаем текущую дату без времени
+    const inputDate = date.startOf('day'); // Убираем время у переданной даты
+
+    return today <= inputDate; // Проверяем, меньше ли сегодня, чем переданная дата
+}
 }

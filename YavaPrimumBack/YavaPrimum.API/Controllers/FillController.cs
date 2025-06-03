@@ -331,7 +331,7 @@ namespace YavaPrimum.API.Controllers
 
                 StatusUpdateRequest statusUpdateRequest = new StatusUpdateRequest()
                 {
-                    Status = random.Next(100) < 80
+                    Status = random.Next(100) < 50
                     ? "Собеседование не пройдено"
                     : "Собеседование пройдено",
 
@@ -390,16 +390,19 @@ namespace YavaPrimum.API.Controllers
 
             foreach (var task in completedKadr)
             {
+                if (random.Next(100) > 80)
+                {
+                    task.Status = await _tasksService.GetStatusByName(random.Next(100) < 80
+                  ? "Пришел"
+                  : "Не пришел");
 
-                task.Status = await _tasksService.GetStatusByName(random.Next(100) < 20
-                  ? "Собеседование не пройдено"
-                  : "Собеседование пройдено");
-
+                
 
                     await _notificationsService.ReadNotificationOfCandidate(task.Candidate.CandidateId);
                     await _notificationsService.SendMessage(task);
 
                     await _dBContext.SaveChangesAsync();
+                }
 
             }
 

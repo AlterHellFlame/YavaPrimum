@@ -10,9 +10,7 @@ namespace YavaPrimum.Core.Interfaces
         Task<List<Tasks>> GetAll();
         Task<List<Tasks>> GetAllByUserId(Guid userId);
         Task Delete(Guid taskId);
-        Task Update(Guid taskId, InterviewCreateRequest newTask);
         Task<Tasks> GetById(Guid taskId);
-        Task RepeatInterview(Guid taskId, string dateTime);
         Task<TasksStatus> GetStatusByName(string name);
         Task SetActive(Guid taskId);
         Task SetNewDate(Tasks task, DateTime dateTime);

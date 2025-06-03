@@ -1,5 +1,6 @@
 <div class="d-flex justify-content-center align-items-center p-4">
-  <div class="container profile shadow-sm p-4 bg-white rounded mb-5">
+<div class="d-flex flex-column profile">
+  <div class="container profile-1 shadow-sm p-4 bg-white rounded mb-2">
       <form>
           <div class="d-flex align-items-center mb-4">
             <img class="photo img-thumbnail" src="https://localhost:7247/{{formData.imgUrl}}" [alt]="formData.surname">
@@ -26,6 +27,14 @@
 
           <button class="btn btn-primary w-100 jusify-self-end" (click)="logOut()">Выйти</button>
       </form>
+  </div>
+    <div class="container profile-1 shadow-sm p-4 bg-white rounded mb-5">
+      <form>
+        <p>Всего выполнено задач: {{totalInterviewPassed}}</p>
+        <p>Назначено собеседований: {{totalInterviewScheduled}}</p>
+        <p>Проверка тестовых заданий: {{totalTestDeadline}}</p>
+      </form>
+      </div>
   </div>
 
   <div class="container flex-grow-1" *ngIf="!isAdmin">

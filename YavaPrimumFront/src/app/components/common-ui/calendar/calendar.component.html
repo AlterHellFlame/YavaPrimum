@@ -30,7 +30,8 @@
   
         <ng-container *ngFor="let task of getTasksForDay(dayOfMonth) | slice:0:4">
           <div class="px-1 task" [ngClass]="{
-          'task-interview ': task.typeStatus == 0, 
+          'task-interview ': task.typeStatus == 0 && isDateNow(task.dateTime), 
+          'task-overdate ': task.typeStatus == 0 && !isDateNow(task.dateTime), 
           'task-compleate': task.typeStatus == 2, 
           'task-call': task.typeStatus == 3, 
           'task-call-compleate': task.typeStatus == 4}">
