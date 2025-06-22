@@ -12,7 +12,7 @@ namespace YavaPrimum.Core.DTO
         public Guid VacancyId { get; set; }
         public UserRequestResponse User { get; set; }
         public string Post { get; set; }
-        public int Count { get; set; }
+        public byte Count { get; set; }
         public bool isClose { get; set; }
         public string AdditionalData { get; set; }
     }

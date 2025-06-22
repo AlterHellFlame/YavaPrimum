@@ -130,33 +130,28 @@ namespace YavaPrimum.Core.Services
         public async Task<List<CandidateFullDataResponse>> GetAllCandidatesFullData(Guid userId)
         {
             // 1. Получаем всех кандидатов, связанных с пользователем через задачи
-            var userCandidateIds = await _dBContext.Tasks
+
+            var candidates = await _dBContext.Tasks
+                .AsQueryable()
+                .Include(c => c.Candidate.Post)
+                .Include(c => c.Candidate.Country)
                 .Where(t => t.User.UserId == userId)
-                .Select(t => t.Candidate.CandidateId)
+                .Select(t => t.Candidate)
                 .Distinct()
                 .ToListAsync();
 
-            if (userCandidateIds == null || !userCandidateIds.Any())
-            {
-                throw new InvalidOperationException("У данного пользователя нет связанных кандидатов.");
-            }
-
-            // 2. Получаем полные данные этих кандидатов
-            var candidates = await _dBContext.Candidate
-                .Where(c => userCandidateIds.Contains(c.CandidateId))
-                .Include(c => c.Post)
-                .Include(c => c.Country)
-                .ToListAsync();
 
             // 3. Получаем ВСЕ задачи этих кандидатов (не только текущего пользователя)
-            var allTasks = await _dBContext.Tasks
-                .Where(t => userCandidateIds.Contains(t.Candidate.CandidateId))
+            var allTasks = await _dBContext.Tasks.AsQueryable()
+                .Where(t => candidates.Contains(t.Candidate))
                 .Include(t => t.Status)
                 .Include(t => t.User)
                 .Include(t => t.User.Post)
                 .Include(t => t.User.Company)
                 .Include(t => t.User.Company.Country)
                 .Include(t => t.Candidate)
+                /*.Include(t => t.Candidate.Post)
+                .Include(t => t.Candidate.Country)*/
                 .OrderBy(t => t.DateTime)
                 .ToListAsync();
 
@@ -190,8 +185,5 @@ namespace YavaPrimum.Core.Services
 
             return responseList;
         }
-
-
-
     }
 }

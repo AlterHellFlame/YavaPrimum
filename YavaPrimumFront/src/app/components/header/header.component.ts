@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit{
         }
       }
     });
-    
+    this.notify.startConnection();
     this.notify.getNotifications().subscribe(notifications =>
       {
         this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;
@@ -53,6 +53,7 @@ export class HeaderComponent implements OnInit{
       this.notify.getNotifications().subscribe(notifications =>
         {
           this.countOfNotify = notifications.filter(notification => notification.isReaded === false).length;
+          
         });
     });
     

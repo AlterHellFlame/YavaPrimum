@@ -1,5 +1,4 @@
 <!-- admin.component.html -->
-<!-- Модальное окно для добавления/редактирования пользователя -->
 <div class="modal fade" id="userModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -9,73 +8,197 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-          <div class="mb-2">
-            <label for="surname" class="form-label">Фамилия</label>
-            <input type="text" class="form-control" id="surname" 
-                   [(ngModel)]="currentUser!.surname" name="surname" 
-                   placeholder="Иванов" required
-                   [class.is-invalid]="isFormSubmitted && form.controls['surname'].invalid">
-          </div>
-          
-          <div class="mb-2">
-            <label for="firstName" class="form-label">Имя</label>
-            <input type="text" class="form-control" id="firstName" 
-                   [(ngModel)]="currentUser!.firstName" name="firstName" 
-                   placeholder="Иван" required
-                   [class.is-invalid]="isFormSubmitted && form.controls['firstName'].invalid">
-          </div>
-          
-          <div class="mb-2">
-            <label for="patronymic" class="form-label">Отчество</label>
-            <input type="text" class="form-control" id="patronymic" 
-                   [(ngModel)]="currentUser!.patronymic" name="patronymic" 
-                   placeholder="Иванович">
-          </div>
-          
-          <div class="mb-2 d-flex justify-content-between">
-            <div class="col-md-5">
-              <label for="company" class="form-label">Компания</label>
-              <select class="form-select" id="company" 
-                      [(ngModel)]="currentUser!.company" name="company" required
-                      [class.is-invalid]="isFormSubmitted && form.controls['company'].invalid">
-                <option *ngFor="let company of companies" [value]="company">{{ company }}</option>
-              </select>
-            </div>
-            <div class="col-md-5">
-              <label for="post" class="form-label">Должность</label>
-              <select class="form-select" id="post" 
-                      [(ngModel)]="currentUser!.post" name="post" required
-                      [class.is-invalid]="isFormSubmitted && form.controls['post'].invalid">
-                <option value="HR">HR</option>
-                <option value="Кадровик">Кадровик</option>
-              </select>
+          <!-- Фамилия -->
+          <div class="form-group mb-2">
+            <label for="surname">Фамилия*</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{'is-invalid': (form.controls['surname']?.invalid && (form.controls['surname']?.dirty || form.controls['surname']?.touched)) || isFormSubmitted && form.controls['surname']?.invalid}"
+              id="surname"
+              [(ngModel)]="currentUser.surname"
+              name="surname"
+              placeholder="Иванов"
+              required
+              minlength="2"
+              maxlength="40"
+            />
+            <div *ngIf="(form.controls['surname']?.invalid && (form.controls['surname']?.dirty || form.controls['surname']?.touched)) || isFormSubmitted && form.controls['surname']?.invalid" 
+                 class="invalid-feedback">
+              <span *ngIf="form.controls['surname']?.errors?.['required']">
+                Пожалуйста, введите фамилию
+              </span>
+              <span *ngIf="form.controls['surname']?.errors?.['minlength']">
+                Фамилия должна содержать минимум 2 символа
+              </span>
+              <span *ngIf="form.controls['surname']?.errors?.['maxlength']">
+                Фамилия не должна превышать 40 символов
+              </span>
             </div>
           </div>
 
-          <div class="mb-2">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" 
-                   [(ngModel)]="currentUser!.email" name="email" required 
-                   placeholder="email@gmail.com"
-                   [class.is-invalid]="isFormSubmitted && form.controls['email'].invalid">
+          <!-- Имя -->
+          <div class="form-group mb-2">
+            <label for="firstName">Имя*</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{'is-invalid': (form.controls['firstName']?.invalid && (form.controls['firstName']?.dirty || form.controls['firstName']?.touched)) || isFormSubmitted && form.controls['firstName']?.invalid}"
+              id="firstName"
+              [(ngModel)]="currentUser.firstName"
+              name="firstName"
+              placeholder="Иван"
+              required
+              minlength="2"
+              maxlength="40"
+            />
+            <div *ngIf="(form.controls['firstName']?.invalid && (form.controls['firstName']?.dirty || form.controls['firstName']?.touched)) || isFormSubmitted && form.controls['firstName']?.invalid" 
+                 class="invalid-feedback">
+              <span *ngIf="form.controls['firstName']?.errors?.['required']">
+                Пожалуйста, введите имя
+              </span>
+              <span *ngIf="form.controls['firstName']?.errors?.['minlength']">
+                Имя должно содержать минимум 2 символа
+              </span>
+              <span *ngIf="form.controls['firstName']?.errors?.['maxlength']">
+                Имя не должно превышать 40 символов
+              </span>
+            </div>
           </div>
-          
-          <div class="mb-2">
-            <label for="phone" class="form-label">Телефон</label>
-            <input type="text" class="form-control" id="phone" 
-                   [(ngModel)]="currentUser!.phone" name="phone" 
-                   placeholder="+375 ## ###-##-##">
+
+          <!-- Отчество -->
+          <div class="form-group mb-2">
+            <label for="patronymic">Отчество</label>
+            <input
+              type="text"
+              class="form-control"
+              id="patronymic"
+              [(ngModel)]="currentUser.patronymic"
+              name="patronymic"
+              placeholder="Иванович"
+              maxlength="40"
+            />
+            <div *ngIf="form.controls['patronymic']?.errors?.['maxlength']" 
+                 class="invalid-feedback">
+              Отчество не должно превышать 40 символов
+            </div>
           </div>
-          
+
+          <!-- Компания и Должность -->
+          <div class="d-flex justify-content-between mb-2">
+            <!-- Компания -->
+            <div class="form-group col-md-6">
+              <label for="company">Компания*</label>
+              <select
+                class="form-select"
+                [ngClass]="{'is-invalid': (form.controls['company']?.invalid && (form.controls['company']?.dirty || form.controls['company']?.touched)) || isFormSubmitted && form.controls['company']?.invalid}"
+                id="company"
+                [(ngModel)]="currentUser.company"
+                name="company"
+                required
+              >
+                <option *ngFor="let company of companies" [value]="company">{{ company }}</option>
+              </select>
+              <div *ngIf="(form.controls['company']?.invalid && (form.controls['company']?.dirty || form.controls['company']?.touched)) || isFormSubmitted && form.controls['company']?.invalid" 
+                   class="invalid-feedback">
+                Пожалуйста, выберите компанию
+              </div>
+            </div>
+
+            <!-- Должность -->
+            <div class="form-group col-md-5">
+              <label for="post">Должность*</label>
+              <select
+                class="form-select"
+                [ngClass]="{'is-invalid': (form.controls['post']?.invalid && (form.controls['post']?.dirty || form.controls['post']?.touched)) || isFormSubmitted && form.controls['post']?.invalid}"
+                id="post"
+                [(ngModel)]="currentUser.post"
+                name="post"
+                required
+              >
+                <option value="HR">HR</option>
+                <option value="Кадровик">Кадровик</option>
+              </select>
+              <div *ngIf="(form.controls['post']?.invalid && (form.controls['post']?.dirty || form.controls['post']?.touched)) || isFormSubmitted && form.controls['post']?.invalid" 
+                   class="invalid-feedback">
+                Пожалуйста, выберите должность
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group mb-2">
+            <label for="email">Email*</label>
+            <input
+              type="email"
+              class="form-control"
+              [ngClass]="{'is-invalid': emailExists || ((form.controls['email']?.invalid && (form.controls['email']?.dirty || form.controls['email']?.touched)) || isFormSubmitted && form.controls['email']?.invalid)}"
+              id="email"
+              [(ngModel)]="currentUser.email"
+              name="email"
+              placeholder="email@gmail.com"
+              required
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+              maxlength="100"
+              (blur)="validateEmail()"
+            />
+            <div *ngIf="emailExists || ((form.controls['email']?.invalid && (form.controls['email']?.dirty || form.controls['email']?.touched)) || isFormSubmitted && form.controls['email']?.invalid)" 
+                 class="invalid-feedback">
+              <span *ngIf="emailExists">
+                Пользователь с таким email уже существует!
+              </span>
+              <span *ngIf="!emailExists && form.controls['email']?.errors?.['required']">
+                Пожалуйста, введите email
+              </span>
+              <span *ngIf="!emailExists && form.controls['email']?.errors?.['pattern']">
+                Введите корректный email
+              </span>
+              <span *ngIf="!emailExists && form.controls['email']?.errors?.['maxlength']">
+                Email не должен превышать 100 символов
+              </span>
+            </div>
+          </div>
+
+          <!-- Телефон -->
+          <div class="form-group mb-2">
+            <label for="phone">Телефон*</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{'is-invalid': phoneExists || ((form.controls['phone']?.invalid && (form.controls['phone']?.dirty || form.controls['phone']?.touched)) || isFormSubmitted && form.controls['phone']?.invalid)}"
+              id="phone"
+              [(ngModel)]="currentUser.phone"
+              name="phone"
+              placeholder="+375 (##) ###-##-##"
+              required
+              maxlength="20"
+              (blur)="validatePhone()"
+            />
+            <div *ngIf="phoneExists || ((form.controls['phone']?.invalid && (form.controls['phone']?.dirty || form.controls['phone']?.touched)) || isFormSubmitted && form.controls['phone']?.invalid)" 
+                 class="invalid-feedback">
+              <span *ngIf="phoneExists">
+                Пользователь с таким телефоном уже существует!
+              </span>
+              <span *ngIf="!phoneExists && form.controls['phone']?.errors?.['required']">
+                Пожалуйста, введите номер телефона
+              </span>
+              <span *ngIf="!phoneExists && form.controls['phone']?.errors?.['maxlength']">
+                Телефон не должен превышать 20 символов
+              </span>
+            </div>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Закрыть</button>
-            <button type="submit" class="btn btn-primary" [attr.data-bs-dismiss]="form.valid ? 'modal' : null">{{ isEditMode ? 'Обновить' : 'Добавить' }}</button>
+            <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Обновить' : 'Добавить' }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Остальная часть шаблона без изменений -->
 
 <div class="d-flex justify-content-between align-items-center sticky-top buttons-panel">
   <!-- Кнопка для добавления пользователя -->
@@ -95,72 +218,77 @@
 <div class="layout-horizontal mt-1">
   <!-- Таблица слева -->
   <div class="table-container">
-    <table class="user-table table-striped">
-     <!-- admin.component.html (обновленная часть таблицы) -->
-      <thead class="table-light">
-        <tr>
-          <th>Фото</th>
-          <th *ngFor="let header of tableHeaders" (click)="sortTable(header.key)">
-            {{ header.title }}
-            <i class="bi" 
-              [class.bi-arrow-up]="sortColumn === header.key && sortDirection === 'asc'"
-              [class.bi-arrow-down]="sortColumn === header.key && sortDirection === 'desc'"></i>
-          </th>
-          <th>Действия</th>
-        </tr>
-        
-        <!-- Фильтры -->
-        <tr class="filter-row">
-          <th></th>
-          <th *ngFor="let filter of ['surname', 'firstName', 'patronymic', 'company', 'email', 'post', 'phone']">
-            <input type="text" class="form-control"
-                  [(ngModel)]="filters[filter]"
-                  (input)="applyFilters()"
-                  [placeholder]="getFilterPlaceholder(filter)">
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of filteredUsers" 
-            (click)="getAllTasksOfUser(user)"
-            [class.table-active]="currentUser?.userId === user.userId">
-          <td>
-            <img class="user-photo mx-1" 
-                 [src]="'https://localhost:7247/' + user.imgUrl" 
-                 [alt]="user.surname"
-                 onerror="this.src='img/default.png'">
-          </td>
-          <td>{{ user.surname }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.patronymic }}</td>
-          <td>{{ user.company }}</td>
-          <td>
-            <a href="mailto:{{user.email}}" class="text-decoration-none">
-              {{ user.email }}
-            </a>
-          </td>
-          <td>{{ user.post }}</td>
-          <td>{{ user.phone }}</td>
-          <td>
-            <div class="action-buttons d-flex gap-1">
-              <button type="button" class="btn btn-edit bi bi-pencil"
-                      data-bs-toggle="modal" data-bs-target="#userModal"
-                      (click)="openEditModal(user); $event.stopPropagation()">
-              </button>
-              <button type="button" class="btn btn-delete bi bi-trash"
-                      (click)="deleteUser(user); $event.stopPropagation()">
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+   <table class="user-table table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>Фото</th>
+      <th *ngFor="let header of tableHeaders" (click)="sortTable(header.key)">
+        {{ header.title }}
+        <i class="bi" 
+          [class.bi-arrow-up]="sortColumn === header.key && sortDirection === 'asc'"
+          [class.bi-arrow-down]="sortColumn === header.key && sortDirection === 'desc'"></i>
+      </th>
+      <th>Действия</th>
+    </tr>
+    
+    <!-- Фильтры -->
+    <tr class="filter-row">
+      <th></th>
+      <th *ngFor="let filter of ['surname', 'firstName', 'patronymic', 'company', 'email', 'post', 'phone']">
+        <input type="text" class="form-control"
+              [(ngModel)]="filters[filter]"
+              (input)="applyFilters()"
+              [placeholder]="getFilterPlaceholder(filter)">
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of filteredUsers" 
+        (click)="getAllTasksOfUser(user)"
+    [class.table-active]="currentUser!?.userId === user.userId"
+    [ngClass]="{'bg-muted text-muted': user.email === '-'}">
+    <ng-container *ngIf="user.post != '!Админ'">
+      <td>
+        <img class="user-photo mx-1" 
+             [src]="'https://localhost:7247/' + user.imgUrl" 
+             [alt]="user.surname"
+             onerror="this.src='img/default.png'">
+      </td>
+      <td>{{ user.surname }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.patronymic }}</td>
+      <td>{{ user.company }}</td>
+      <td>
+        <a *ngIf="user.email !== '-'" href="mailto:{{user.email}}" class="text-decoration-none">
+          {{ user.email }}
+        </a>
+        <span *ngIf="user.email === '-'">-</span>
+      </td>
+      <td>{{ user.post }}</td>
+      <td>{{ user.phone }}</td>
+      <td>
+        <div class="action-buttons d-flex gap-1">
+          <button *ngIf="user.email !== '-'" 
+                  type="button" class="btn btn-edit bi bi-pencil"
+                  data-bs-toggle="modal" data-bs-target="#userModal"
+                  (click)="openEditModal(user); $event.stopPropagation()">
+          </button>
+          <button *ngIf="user.email !== '-' && user.post != '!Админ'" 
+                  type="button" class="btn btn-delete bi bi-trash"
+                  (click)="deleteUser(user); $event.stopPropagation()">
+          </button>
+        </div>
+      </td>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>
   </div>
 
   <!-- График справа -->
   <div class="chart-container" [style.display]="isChartVisible ? 'inherit' : 'none'">
-    <h3 class="text-center">{{currentUser?.surname}} {{currentUser?.firstName}}</h3>
+    <h3 class="text-center">{{currentUser!?.surname}} {{currentUser!?.firstName}}</h3>
     <span class="d-flex gap-1 justify-content-center">
       <button class="btn btn-outline-secondary" (click)="changeMonth(-1)"><i class="bi bi-caret-left"></i></button>
       <p class="h5 mb-0 mx-3">{{activeMonthToString}}</p>

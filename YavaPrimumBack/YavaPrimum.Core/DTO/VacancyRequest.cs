@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YavaPrimum.Core.DataBase.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace YavaPrimum.Core.DTO
 {
     public class VacancyRequest
     {
+        [MaxLength(30)]
         public string Post { get; set; }
-        public int Count { get; set; }
-        public string AdditionalData { get; set; }
 
+        public byte Count { get; set; } // Исправлено на `byte`, так как в БД `tinyint`
+
+        public string AdditionalData { get; set; }
     }
 }

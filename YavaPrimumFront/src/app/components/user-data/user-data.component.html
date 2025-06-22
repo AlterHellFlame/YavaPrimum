@@ -28,11 +28,12 @@
           <button class="btn btn-primary w-100 jusify-self-end" (click)="logOut()">Выйти</button>
       </form>
   </div>
-    <div class="container profile-1 shadow-sm p-4 bg-white rounded mb-5">
+    <div class="container profile-1 shadow-sm p-4 bg-white rounded mb-5" *ngIf="!isAdmin">
       <form>
-        <p>Всего выполнено задач: {{totalInterviewPassed}}</p>
-        <p>Назначено собеседований: {{totalInterviewScheduled}}</p>
-        <p>Проверка тестовых заданий: {{totalTestDeadline}}</p>
+        <p>Всего успешно выполнено задач: {{totalInterviewPassed}}</p>
+        <p *ngIf="isHR">Назначено собеседований: {{totalInterviewScheduled}}</p>
+        <p *ngIf="isHR">Проверка тестовых заданий: {{totalTestDeadline}}</p>
+        <p *ngIf="!isHR">Назначено приёмов: {{totalPriem}}</p>
       </form>
       </div>
   </div>

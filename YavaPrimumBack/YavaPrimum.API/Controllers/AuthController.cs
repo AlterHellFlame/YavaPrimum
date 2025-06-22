@@ -1,7 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
@@ -56,7 +53,7 @@ namespace YavaPrimum.API.Controllers
 
             string token = await _authService.Login(request.Email, request.Password);
 
-
+            if(request.Email == "-") throw new ArgumentNullException("Пользователя с такой почтой не существует");
             HttpContext.Response.Cookies.Append(JwtProvider.CookiesName, token, new CookieOptions()
             {
                 Secure = true, // Используйте true, если у вас HTTPS

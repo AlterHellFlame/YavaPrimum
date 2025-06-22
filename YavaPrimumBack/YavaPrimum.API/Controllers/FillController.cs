@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using YavaPrimum.Core.DataBase;
 using YavaPrimum.Core.DataBase.Models;
 using YavaPrimum.Core.DTO;
 using YavaPrimum.Core.Interfaces;
-using YavaPrimum.Core.Services;
 
 namespace YavaPrimum.API.Controllers
 {
@@ -129,16 +127,23 @@ namespace YavaPrimum.API.Controllers
                 new Post { PostId = Guid.NewGuid(), Name = "Кадровик" },
 
                 // Дополнительные должности из логистики
-                new Post { PostId = Guid.NewGuid(), Name = "Водитель-дальнобойщик" },
                 new Post { PostId = Guid.NewGuid(), Name = "Водитель-экспедитор" },
                 new Post { PostId = Guid.NewGuid(), Name = "Водитель категории C" },
                 new Post { PostId = Guid.NewGuid(), Name = "Водитель категории E" },
                 new Post { PostId = Guid.NewGuid(), Name = "Водитель автобуса" },
                 new Post { PostId = Guid.NewGuid(), Name = "Водитель спецтехники" },
-                new Post { PostId = Guid.NewGuid(), Name = "Оператор складского транспорта" },
                 new Post { PostId = Guid.NewGuid(), Name = "Координатор логистики" },
-                new Post { PostId = Guid.NewGuid(), Name = "Механик по грузовым авто" },
-                new Post { PostId = Guid.NewGuid(), Name = "Диспетчер транспортной компании" }
+                new Post { PostId = Guid.NewGuid(), Name = "Механик грузовиков" },
+                new Post { PostId = Guid.NewGuid(), Name = "Экспедитор транспортный" },
+                new Post { PostId = Guid.NewGuid(), Name = "Слесарь по ремонту" },
+                new Post { PostId = Guid.NewGuid(), Name = "Диспетчер транспорта" },
+                new Post { PostId = Guid.NewGuid(), Name = "Бухгалтер" },
+                new Post { PostId = Guid.NewGuid(), Name = "Экономист" },
+                new Post { PostId = Guid.NewGuid(), Name = "Мастер" },
+                new Post { PostId = Guid.NewGuid(), Name = "Делопроизводитель" },
+                new Post { PostId = Guid.NewGuid(), Name = "Клиентский специалист" },
+                new Post { PostId = Guid.NewGuid(), Name = "Начальник" }
+
             };
 
 
@@ -157,15 +162,15 @@ namespace YavaPrimum.API.Controllers
     new TasksStatus { TasksStatusId = Guid.Parse("BB48E8BA-6D5B-4821-A0CA-F49D21AADC1F"), Name = "Назначено собеседование", TypeStatus = 0, MessageTemplate = null },
     new TasksStatus { TasksStatusId = Guid.Parse("DD100C62-83B9-47C3-AF1D-3F3D935FB4FA"), Name = "Назначен приём", TypeStatus = 0, MessageTemplate = null },
     new TasksStatus { TasksStatusId = Guid.Parse("87B85A86-2B26-4931-973D-201EBF938574"), Name = "Срок тестового задания", TypeStatus = 0, MessageTemplate = "Кандидат [Candidate.Surname] должен выполнить тестовое задание до [Date]" },
-    new TasksStatus { TasksStatusId = Guid.Parse("CBBE4BB0-8A9D-4830-BDA0-9713E5D7FE11"), Name = "Подтверждение даты", TypeStatus = -1, MessageTemplate = null },
-    new TasksStatus { TasksStatusId = Guid.Parse("6A6F5BD2-FB98-4E66-BE74-B0DABD372BD4"), Name = "Запрос на смену времени", TypeStatus = -1, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене времени" },
-    new TasksStatus { TasksStatusId = Guid.Parse("E9DED4B6-D1BC-4460-BA8E-769C48C69E6F"), Name = "Запрос на смену даты", TypeStatus = -1, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене даты" },
-    new TasksStatus { TasksStatusId = Guid.Parse("FEF06092-F6BB-4896-BA3E-F85E61309138"), Name = "Подтверждение времени", TypeStatus = -1, MessageTemplate = null },
-    new TasksStatus { TasksStatusId = Guid.Parse("EC75AFA1-0E3A-43BE-ABD7-83862AF3AF86"), Name = "Дата подтверждена", TypeStatus = -2, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] была подтвеждена" },
-    new TasksStatus { TasksStatusId = Guid.Parse("B312D748-1CC3-42A0-8FFA-C304497CB29C"), Name = "Время отказано", TypeStatus = -2, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] не были подтвеждена. Пожалуйста выберите новое время" },
-    new TasksStatus { TasksStatusId = Guid.Parse("6DB2A556-6190-4022-AB3B-66315E6C4A35"), Name = "Дата отказана", TypeStatus = -2, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] не была подтвеждена. Пожалуйста выберите новую дату" },
-    new TasksStatus { TasksStatusId = Guid.Parse("6B657AD4-0BB3-42C1-9C7A-57E318C3F21A"), Name = "Время подтверждено", TypeStatus = -2, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] были подтвеждена" },
-    new TasksStatus { TasksStatusId = Guid.Parse("7D8E09B4-335A-4EEF-943B-9D68506CBFA0"), Name = "Перенесено собеседование", TypeStatus = -2, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("CBBE4BB0-8A9D-4830-BDA0-9713E5D7FE11"), Name = "Подтверждение даты", TypeStatus = 6, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("6A6F5BD2-FB98-4E66-BE74-B0DABD372BD4"), Name = "Запрос на смену времени", TypeStatus = 6, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене времени" },
+    new TasksStatus { TasksStatusId = Guid.Parse("E9DED4B6-D1BC-4460-BA8E-769C48C69E6F"), Name = "Запрос на смену даты", TypeStatus = 6, MessageTemplate = "Кандидат [Candidate.Surname] [Candidate.FirstName] на должности [Candidate.Post] нуждается в смене даты" },
+    new TasksStatus { TasksStatusId = Guid.Parse("FEF06092-F6BB-4896-BA3E-F85E61309138"), Name = "Подтверждение времени", TypeStatus = 6, MessageTemplate = null },
+    new TasksStatus { TasksStatusId = Guid.Parse("EC75AFA1-0E3A-43BE-ABD7-83862AF3AF86"), Name = "Дата подтверждена", TypeStatus = 7, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] была подтвеждена" },
+    new TasksStatus { TasksStatusId = Guid.Parse("B312D748-1CC3-42A0-8FFA-C304497CB29C"), Name = "Время отказано", TypeStatus = 7, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] не были подтвеждена. Пожалуйста выберите новое время" },
+    new TasksStatus { TasksStatusId = Guid.Parse("6DB2A556-6190-4022-AB3B-66315E6C4A35"), Name = "Дата отказана", TypeStatus = 7, MessageTemplate = "Дата [Date] для кандидата [Candidate.Surname] [Candidate.FirstName] не была подтвеждена. Пожалуйста выберите новую дату" },
+    new TasksStatus { TasksStatusId = Guid.Parse("6B657AD4-0BB3-42C1-9C7A-57E318C3F21A"), Name = "Время подтверждено", TypeStatus = 7, MessageTemplate = "Дата и время [Date] [Time] для кандидата [Candidate.Surname] [Candidate.FirstName] были подтвеждена" },
+    new TasksStatus { TasksStatusId = Guid.Parse("7D8E09B4-335A-4EEF-943B-9D68506CBFA0"), Name = "Перенесено собеседование", TypeStatus = 7, MessageTemplate = null },
     new TasksStatus { TasksStatusId = Guid.Parse("315A68D8-C2DA-4F5C-9233-2643729608DF"), Name = "Дата была подтверждена", TypeStatus = 3, MessageTemplate = null }
 };
             // 5. Создаем пользователей
@@ -228,7 +233,7 @@ namespace YavaPrimum.API.Controllers
                         Surname = surnames[random.Next(surnames.Length)],
                         FirstName = firstNames[random.Next(firstNames.Length)],
                         Patronymic = patronymics[random.Next(patronymics.Length)],
-                        ImgUrl = imagePaths[random.Next(imagePaths.Length)],
+                        ImgUrl = "profile_photo/default.png",//imagePaths[random.Next(imagePaths.Length)],
                         Phone = $"+37529{random.Next(1000000, 9999999)}",
                         Email = $"{company.Name.ToLower()}Kadr{random.Next(1000)}@primum.com",
                         PasswordHash = defaultPasswordHash,
@@ -243,7 +248,7 @@ namespace YavaPrimum.API.Controllers
                     Surname = surnames[random.Next(surnames.Length)],
                     FirstName = firstNames[random.Next(firstNames.Length)],
                     Patronymic = patronymics[random.Next(patronymics.Length)],
-                    ImgUrl = imagePaths[random.Next(imagePaths.Length)],
+                    ImgUrl = "profile_photo/default.png",//imagePaths[random.Next(imagePaths.Length)],
                     Phone = $"+37544{random.Next(1000000, 9999999)}",
                     Email = $"{company.Name.ToLower()}Hr{random.Next(1000)}@primum.com",
                     PasswordHash = defaultPasswordHash,

@@ -14,7 +14,10 @@
     margin: 0 !important;
   }
 
-
+ .candidate-cards .card-body
+ {
+  height: 150%;
+ }
   .candidate-cards {
   .card {
     cursor: pointer;

@@ -1,6 +1,6 @@
 // admin.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import { defaultUser, User } from '../../../data/interface/User.interface';
@@ -14,6 +14,7 @@ import { NotifyService } from '../../../services/notify/notify.service';
 Chart.register(...registerables);
 
 interface UserFilters {
+  [key: string]: string;
   surname: string;
   firstName: string;
   patronymic: string;
@@ -21,9 +22,7 @@ interface UserFilters {
   email: string;
   post: string;
   phone: string;
-  [key: string]: string;
 }
-
 
 @Component({
   selector: 'app-admin',
@@ -32,16 +31,16 @@ interface UserFilters {
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   users: User[] = [];
   filteredUsers: User[] = [];
-  currentUser: User | null = null;
+  currentUser: User = this.getDefaultUser();
   isEditMode = false;
   isChartVisible = false;
-
-  // Для модального окна
   modalTitle = '';
   isFormSubmitted = false;
+  emailExists = false;
+  phoneExists = false;
 
   filters: UserFilters = {
     surname: '',
@@ -53,14 +52,28 @@ export class AdminComponent implements OnInit {
     phone: '',
   };
 
+  tableHeaders = [
+    { key: 'surname', title: 'Фамилия' },
+    { key: 'firstName', title: 'Имя' },
+    { key: 'patronymic', title: 'Отчество' },
+    { key: 'company', title: 'Компания' },
+    { key: 'email', title: 'Email' },
+    { key: 'post', title: 'Должность' },
+    { key: 'phone', title: 'Телефон' }
+  ];
+
   selectedUserTasks: Tasks[] = [];
   allTasks: Tasks[] = [];
   companies: string[] = [];
   activeMonth: Date = new Date();
+  sortColumn: string = 'surname';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
   taskChartData: ChartData<'line', number[], string> = {
     labels: [],
     datasets: []
   };
+
   taskChartOptions: ChartOptions<'line'> = {
     responsive: true,
     scales: {
@@ -75,92 +88,12 @@ export class AdminComponent implements OnInit {
     private taskService: TaskService,
     private optional: OptionalDataService,
     private notify: NotifyService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.loadInitialData();
   }
 
-  tableHeaders = [
-    { key: 'surname', title: 'Фамилия' },
-    { key: 'firstName', title: 'Имя' },
-    { key: 'patronymic', title: 'Отчество' },
-    { key: 'company', title: 'Компания' },
-    { key: 'email', title: 'Email' },
-    { key: 'post', title: 'Должность' },
-    { key: 'phone', title: 'Телефон' }
-  ];
-  sortColumn: string = 'surname';
-  sortDirection: 'asc' | 'desc' = 'asc';
-
-  // ... остальной код компонента без изменений ...
-
-  // Метод для сортировки таблицы
-  sortTable(column: string): void {
-    if (this.sortColumn === column) {
-      // Если уже сортируем по этому столбцу, меняем направление
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      // Если новый столбец, устанавливаем его и направление по умолчанию
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
-    }
-    
-    this.applySorting();
-  }
-
-  // Метод применения сортировки
-  private applySorting(): void {
-    this.filteredUsers.sort((a, b) => {
-      const valueA = a[this.sortColumn as keyof User];
-      const valueB = b[this.sortColumn as keyof User];
-      
-      // Для строк
-      if (typeof valueA === 'string' && typeof valueB === 'string') {
-        return this.sortDirection === 'asc' 
-          ? valueA.localeCompare(valueB) 
-          : valueB.localeCompare(valueA);
-      }
-      
-      // Для чисел и других типов
-      if (valueA > valueB) {
-        return this.sortDirection === 'asc' ? 1 : -1;
-      }
-      if (valueA < valueB) {
-        return this.sortDirection === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
-  // Обновляем метод applyFilters, чтобы он также применял сортировку
-  applyFilters(): void {
-    this.filteredUsers = this.users.filter(user => 
-      Object.keys(this.filters).every(key =>
-        !this.filters[key] || String(user[key as keyof User]).toLowerCase().includes(this.filters[key].toLowerCase())
-      )
-    );
-    
-    this.applySorting();
-  }
-
-  // Обновляем метод loadUsers, чтобы при загрузке данных тоже применялась сортировка
-  private loadUsers(): void {
-    this.userService.getAllUsersData().pipe(
-      catchError(err => {
-        console.error('Ошибка загрузки пользователей:', err);
-        return of([]);
-      })
-    ).subscribe(users => {
-      this.users = users;
-      this.filteredUsers = [...users];
-      this.applySorting(); // Применяем сортировку после загрузки
-      
-      if (users.length > 0 && !this.currentUser) {
-        this.currentUser = users[0];
-        this.getAllTasksOfUser(users[0]);
-      }
-    });
+  private getDefaultUser(): User {
+    return defaultUser;
   }
 
   private loadInitialData(): void {
@@ -177,6 +110,22 @@ export class AdminComponent implements OnInit {
     this.loadAllTasks();
   }
 
+  private loadUsers(): void {
+    this.userService.getAllUsersData().pipe(
+      catchError(err => {
+        console.error('Ошибка загрузки пользователей:', err);
+        return of([]);
+      })
+    ).subscribe(users => {
+      this.users = users;
+      this.applyFilters();
+      if (users.length > 0 && !this.currentUser.userId) {
+        this.currentUser = users[0];
+        this.getAllTasksOfUser(users[0]);
+      }
+    });
+  }
+
   private loadAllTasks(): void {
     this.taskService.getAllTasks().pipe(
       catchError(err => {
@@ -184,16 +133,54 @@ export class AdminComponent implements OnInit {
         return of([]);
       })
     ).subscribe(tasks => {
-      this.allTasks = tasks;
+        this.allTasks = tasks.filter(task => {
+          return (task.typeStatus === 0 || task.typeStatus === 2);
+        });
     });
   }
 
-  // Методы для модального окна
+  sortTable(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.applySorting();
+  }
+
+  private applySorting(): void {
+    this.filteredUsers.sort((a, b) => {
+      const valueA = a[this.sortColumn as keyof User];
+      const valueB = b[this.sortColumn as keyof User];
+      
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.sortDirection === 'asc' 
+          ? valueA.localeCompare(valueB) 
+          : valueB.localeCompare(valueA);
+      }
+      
+      if (valueA > valueB) return this.sortDirection === 'asc' ? 1 : -1;
+      if (valueA < valueB) return this.sortDirection === 'asc' ? -1 : 1;
+      return 0;
+    });
+  }
+
+  applyFilters(): void {
+    this.filteredUsers = this.users.filter(user => 
+      Object.keys(this.filters).every(key =>
+        !this.filters[key] || String(user[key as keyof User]).toLowerCase().includes(this.filters[key].toLowerCase())
+    ));
+    this.applySorting();
+  }
+
   openAddModal(): void {
     this.isEditMode = false;
     this.modalTitle = 'Добавить пользователя';
-    this.currentUser = defaultUser;
+    this.currentUser = this.getDefaultUser();
     this.isFormSubmitted = false;
+    this.emailExists = false;
+    this.phoneExists = false;
   }
 
   openEditModal(user: User): void {
@@ -201,48 +188,43 @@ export class AdminComponent implements OnInit {
     this.modalTitle = 'Редактировать пользователя';
     this.currentUser = { ...user };
     this.isFormSubmitted = false;
+    this.emailExists = false;
+    this.phoneExists = false;
   }
 
   closeModal(): void {
-    this.currentUser = defaultUser;
+    this.currentUser = this.getDefaultUser();
     this.isFormSubmitted = false;
   }
 
- onSubmit(form: NgForm): void {
+  onSubmit(form: NgForm): void {
     this.isFormSubmitted = true;
-    
-    if (form.invalid) return;
+    if (form.invalid || this.emailExists || this.phoneExists) return;
 
     const operation = this.isEditMode 
-        ? this.userService.updateUser(this.currentUser!)
-        : this.userService.addUser(this.currentUser!);
+      ? this.userService.updateUser(this.currentUser)
+      : this.userService.addUser(this.currentUser);
 
     operation.subscribe({
-        next: () => {
-            this.loadUsers();
-            this.closeModal();
-            // Можно добавить уведомление об успехе
-            this.notify.showSuccess(
-                this.isEditMode 
-                    ? 'Пользователь успешно обновлен' 
-                    : 'Пользователь успешно зарегистрирован'
-            );
-        },
-        error: (err) => {
-            console.error('Ошибка сохранения пользователя:', err);
-            
-            if (err.status === 409) {
-                // Конфликт - пользователь уже существует
-                this.notify.showError(err.response.data?.Message);
-            } else {
-                // Другие ошибки
-                this.notify.showError(
-                    'Произошла ошибка при сохранении пользователя'
-                );
-            }
-        }
+      next: () => {
+        this.loadUsers();
+        this.closeModal();
+        this.notify.showSuccess(
+          this.isEditMode 
+            ? 'Пользователь успешно обновлен' 
+            : 'Пользователь успешно зарегистрирован'
+        );
+      },
+      error: (err) => {
+        console.error('Ошибка сохранения пользователя:', err);
+        this.notify.showError(
+          err.status === 409 
+            ? err.response.data?.Message 
+            : 'Произошла ошибка при сохранении пользователя'
+        );
+      }
     });
-}
+  }
 
   deleteUser(user: User): void {
     if (confirm(`Вы уверены, что хотите удалить пользователя ${user.surname}?`)) {
@@ -253,7 +235,19 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  validateEmail(): void {
+    this.emailExists = this.users.some(user => 
+      user.email === this.currentUser.email && 
+      (!this.isEditMode || user.userId !== this.currentUser.userId)
+    );
+  }
 
+  validatePhone(): void {
+    this.phoneExists = this.users.some(user => 
+      user.phone === this.currentUser.phone && 
+      (!this.isEditMode || user.userId !== this.currentUser.userId)
+    );
+  }
 
   getFilterPlaceholder(key: string): string {
     const placeholders: Record<string, string> = {
@@ -268,6 +262,7 @@ export class AdminComponent implements OnInit {
     return placeholders[key] || '';
   }
 
+  // Остальные методы без изменений
   getAllTasksOfUser(user: User): void {
     if (!user?.userId) return;
     
@@ -286,7 +281,7 @@ export class AdminComponent implements OnInit {
   }
 
   private renderTaskNowChart(): void {
-    if (!this.currentUser || this.selectedUserTasks.length === 0) {
+    if (!this.currentUser?.userId || this.selectedUserTasks.length === 0) {
       this.taskChartData = { labels: [], datasets: [] };
       return;
     }
@@ -346,8 +341,7 @@ export class AdminComponent implements OnInit {
   }
 
   private formatDateForDisplay(isoDate: string): string {
-    const date = new Date(isoDate);
-    return date.getDate().toString();
+    return new Date(isoDate).getDate().toString();
   }
 
   get activeMonthToString(): string {

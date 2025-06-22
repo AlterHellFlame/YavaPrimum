@@ -16,8 +16,8 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneMask = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    PhoneMask = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,7 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,9 +41,9 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     TasksStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeStatus = table.Column<int>(type: "int", nullable: false),
-                    MessageTemplate = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TypeStatus = table.Column<byte>(type: "tinyint", nullable: false),
+                    MessageTemplate = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -74,11 +74,11 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Surname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Patronymic = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -104,13 +104,13 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -136,12 +136,12 @@ namespace YavaPrimum.Core.Migrations
                 columns: table => new
                 {
                     TasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatusTasksStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TasksStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsArchive = table.Column<bool>(type: "bit", nullable: false),
-                    AdditionalData = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
+                    AdditionalData = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,8 +152,8 @@ namespace YavaPrimum.Core.Migrations
                         principalTable: "Candidate",
                         principalColumn: "CandidateId");
                     table.ForeignKey(
-                        name: "FK_Tasks_TasksStatus_StatusTasksStatusId",
-                        column: x => x.StatusTasksStatusId,
+                        name: "FK_Tasks_TasksStatus_TasksStatusId",
+                        column: x => x.TasksStatusId,
                         principalTable: "TasksStatus",
                         principalColumn: "TasksStatusId",
                         onDelete: ReferentialAction.Cascade);
@@ -171,9 +171,9 @@ namespace YavaPrimum.Core.Migrations
                     VacancyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
+                    Count = table.Column<byte>(type: "tinyint", nullable: false),
                     isClose = table.Column<bool>(type: "bit", nullable: false),
-                    AdditionalData = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AdditionalData = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,7 +199,7 @@ namespace YavaPrimum.Core.Migrations
                     NotificationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TasksId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RecipientUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TextMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TextMessage = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     DateTimeOfNotify = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsReaded = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -251,9 +251,9 @@ namespace YavaPrimum.Core.Migrations
                 column: "CandidateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_StatusTasksStatusId",
+                name: "IX_Tasks_TasksStatusId",
                 table: "Tasks",
-                column: "StatusTasksStatusId");
+                column: "TasksStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_UserId",

@@ -29,7 +29,7 @@ export class HrComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTasks();  
-
+    this.notify.startConnection();
     this.notify.addReceiveListener((message) => {
       this.loadTasks();   
     });

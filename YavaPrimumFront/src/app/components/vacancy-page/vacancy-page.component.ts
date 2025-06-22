@@ -23,7 +23,7 @@ export class VacancyPageComponent implements OnInit {
 
     
   isAdmin: boolean = (localStorage.getItem('isAdmin') === 'true'? true : false);
-  isHr: boolean = (localStorage.getItem('isHr') === 'true'? true : false);
+  isHr: boolean = (localStorage.getItem('isHR') === 'true'? true : false);
 
   vacancyForm: FormGroup;
   editVacancyForm: FormGroup;
@@ -90,7 +90,10 @@ export class VacancyPageComponent implements OnInit {
       const newVacancy: VacancyRequest = this.vacancyForm.value;
       this.userService.createVacancy(newVacancy).subscribe({
         next: (createdVacancy) => {
-          this.modalService.dismissAll();
+           this.userService.getAllVacancies().subscribe(v => {
+            this.vacancies = v;
+                      this.modalService.dismissAll();
+          });
           this.vacancies.unshift(createdVacancy);
           this.vacancyForm.reset({ count: 1 });
           this.notify.showSuccess("Вакансия добавлена");
@@ -150,7 +153,7 @@ get filteredVacancies(): Vacancy[] {
 
 // Метод проверки прав
 canEditVacancy(vacancy: Vacancy): boolean {
-  return vacancy.user?.userId === this.user?.userId;
+  return (vacancy.user?.userId === this.user?.userId) && (!vacancy.isClose);
 }
 
 filter = { post: '' };

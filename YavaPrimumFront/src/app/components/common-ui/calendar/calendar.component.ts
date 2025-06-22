@@ -15,7 +15,7 @@ import { NotifyService } from '../../../services/notify/notify.service';
 export class CalendarComponent implements OnInit {
   @Output() getTasks = new EventEmitter<any>();
 
-  today: DateTime = DateTime.local().minus({ days: 1 });
+  today: DateTime = DateTime.local();
   firstDayOfActiveMonth: DateTime = this.today.startOf('month');
   weekDays: string[] = Info.weekdays('short');
   daysOfMonth: DateTime[] = [];

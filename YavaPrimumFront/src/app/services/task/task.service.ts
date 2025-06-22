@@ -45,7 +45,7 @@ export class TaskService {
   public getTasksOfDay(day: DateTime): Tasks[] {
       let tasks = this.allTasks
         .filter(task => 
-          task.dateTime.hasSame(day, 'day') && task.typeStatus !== -1 && task.typeStatus !== -2
+          task.dateTime.hasSame(day, 'day') && task.typeStatus !== 6 && task.typeStatus !== 7
         ) // ✅ Фильтруем задачи, исключая статусы -1 и -2
         .sort((a, b) => {
           let statusA = (a.typeStatus === 0 || a.typeStatus === 3) ? 0 : 1;
@@ -119,13 +119,13 @@ export class TaskService {
               { status, additionalData, newDateTime: newDate, isTestTask },
               { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
           ).toPromise();
-          
           console.log('Status updated:', response);
       } catch (error) {
           console.error('Update error:', error);
           this.notify.showError("Упс...");
           throw error;
       }
+          this.notify.SendToUser("Прочитано");
   }
 
 

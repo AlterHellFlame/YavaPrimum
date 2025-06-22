@@ -21,9 +21,11 @@ export class UserDataComponent implements OnInit {
   totalTestDeadline = 0;
   totalInterviewScheduled = 0;
   totalTestCompleted = 0;
+  totalPriem = 0;
 
   allTasks: Tasks[] = [];
   isAdmin: boolean = (localStorage.getItem('isAdmin') === 'true'? true : false);
+  isHR: boolean = (localStorage.getItem('isHR') === 'true'? true : false);
   taskChartData: ChartData<'line', number[], string> = {
     labels: [],
     datasets: []
@@ -45,11 +47,15 @@ export class UserDataComponent implements OnInit {
   ngOnInit(): void 
   {
     this.taskService.loadAllTasks().subscribe({
-      next: data => {
-        let allTasks = data.map(task => ({
+      next: data => 
+      {
+        let allTasks = (data.map(task => ({
           ...task,
           dateTime: DateTime.fromISO(task.dateTime as unknown as string)
-        }));
+        })))
+        .filter(task => {
+          return (task.typeStatus === 0 || task.typeStatus === 2)})
+
         console.log(allTasks);
         this.taskService.setAllTasks(allTasks);
         this.renderTaskNowChart()
@@ -67,10 +73,11 @@ export class UserDataComponent implements OnInit {
 
 
     private calculateTaskStatistics(): void {
-    this.totalInterviewPassed = this.allTasks.filter(t => t.status === 'Собеседование пройдено' || t.status === 'Тестовое задание выполнено').length;
+    this.totalInterviewPassed = this.allTasks.filter(t => t.status === 'Собеседование пройдено' || t.status === 'Выполнено тестовое задание' || t.status === 'Пришел').length;
     this.totalTestDeadline = this.allTasks.filter(t => t.status === 'Срок тестового задания').length;
-    this.totalInterviewScheduled = this.allTasks.filter(t => t.status === 'Собеседование назначено').length;
-    this.totalTestCompleted = this.allTasks.filter(t => t.status === 'Тестовое задание выполнено').length;
+    this.totalInterviewScheduled = this.allTasks.filter(t => t.status === 'Назначено собеседование').length;
+    this.totalTestCompleted = this.allTasks.filter(t => t.status === 'Выполнено тестовое задание').length;
+    this.totalPriem = this.allTasks.filter(t => t.status === 'Назначен приём').length;
   }
   renderTaskNowChart(): void {
     this.allTasks = this.taskService.getAllTasksOfUser();

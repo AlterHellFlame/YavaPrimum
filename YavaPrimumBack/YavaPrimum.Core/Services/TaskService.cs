@@ -143,7 +143,7 @@ namespace YavaPrimum.Core.Services
             switch (task.Status.TypeStatus)
             {
 
-                case -1: // Подтверждения
+                case 6: // Подтверждения
                     await HandleStatusMinusOne(task, taskStatus);
                     break;
                 case 0: // Текущие задачи
@@ -192,7 +192,7 @@ namespace YavaPrimum.Core.Services
 
                     task.IsArchive = true;
 
-                    string res = await _notificationsService.SendMessageToEmail(task.Candidate.Email, _notificationsService.GetTextMessageForTestTask(task), "Тестовое задание Primum");
+                    string res = await _notificationsService.SendMessageToEmail(task.Candidate.Email, _notificationsService.GetTextMessageForTestTask(testTask), "Тестовое задание Primum");
 
                     await Create(testTask);
 

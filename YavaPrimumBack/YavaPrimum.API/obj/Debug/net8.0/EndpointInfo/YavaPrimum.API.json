@@ -1307,17 +1307,17 @@
             "format": "uuid"
           },
           "surname": {
-            "maxLength": 50,
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
           "firstName": {
-            "maxLength": 50,
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
           "patronymic": {
-            "maxLength": 50,
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
@@ -1331,8 +1331,16 @@
             "type": "string",
             "nullable": true
           },
+          "postId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "post": {
             "$ref": "#/components/schemas/Post"
+          },
+          "countryId": {
+            "type": "string",
+            "format": "uuid"
           },
           "country": {
             "$ref": "#/components/schemas/Country"
@@ -1419,8 +1427,13 @@
             "format": "uuid"
           },
           "name": {
+            "maxLength": 50,
             "type": "string",
             "nullable": true
+          },
+          "countryId": {
+            "type": "string",
+            "format": "uuid"
           },
           "country": {
             "$ref": "#/components/schemas/Country"
@@ -1436,10 +1449,12 @@
             "format": "uuid"
           },
           "name": {
+            "maxLength": 30,
             "type": "string",
             "nullable": true
           },
           "phoneMask": {
+            "maxLength": 20,
             "type": "string",
             "nullable": true
           }
@@ -1516,6 +1531,7 @@
             "format": "uuid"
           },
           "name": {
+            "maxLength": 30,
             "type": "string",
             "nullable": true
           }
@@ -1594,6 +1610,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "tasksStatusId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "status": {
             "$ref": "#/components/schemas/TasksStatus"
           },
@@ -1601,8 +1621,16 @@
             "type": "string",
             "format": "date-time"
           },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "candidateId": {
+            "type": "string",
+            "format": "uuid"
           },
           "candidate": {
             "$ref": "#/components/schemas/Candidate"
@@ -1662,6 +1690,7 @@
             "format": "uuid"
           },
           "name": {
+            "maxLength": 50,
             "type": "string",
             "nullable": true
           },
@@ -1670,6 +1699,7 @@
             "format": "int32"
           },
           "messageTemplate": {
+            "maxLength": 250,
             "type": "string",
             "nullable": true
           }
@@ -1684,35 +1714,50 @@
             "format": "uuid"
           },
           "surname": {
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
           "firstName": {
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
           "patronymic": {
+            "maxLength": 40,
             "type": "string",
             "nullable": true
           },
           "imgUrl": {
+            "maxLength": 50,
             "type": "string",
             "nullable": true
           },
           "phone": {
+            "maxLength": 20,
             "type": "string",
             "nullable": true
           },
           "email": {
+            "maxLength": 100,
             "type": "string",
             "nullable": true
           },
           "passwordHash": {
+            "maxLength": 60,
             "type": "string",
             "nullable": true
           },
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "company": {
             "$ref": "#/components/schemas/Company"
+          },
+          "postId": {
+            "type": "string",
+            "format": "uuid"
           },
           "post": {
             "$ref": "#/components/schemas/Post"
@@ -1769,8 +1814,16 @@
             "type": "string",
             "format": "uuid"
           },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "postId": {
+            "type": "string",
+            "format": "uuid"
           },
           "post": {
             "$ref": "#/components/schemas/Post"
@@ -1783,6 +1836,7 @@
             "type": "boolean"
           },
           "additionalData": {
+            "maxLength": 250,
             "type": "string",
             "nullable": true
           }
@@ -1793,6 +1847,7 @@
         "type": "object",
         "properties": {
           "post": {
+            "maxLength": 30,
             "type": "string",
             "nullable": true
           },

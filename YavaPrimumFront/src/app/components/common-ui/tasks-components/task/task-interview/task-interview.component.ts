@@ -22,7 +22,7 @@ export class TaskInterviewComponent {
   additionalData: string = '';
   newDate: string = DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm");
   newDateTime: string = '';
-  minDate: string = new Date().toISOString().slice(0, 16);
+  minDate: string = new Date().toISOString().split('T')[0];
   minDateTime: string = new Date().toISOString().slice(0, 16);
   sendTestTask: boolean = false;
   activeModal: string | null = null;
@@ -182,10 +182,11 @@ private validateTime(control: FormControl): { [key: string]: boolean } | null {
       }
       
       
-      if(this.task == task)
+      if(this.task?.taskId == task.taskId || task.typeStatus == 2 || (task.typeStatus == 3 && task.status != 'Ожидается подтверждение времени'))
       {
         return false;
       }
+
       const taskDateTime = DateTime.fromISO(task.dateTime.toString());
       console.log('taskDateTime '+ taskDateTime)
 

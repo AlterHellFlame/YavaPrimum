@@ -191,6 +191,11 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     const hasConflict = this.taskService.getTasksOfDay(DateTime.fromISO(control.value)).some(task => {
       if (!DateTime.fromISO(control.value)) return false;
       
+      if(task.typeStatus == 2)
+      {
+        return false;
+      }
+
       const taskTime = task.dateTime instanceof DateTime 
         ? task.dateTime.toMillis() 
         : DateTime.fromISO(task.dateTime).toMillis();

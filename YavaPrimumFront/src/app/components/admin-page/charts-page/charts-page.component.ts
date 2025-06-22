@@ -175,8 +175,6 @@ export class ChartsPageComponent implements OnInit {
     this.addSummarySheet(workbook);
     this.addHiresAnalysisSheet(workbook);
     this.addRejectionsAnalysisSheet(workbook);
-    this.addHrPerformanceSheet(workbook);
-    this.addRecruiterPerformanceSheet(workbook);
     this.addEventsPlanSheet(workbook);
     this.addPeriodInfoSheet(workbook);
 
@@ -190,18 +188,19 @@ export class ChartsPageComponent implements OnInit {
     
     if (!start || !end) return;
     
-    this.taskService.getAllTasks().subscribe({
+      this.taskService.getAllTasks().subscribe({
       next: tasks => {
         this.allTasks = tasks.filter(task => {
           const taskDate = this.getTaskDate(task);
-          return taskDate >= start && taskDate <= end;
+          return taskDate >= start && taskDate <= end && (task.typeStatus === 0 || task.typeStatus === 2);
         });
-        
+
         this.calculateSummary();
         this.generateCharts();
       },
       error: err => console.error('Ошибка загрузки задач:', err)
     });
+
   }
 
   private generateCharts(): void {
@@ -214,7 +213,7 @@ export class ChartsPageComponent implements OnInit {
 
   private generateHiresChart(): void {
     const hiresData = this.groupByPeriod(
-      this.allTasks.filter(t => t.status === 'Взят кандидат' || t.status === 'Собеседование пройдено'),
+      this.allTasks.filter(t => t.status === 'Пришел'),
       this.getGroupBy(),
       this.getTaskDate
     );
@@ -522,7 +521,6 @@ private generateEventsPlanChart(): void {
     sheet.addRow(['Всего отказов', this.totalRejections]);
     sheet.addRow(['Ожидающие подтверждения', this.totalPending]);
     sheet.addRow(['Завершенные задачи', this.totalCompletedTasks]);
-    sheet.addRow(['Активные задачи', this.totalActiveTasks]);
     sheet.addRow(['Эффективность HR (%)', this.hrEfficiency]);
     sheet.addRow(['Эффективность рекрутеров (%)', this.recruiterEfficiency]);
     
@@ -554,32 +552,6 @@ private generateEventsPlanChart(): void {
     });
     
     sheet.getColumn(1).width = 20;
-    sheet.getColumn(2).width = 15;
-  }
-
-  private addHrPerformanceSheet(workbook: ExcelJS.Workbook): void {
-    const sheet = workbook.addWorksheet('Работа HR');
-    sheet.addRow(['Анализ работы HR отдела']).font = { bold: true, size: 14 };
-    sheet.addRow(['Тип задачи', 'Количество']);
-    
-    Object.keys(this.hrWorkloadChart.labels!).forEach((label, i) => {
-      sheet.addRow([label, this.hrWorkloadChart.datasets[0].data[i]]);
-    });
-    
-    sheet.getColumn(1).width = 25;
-    sheet.getColumn(2).width = 15;
-  }
-
-  private addRecruiterPerformanceSheet(workbook: ExcelJS.Workbook): void {
-    const sheet = workbook.addWorksheet('Работа рекрутеров');
-    sheet.addRow(['Анализ работы рекрутеров']).font = { bold: true, size: 14 };
-    sheet.addRow(['Тип задачи', 'Количество']);
-    
-    Object.keys(this.recruiterWorkloadChart.labels!).forEach((label, i) => {
-      sheet.addRow([label, this.recruiterWorkloadChart.datasets[0].data[i]]);
-    });
-    
-    sheet.getColumn(1).width = 25;
     sheet.getColumn(2).width = 15;
   }
 

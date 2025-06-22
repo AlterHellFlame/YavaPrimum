@@ -19,14 +19,14 @@
     />
   </div>
   <!-- Фильтр статуса через выпадающий список -->
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="statusFilter" class="form-label">Фильтр по статусу</label>
     <select id="statusFilter" class="form-control" [(ngModel)]="filterStatus">
       <option value="all">Все</option>
       <option value="completed">Только выполненные</option>
       <option value="incomplete">Только невыполненные</option>
     </select>
-  </div>
+  </div> -->
 </div>
 
 <!-- Карточки кандидатов -->
@@ -42,9 +42,9 @@
               {{ candidate.candidate.firstName }}
               {{ candidate.candidate.patronymic }}
             </h4>
-            <p class="text-muted mb-0">{{ candidate.candidate.country }}</p>
+            <p class="text-muted mb-0">{{ candidate.candidate.country }} - {{candidate.candidate.post}}</p>
           </div>
-          <div class="flex-shrink-0">
+          <!-- <div class="flex-shrink-0">
             <span class="badge" [ngClass]="{
               'bg-opacity-10 text-success': allTasksCompleted(candidate),
               'bg-opacity-10 text-warning': !allTasksCompleted(candidate)
@@ -55,7 +55,7 @@
               }"></i>
               {{ allTasksCompleted(candidate) ? "Все задачи выполнены" : "Есть невыполненные задачи" }}
             </span>
-          </div>
+          </div> -->
         </div>
 
         <!-- Контактная информация (без изменений) -->
@@ -82,22 +82,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let task of candidate.tasks">
+              <ng-container *ngFor="let task of candidate.tasks">
+              <tr *ngIf="!task.isArchive">
                 <td>{{ toFormat(task.dateTime) }}</td>
                 <td>
-                  <span class="badge" [ngClass]="{
-                    'bg-opacity-10 text-success': isTaskCompleted(task),
-                    'bg-opacity-10 text-warning': !isTaskCompleted(task)
-                  }">
-                    <i class="bi me-1" [ngClass]="{
-                      'bi-check-circle-fill': isTaskCompleted(task),
-                      'bi-hourglass-split': !isTaskCompleted(task)
-                    }"></i>
-                    {{ task.status }}
-                  </span>
+                  {{ task.status }}
                 </td>
                 <td>{{ task.user.post}}</td>
               </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
@@ -108,7 +101,7 @@
                   data-bs-toggle="modal" 
                   data-bs-target="#changeDateTimeModal"
                   (click)="selectTaskForChange(candidate.tasks)">
-            Сменить дату время
+            {{ canChangeDateTime(candidate.tasks) == 'date' ? 'Сменить дату': 'Сменить дату и время'}}
           </button>
         </div>
       </div>
@@ -130,15 +123,15 @@
         <div class="btn-group w-100 mb-3" role="group">
           <button type="button" 
                   class="btn btn-outline-primary"
-                  [class.active]="isChangeDate === true"
+                  [class.active]="isChangeDate == true"
                   (click)="isChangeDate = true">
             <i class="bi bi-calendar3 me-2"></i>Изменить дату
           </button>
           <button type="button" 
                   class="btn btn-outline-primary"
-                  [class.active]="isChangeDate === false"
+                  [class.active]="isChangeDate == false"
                   (click)="isChangeDate = false"
-                  [disabled]="canChangeDateTime() == 'datetime'">
+                  [disabled]="canChangeDateTime() != 'datetime'">
             <i class="bi bi-clock me-2"></i>Изменить время
           </button>
         </div>
@@ -153,7 +146,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
         <button type="button" class="btn btn-primary" 
                 (click)="confirmDateTimeChange()">
-          Сохранить изменения
+          {{isChangeDate? 'Запрос на дату' : 'Запрос на время'}}
         </button>
       </div>
     </div>

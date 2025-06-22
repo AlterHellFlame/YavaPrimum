@@ -74,6 +74,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNotifications();
+    this.notify.startConnection();
     this.notify.addReceiveListener(() => this.loadNotifications());
 
   this.taskService.loadAllTasks().subscribe({
@@ -192,7 +193,6 @@ filterNotifications(): void {
       DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm")
     ).then(t => {
       this.closeModal();
-      this.notify.SendToUser('Статус изменен');
     });
   }
 
@@ -219,8 +219,13 @@ filterNotifications(): void {
     const hasConflict = tasksForDay.some(task => {
       if (!task.dateTime || task.taskId === this.selectedNotification?.task.taskId) {
         return false;
+      } 
+        
+      if(task.typeStatus == 3 && task.status !== 'Ожидается подтверждение времени')
+      {
+          return false;
       }
-      
+
       const taskDateTime = DateTime.fromISO(task.dateTime.toString());
       if (taskDateTime.toISODate() !== notificationDate.toISODate()) {
         return false;

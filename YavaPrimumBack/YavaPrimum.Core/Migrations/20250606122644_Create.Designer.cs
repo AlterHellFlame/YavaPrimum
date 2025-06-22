@@ -12,7 +12,7 @@ using YavaPrimum.Core.DataBase;
 namespace YavaPrimum.Core.Migrations
 {
     [DbContext(typeof(YavaPrimumDBContext))]
-    [Migration("20250602093549_Create")]
+    [Migration("20250606122644_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -37,30 +37,30 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Patronymic")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("CandidateId");
 
@@ -82,7 +82,8 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("CompanyId");
 
@@ -99,11 +100,13 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("PhoneMask")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("CountryId");
 
@@ -130,7 +133,8 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("TextMessage")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("NotificationsId");
 
@@ -154,7 +158,8 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("PostId");
 
@@ -169,7 +174,7 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("AdditionalData")
                         .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
@@ -180,7 +185,7 @@ namespace YavaPrimum.Core.Migrations
                     b.Property<bool>("IsArchive")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("StatusTasksStatusId")
+                    b.Property<Guid>("TasksStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -190,7 +195,7 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("StatusTasksStatusId");
+                    b.HasIndex("TasksStatusId");
 
                     b.HasIndex("UserId");
 
@@ -211,14 +216,16 @@ namespace YavaPrimum.Core.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MessageTemplate")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("TypeStatus")
-                        .HasColumnType("int");
+                    b.Property<byte>("TypeStatus")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("TasksStatusId");
 
@@ -241,34 +248,41 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("ImgUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Patronymic")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("UserId");
 
@@ -287,10 +301,11 @@ namespace YavaPrimum.Core.Migrations
 
                     b.Property<string>("AdditionalData")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
+                    b.Property<byte>("Count")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
@@ -369,7 +384,7 @@ namespace YavaPrimum.Core.Migrations
 
                     b.HasOne("YavaPrimum.Core.DataBase.Models.TasksStatus", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusTasksStatusId")
+                        .HasForeignKey("TasksStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
